@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+
 import styled from "styled-components";
 
 const Page = styled.div`
@@ -20,14 +20,19 @@ const MainPage = styled.div`
   }
 `;
 
+const FlexCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 function Main() {
   return (
     <Page>
-      <Flex justify="center">
+      <FlexCenter>
         <MainPage>
           <p>메인페이지</p>
         </MainPage>
-      </Flex>
+      </FlexCenter>
     </Page>
   );
 }
