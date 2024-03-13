@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
+import Search from "../images/search_black.png";
+
 const DefaultHeader = () => {
   return (
     <HeaderContainer>
       <div>PONNECT</div>
-      <button>QR</button>
+      <div className="search-img">
+        <img src={Search} alt="QR 인식" />
+      </div>
     </HeaderContainer>
   );
 };

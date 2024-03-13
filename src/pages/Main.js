@@ -4,10 +4,6 @@ import "../styles/Main.css";
 
 import MainHeader from "../components/MainHeader";
 
-const MainPage = styled.div`
-  background-image: linear-gradient(#138eff, #006eee);
-`;
-
 function Main() {
   return (
     <div className="page">
@@ -24,3 +20,7 @@ function Main() {
 }
 
 export default Main;
+
+const MainPage = styled.div`
+  background-image: linear-gradient(#138eff, #006eee);
+`;
