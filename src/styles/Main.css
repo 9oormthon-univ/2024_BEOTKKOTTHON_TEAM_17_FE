@@ -12,10 +12,7 @@
 
 .page-space {
   width: 100vw;
-  min-height: 100vh;
-  @supports (-webkit-touch-callout: none) {
-    min-height: -webkit-fill-available;
-  }
+  min-height: 100svh;
 }
 
 @media (hover: hover) and (pointer: fine) {
