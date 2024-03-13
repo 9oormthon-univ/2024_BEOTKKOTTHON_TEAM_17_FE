@@ -1,5 +1,12 @@
+import DefaultHeader from "../components/DefaultHeader";
+
 const SignIn = () => {
-  return <div>signin</div>;
+  return (
+    <div>
+      <DefaultHeader />
+      signin
+    </div>
+  );
 };
 
 export default SignIn;

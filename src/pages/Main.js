@@ -1,6 +1,7 @@
 import React from "react";
-
 import styled from "styled-components";
+
+import MainHeader from "../components/MainHeader";
 
 const Page = styled.div`
   width: 100vw;
@@ -10,8 +11,7 @@ const Page = styled.div`
 `;
 
 const MainPage = styled.div`
-  background: linear-gradient(#138eff, #006eee);
-
+  background-image: linear-gradient(#138eff, #006eee);
   width: 100vw;
   min-height: 100vh;
 
@@ -30,6 +30,7 @@ function Main() {
     <Page>
       <FlexCenter>
         <MainPage>
+          <MainHeader />
           <p>메인페이지</p>
         </MainPage>
       </FlexCenter>
