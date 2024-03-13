@@ -5,9 +5,12 @@ import Search from "../images/search_black.png";
 const DefaultHeader = () => {
   return (
     <HeaderContainer>
-      <div>PONNECT</div>
+      <Title>PONNECT</Title>
       <div className="search-img">
-        <img src={Search} alt="QR 인식" />
+        <img
+          src={Search}
+          alt="QR 인식"
+        />
       </div>
     </HeaderContainer>
   );
@@ -24,4 +27,8 @@ const HeaderContainer = styled.div`
   padding: 10px 20px;
   background-color: #fff;
   color: #138eff;
+`;
+
+const Title = styled.div`
+  font-size: 14px;
 `;

@@ -18,14 +18,17 @@ const MainHeader = () => {
   //로그인 여부 => 로그인 버튼이 렌더 or MY 버튼이 렌더
   return (
     <HeaderContainer>
-      <div>PONNECT</div>
+      <Title>PONNECT</Title>
       <HeaderRight>
         {/* 로그인 버튼 */}
         <HeaderBtn onClick={handleToSignin}>로그인</HeaderBtn>
         {/* MY 버튼 */}
         {/* <HeaderBtn onClick={handleToMypage}>MY</HeaderBtn> */}
         <div className="search-img">
-          <img src={Search} alt="QR 인식" />
+          <img
+            src={Search}
+            alt="QR 인식"
+          />
         </div>
       </HeaderRight>
     </HeaderContainer>
@@ -42,6 +45,10 @@ const HeaderContainer = styled.div`
   align-items: center;
   padding: 10px 20px;
   color: #fff;
+`;
+
+const Title = styled.div`
+  font-size: 14px;
 `;
 
 const HeaderRight = styled.div`
