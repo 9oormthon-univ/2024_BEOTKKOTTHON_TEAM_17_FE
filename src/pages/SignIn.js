@@ -3,6 +3,7 @@ import DefaultHeader from "../components/DefaultHeader";
 import "../styles/Main.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { logIn } from "../uitls/axios";
 
 const SignIn = () => {
   const location = useLocation();
@@ -21,7 +22,13 @@ const SignIn = () => {
   };
 
   const handleSignIn = async () => {
-    // 로그인하기 버튼 클릭 이벤트
+    try {
+      const data = await logIn(signInData); // signUp 함수를 비동기적으로 호출
+      navigate("/"); // 메인으로 리다이렉트
+      console.log("로그인 성공:", data);
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+    }
   };
 
   const linkToSignUp = () => {
@@ -50,7 +57,7 @@ const SignIn = () => {
                 onChange={handleChangeState}
                 placeholder="비밀번호"
               />
-              <Button>로그인하기</Button>
+              <Button onClick={handleSignIn}>로그인하기</Button>
               <Button $isFindPassword>비밀번호 찾기</Button>
               <SignupPrompt>
                 <IsFirst>PONNECT가 처음이신가요?</IsFirst>

@@ -18,3 +18,13 @@ export const submitSignUp = async (userData) => {
     throw error;
   }
 };
+
+export const logIn = async (userData) => {
+  try {
+    const url = `${API_KEY}` + "/api/auth/sign-in";
+    const res = await axios.post(url, userData);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
