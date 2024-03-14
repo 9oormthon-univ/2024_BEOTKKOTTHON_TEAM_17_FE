@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useSignUpStore from "../store/store";
-import DefaultHeader from "../components/DefaultHeader";
+import BackHeader from "../components/BackHeader";
 
 const SignUpStep1 = () => {
   const navigate = useNavigate();
@@ -54,13 +54,13 @@ const SignUpStep1 = () => {
       <div className="center">
         <SignUpPage1>
           <div className="page-space">
-            <DefaultHeader />
-            <Form>
-              <WelcomeText>
+            <BackHeader />
+            <Container>
+              <FormText>
                 반갑습니다!
                 <br />
-                <boldSpan>가입을 위한 정보</boldSpan>를 입력해주세요.
-              </WelcomeText>
+                <BoldSpan>가입을 위한 정보</BoldSpan>를 입력해주세요.
+              </FormText>
               <Input
                 type="text"
                 placeholder="이름을 입력해주세요"
@@ -83,7 +83,7 @@ const SignUpStep1 = () => {
               >
                 다음
               </NextButton>
-            </Form>
+            </Container>
           </div>
         </SignUpPage1>
       </div>
@@ -97,54 +97,79 @@ const SignUpPage1 = styled.div`
   background-color: #fff;
 `;
 
-const Form = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 `;
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-`;
-
-const WelcomeText = styled.h3`
-  margin-bottom: 20px; // 제목과 입력 필드 사이의 간격
+const FormText = styled.span`
+  margin-top: 60px;
+  margin-bottom: 43px;
   align-self: flex-start;
+  color: #000;
+
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
-const boldSpan = styled.span``;
+const BoldSpan = styled.span`
+  color: #000;
+
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
 
 const Input = styled.input`
-  margin-bottom: 20px; // 입력 필드 사이의 간격
-  padding: 10px;
-  border: 1px solid #ccc;
+  width: 343px;
+  height: 37px;
 
-  width: 87vw;
+  box-sizing: border-box;
+  margin-bottom: 11px;
+  border: 1px solid #8c8c8c;
+
+  padding: 10px;
+
+  &::placeholder {
+    color: #8c8c8c;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 `;
 
 const NextButton = styled.button`
-  margin-top: 20px; // 버튼 상단의 간격
+  margin-top: 20px;
   padding: 10px 20px;
   border: none;
-  background-color: #ccc; // 비활성화 상태의 배경색
-  color: white;
+  background-color: #bdbdbd;
+  color: #fff;
   cursor: default;
-  width: 90vw;
 
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+
+  width: 343px;
+  height: 42px;
   ${({ $isActive }) =>
     $isActive &&
     `
-  background-color: #138eff; // 활성화 상태의 배경색
-  cursor: pointer;
-  &:hover {
-    background-color: #006eee;
+    background-color: #138eff; 
+    cursor: pointer;
+    &:hover {
+      background-color: #006eee;
   }
 `}
 `;

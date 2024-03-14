@@ -1,13 +1,17 @@
 import styled from "styled-components";
-
+import React from "react";
 import BackArrow from "../images/back_arrow.png";
 
 const BackHeader = () => {
+  const goBack = () => {
+    window.history.back(); // 뒤로 가기
+  };
   return (
     <HeaderContainer>
-      <Title>PONNECT</Title>
       <div className="backarrow-img">
-        <img
+        <Img
+          onClick={goBack}
+          style={{ cursor: "pointer" }}
           src={BackArrow}
           alt="뒤로가기"
         />
@@ -19,16 +23,16 @@ const BackHeader = () => {
 export default BackHeader;
 
 const HeaderContainer = styled.div`
-  font-family: "Pretendard-Bold";
+  height: 10%;
   font-weight: 800;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 10px;
   background-color: #fff;
-  color: #138eff;
 `;
 
-const Title = styled.div`
-  font-size: 14px;
+const Img = styled.img`
+  width: 17px;
+  height: auto;
 `;

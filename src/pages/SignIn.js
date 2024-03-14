@@ -87,6 +87,7 @@ const Title = styled.h2`
 
   text-align: center;
 
+  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
@@ -106,6 +107,7 @@ const Input = styled.input`
 
   &::placeholder {
     color: #8c8c8c;
+    font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -120,9 +122,10 @@ const Button = styled.button`
   height: 42px;
   border: none;
   background-color: ${({ isFindPassword }) => (isFindPassword ? "white" : "#138EFF")};
-  color: ${({ isFindPassword }) => (isFindPassword ? "#000" : "white")};
+  color: ${({ isFindPassword }) => (isFindPassword ? " #515151;" : "white")};
   cursor: pointer;
 
+  font-family: Pretendard;
   font-size: ${({ isFindPassword }) => (isFindPassword ? "#12px" : "14px")};
   font-weight: ${({ isFindPassword }) => (isFindPassword ? "400" : "700")};
   font-style: normal;
@@ -150,6 +153,7 @@ const SignUpButton = styled(Button)`
   width: 343px;
   height: 42px;
 
+  font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
@@ -165,6 +169,7 @@ const IsFirst = styled.div`
   margin-top: 20px;
   margin-left: 20px;
 
+  font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
