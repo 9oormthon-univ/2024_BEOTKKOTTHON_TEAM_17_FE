@@ -6,9 +6,12 @@ import styled from "styled-components";
 import BackHeader from "../components/BackHeader";
 import { submitSignUp } from "../uitls/axios";
 import "../styles/Main.css";
+import { useCookies } from "react-cookie";
 
 const SignUpStep2 = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["jwt-token"]);
+
   const { userData, setUserData } = useSignUpStore();
   const [isActive, setIsActive] = useState(false);
 
@@ -25,8 +28,7 @@ const SignUpStep2 = () => {
     e.preventDefault();
     // 회원가입 로직 구현 (API 연동)
     try {
-      const data = await submitSignUp(userData); // signUp 함수를 비동기적으로 호출
-      console.log("회원가입 성공:", data);
+      const data = await submitSignUp(userData, setCookie); // signUp 함수를 비동기적으로 호출
       navigate("/"); // 메인으로 리다이렉트
     } catch (error) {
       console.error("회원가입 실패:", error);

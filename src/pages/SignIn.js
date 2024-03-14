@@ -4,10 +4,12 @@ import "../styles/Main.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logIn } from "../uitls/axios";
+import { useCookies } from "react-cookie";
 
 const SignIn = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["jwt-token"]);
 
   const [signInData, setSignInData] = useState({
     principal: "",
@@ -23,11 +25,11 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      const data = await logIn(signInData); // signUp 함수를 비동기적으로 호출
+      const data = await logIn(signInData, setCookie);
       navigate("/"); // 메인으로 리다이렉트
-      console.log("로그인 성공:", data);
+      console.log("로그인 성공");
     } catch (error) {
-      console.error("회원가입 실패:", error);
+      console.error("로그인 실패:", error);
     }
   };
 

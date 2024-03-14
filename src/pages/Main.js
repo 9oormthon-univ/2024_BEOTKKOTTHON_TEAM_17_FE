@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import "../styles/Main.css";
 import MainLogo from "../images/main.png";
 import Wallet from "../images/wallet_circle.png";
 import MainHeader from "../components/MainHeader";
+import { useCookies } from "react-cookie";
 
 function Main() {
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+
+  useEffect(() => {
+    //유효성 검사 로직
+  }, []);
+
   return (
     <div className="page">
       <div className="center">
