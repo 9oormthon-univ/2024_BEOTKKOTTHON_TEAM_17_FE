@@ -3,9 +3,9 @@ import { create } from "zustand";
 const useSignUpStore = create((set) => ({
   userData: {
     name: "",
-    phoneNumber: "",
-    username: "",
-    password: "",
+    phone: "",
+    email: "",
+    credential: "",
   },
   setUserData: (field, value) =>
     set((state) => ({

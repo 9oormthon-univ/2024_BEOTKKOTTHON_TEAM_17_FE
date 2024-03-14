@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useSignUpStore from "../store/store";
 import styled from "styled-components";
 import BackHeader from "../components/BackHeader";
+import { submitSignUp } from "../uitls/axios";
 
 const SignUpStep2 = () => {
   const navigate = useNavigate();
@@ -11,19 +12,24 @@ const SignUpStep2 = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    setIsActive(userData.username.length >= 4 && userData.password.length >= 4);
-  }, [userData.username, userData.password]);
+    setIsActive(userData.email.length >= 4 && userData.credential.length >= 4);
+  }, [userData.email, userData.credential]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 회원가입 로직 구현 (API 연동)
-    navigate("/"); // 메인으로 리다이렉트
-    console.log(userData);
+    try {
+      const data = await submitSignUp(userData); // signUp 함수를 비동기적으로 호출
+      console.log("회원가입 성공:", data);
+      navigate("/"); // 메인으로 리다이렉트
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+    }
   };
 
   return (
@@ -40,18 +46,18 @@ const SignUpStep2 = () => {
               <Label>아이디</Label>
               <Input
                 type="text"
-                name="username"
+                name="email"
                 onChange={handleChange}
                 placeholder="이메일을 입력해주세요."
-                value={userData.username}
+                value={userData.email}
               />
               <Label>비밀번호</Label>
               <Input
                 type="password"
-                name="password"
+                name="credential"
                 onChange={handleChange}
                 placeholder="4자리 이상 입력해주세요."
-                value={userData.password}
+                value={userData.credential}
               />
               <Button
                 $isActive={isActive}

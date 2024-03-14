@@ -51,7 +51,7 @@ const SignIn = () => {
                 placeholder="비밀번호"
               />
               <Button>로그인하기</Button>
-              <Button isFindPassword>비밀번호 찾기</Button>
+              <Button $isFindPassword>비밀번호 찾기</Button>
               <SignupPrompt>
                 <IsFirst>PONNECT가 처음이신가요?</IsFirst>
                 <SignUpButton onClick={linkToSignUp}>간편 회원가입하기</SignUpButton>
@@ -121,18 +121,18 @@ const Button = styled.button`
   width: 343px;
   height: 42px;
   border: none;
-  background-color: ${({ isFindPassword }) => (isFindPassword ? "white" : "#138EFF")};
-  color: ${({ isFindPassword }) => (isFindPassword ? " #515151;" : "white")};
+  background-color: ${({ $isFindPassword }) => ($isFindPassword ? "white" : "#138EFF")};
+  color: ${({ $isFindPassword }) => ($isFindPassword ? " #515151;" : "white")};
   cursor: pointer;
 
   font-family: Pretendard;
-  font-size: ${({ isFindPassword }) => (isFindPassword ? "#12px" : "14px")};
-  font-weight: ${({ isFindPassword }) => (isFindPassword ? "400" : "700")};
+  font-size: ${({ $isFindPassword }) => ($isFindPassword ? "#12px" : "14px")};
+  font-weight: ${({ $isFindPassword }) => ($isFindPassword ? "400" : "700")};
   font-style: normal;
   line-height: normal;
 
   &:hover {
-    background-color: ${({ isFindPassword }) => (isFindPassword ? "#f8f9fa" : "#007bff")};
+    background-color: ${({ $isFindPassword }) => ($isFindPassword ? "#f8f9fa" : "#007bff")};
   }
 `;
 

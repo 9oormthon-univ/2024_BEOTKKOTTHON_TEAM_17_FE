@@ -22,7 +22,7 @@ const SignUpStep1 = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "phoneNumber") {
+    if (name === "phone") {
       const formattedValue = formatPhoneNum(value);
       setDisplayPhoneNumber(formattedValue); // 화면에 표시될 값 업데이트
       const originPhoneNum = value.replace(/[^0-9]/g, "");
@@ -33,7 +33,7 @@ const SignUpStep1 = () => {
   };
 
   // '다음' 버튼 활성화 상태 결정
-  const isActive = userData.name.length > 1 && userData.phoneNumber.length > 10;
+  const isActive = userData.name.length > 1 && userData.phone.length > 10;
 
   // '다음' 버튼 클릭 이벤트
   const handleNext = (e) => {
@@ -43,8 +43,8 @@ const SignUpStep1 = () => {
   };
   // 이전 화면으로 돌아와도 하이푼이 포함된 전화번호 유지
   React.useEffect(() => {
-    if (userData.phoneNumber) {
-      const formattedPhoneNumber = formatPhoneNum(userData.phoneNumber);
+    if (userData.phone) {
+      const formattedPhoneNumber = formatPhoneNum(userData.phone);
       setDisplayPhoneNumber(formattedPhoneNumber);
     }
   }, []);
@@ -71,7 +71,7 @@ const SignUpStep1 = () => {
               <Input
                 type="text"
                 placeholder="휴대폰 번호를 -없이 입력해주세요"
-                name="phoneNumber"
+                name="phone"
                 value={displayPhoneNumber}
                 maxLength={13}
                 onChange={handleChange}
