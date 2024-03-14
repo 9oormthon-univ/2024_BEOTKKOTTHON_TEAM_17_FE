@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
 
 const BackHeader = () => {
@@ -23,7 +24,6 @@ const BackHeader = () => {
 export default BackHeader;
 
 const HeaderContainer = styled.div`
-  height: 10%;
   font-weight: 800;
   display: flex;
   justify-content: space-between;

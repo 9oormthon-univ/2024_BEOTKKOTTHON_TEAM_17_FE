@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useSignUpStore from "../store/store";
 import BackHeader from "../components/BackHeader";
+import "../styles/Main.css";
 
 const SignUpStep1 = () => {
   const navigate = useNavigate();

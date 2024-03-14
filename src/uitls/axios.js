@@ -6,7 +6,6 @@ export const submitSignUp = async (userData) => {
   try {
     const formData = new FormData();
     formData.append("signUp", JSON.stringify(userData));
-    formData.append("profileImg", null);
 
     const postData = {
       signUp: userData,

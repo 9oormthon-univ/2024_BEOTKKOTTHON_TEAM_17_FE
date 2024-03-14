@@ -5,7 +5,7 @@ const useSignUpStore = create((set) => ({
     name: "",
     phone: "",
     email: "",
-    credential: "",
+    password: "",
   },
   setUserData: (field, value) =>
     set((state) => ({

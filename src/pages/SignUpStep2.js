@@ -5,6 +5,7 @@ import useSignUpStore from "../store/store";
 import styled from "styled-components";
 import BackHeader from "../components/BackHeader";
 import { submitSignUp } from "../uitls/axios";
+import "../styles/Main.css";
 
 const SignUpStep2 = () => {
   const navigate = useNavigate();
@@ -12,8 +13,8 @@ const SignUpStep2 = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    setIsActive(userData.email.length >= 4 && userData.credential.length >= 4);
-  }, [userData.email, userData.credential]);
+    setIsActive(userData.email.length >= 4 && userData.password.length >= 4);
+  }, [userData.email, userData.password]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,10 +55,10 @@ const SignUpStep2 = () => {
               <Label>비밀번호</Label>
               <Input
                 type="password"
-                name="credential"
+                name="password"
                 onChange={handleChange}
                 placeholder="4자리 이상 입력해주세요."
-                value={userData.credential}
+                value={userData.password}
               />
               <Button
                 $isActive={isActive}

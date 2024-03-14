@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import "../styles/Header.css";
 import Search from "../images/search_black.png";
 
 const DefaultHeader = () => {
