@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
+import Search from "../images/search1.png";
 
 const BackHeader = () => {
   const goBack = () => {
@@ -11,6 +12,9 @@ const BackHeader = () => {
     <HeaderContainer>
       <div className="backarrow-img">
         <Img onClick={goBack} style={{ cursor: "pointer" }} src={BackArrow} alt="뒤로가기" />
+      </div>
+      <div className="search-img">
+        <img src={Search} alt="QR 인식" />
       </div>
     </HeaderContainer>
   );
