@@ -192,7 +192,7 @@ const Button = styled.button`
 
 const SignupPrompt = styled.div`
   margin-top: 20px;
-  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -223,7 +223,6 @@ const IsFirst = styled.div`
   margin-top: 20px;
   margin-left: 25px;
   align-self: flex-start;
-
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
