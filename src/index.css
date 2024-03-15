@@ -1,23 +1,44 @@
+/*Regular*/
 @font-face {
-  font-family: "Pretendard-Bold";
-  src: url(../public/Pretendard-Bold.ttf) format("ttf"), url(../public/Pretendard-Bold.ttf) format("truetype"),
-    url(../public/Pretendard-Bold.ttf) format("woff");
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../public/Pretendard-Regular.otf) format("truetype"), url(../public/Pretendard-Regular.ttf) format("ttf"),
+    url(../public/Pretendard-Regular.woff) format("woff"), url(../public/Pretendard-Regular.woff2) format("woff2");
 }
 
+/*Medium*/
 @font-face {
-  font-family: "Pretendard-ExtraBold";
-  src: url(../public/Pretendard-ExtraBold.ttf) format("ttf"), url(../public/Pretendard-ExtraBold.ttf) format("truetype"),
-    url(../public/Pretendard-ExtraBold.ttf) format("woff");
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  src: url(../public/Pretendard-Medium.ttf) format("ttf"), url(../public/Pretendard-Medium.otf) format("truetype"),
+    url(../public/Pretendard-Medium.ttf) format("woff"), url(../public/Pretendard-Medium.woff2) format("woff2");
 }
 
+/*Semibold*/
 @font-face {
-  font-family: "Pretendard-Medium";
-  src: url(../public/Pretendard-Medium.ttf) format("ttf"), url(../public/Pretendard-Medium.ttf) format("truetype"),
-    url(../public/Pretendard-Medium.ttf) format("woff");
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  src: url(../public/Pretendard-SemiBold.ttf) format("ttf"), url(../public/Pretendard-SemiBold.otf) format("truetype"),
+    url(../public/Pretendard-SemiBold.woff) format("woff"), url(../public/Pretendard-SemiBold.woff2) format("woff2");
 }
 
+/*Bold*/
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url(../public/Pretendard-Regular.ttf) format("ttf"), url(../public/Pretendard-Regular.ttf) format("truetype"),
-    url(../public/Pretendard-Regular.ttf) format("woff");
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  src: url(../public/Pretendard-Bold.ttf) format("ttf"), url(../public/Pretendard-Bold.otf) format("truetype"),
+    url(../public/Pretendard-Bold.woff) format("woff"), url(../public/Pretendard-Bold.woff2) format("woff2");
+}
+
+/*Extrabold*/
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 800;
+  src: url(../public/Pretendard-ExtraBold.ttf) format("ttf"), url(../public/Pretendard-ExtraBold.otf) format("truetype"),
+    url(../public/Pretendard-ExtraBold.woff) format("woff"), url(../public/Pretendard-ExtraBold.woff2) format("woff2");
 }
