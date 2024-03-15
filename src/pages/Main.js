@@ -61,6 +61,7 @@ const MainPage = styled.div`
 // 스크롤이 생기지 않게 최대 길이를 제한
 const Container = styled.div`
   justify-content: center;
+
   max-height: 100dvh;
   overflow: hidden;
 `;

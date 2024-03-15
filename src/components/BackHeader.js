@@ -27,8 +27,9 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 6dvh;
   color: #fff;
+
+  padding: 10px 4px;
 `;
 
 const Img = styled.img`
