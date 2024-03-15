@@ -80,7 +80,6 @@ const SignInPage = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100dvw;
   display: flex;
   flex-direction: column;
   align-items: center;
