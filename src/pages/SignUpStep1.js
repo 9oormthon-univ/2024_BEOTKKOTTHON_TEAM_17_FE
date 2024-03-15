@@ -40,7 +40,6 @@ const SignUpStep1 = () => {
   const handleNext = (e) => {
     e.preventDefault();
     navigate("/signup/step2");
-    console.log(userData);
   };
   // 이전 화면으로 돌아와도 하이푼이 포함된 전화번호 유지
   React.useEffect(() => {

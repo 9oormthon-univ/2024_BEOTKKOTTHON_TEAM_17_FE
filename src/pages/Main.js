@@ -1,25 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "../styles/Main.css";
 import MainLogo from "../images/main.png";
 import Wallet from "../images/wallet_circle.png";
 import MainHeader from "../components/MainHeader";
 import { useCookies } from "react-cookie";
+import { isValidToken } from "../uitls/axios";
 
 function Main() {
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
-    //유효성 검사 로직
-  }, []);
+    async function fetchData() {
+      try {
+        const response = await isValidToken(token);
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsLoggedIn(false);
+      }
+    }
+    fetchData();
+  }, [token]);
 
   return (
     <div className="page">
       <div className="center">
         <MainPage>
           <div className="page-space">
-            <MainHeader />
+            <MainHeader isLoggedIn={isLoggedIn} />
             <Container>
               <FiestTextLine>나만의 명함을 만들고 정보 관리를 손쉽게</FiestTextLine>
               <SecondTextLine>PONNECT</SecondTextLine>
@@ -45,7 +61,6 @@ const MainPage = styled.div`
 // 스크롤이 생기지 않게 최대 길이를 제한
 const Container = styled.div`
   justify-content: center;
-
   max-height: 100dvh;
   overflow: hidden;
 `;

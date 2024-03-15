@@ -19,16 +19,22 @@ const DefaultHeader = () => {
 export default DefaultHeader;
 
 const HeaderContainer = styled.div`
-  font-family: "Pretendard-Bold";
-  font-weight: 800;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #fff;
-  color: #138eff;
+  height: 6dvh;
+  color: #fff;
+
+  width: 100%;
 `;
 
 const Title = styled.div`
+  color: #138eff;
+  font-family: Pretendard;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+
+  margin-left: 15px;
 `;

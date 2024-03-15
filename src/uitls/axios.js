@@ -28,3 +28,19 @@ export const logIn = async (userData, setCookie) => {
     throw error;
   }
 };
+
+export const isValidToken = async (token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/auth/validation-jwt`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};

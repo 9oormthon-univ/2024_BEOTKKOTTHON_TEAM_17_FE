@@ -80,9 +80,7 @@ const SignInPage = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-
+  width: 100dvw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,7 +148,7 @@ const SignupPrompt = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 const SignUpButton = styled(Button)`
@@ -176,7 +174,8 @@ const SignUpButton = styled(Button)`
 
 const IsFirst = styled.div`
   margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 25px;
+  align-self: flex-start;
 
   font-family: Pretendard;
   font-size: 12px;

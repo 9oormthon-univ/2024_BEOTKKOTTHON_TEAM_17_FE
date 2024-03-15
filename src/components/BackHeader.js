@@ -24,15 +24,15 @@ const BackHeader = () => {
 export default BackHeader;
 
 const HeaderContainer = styled.div`
-  font-weight: 800;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 10px;
-  background-color: #fff;
+  height: 6dvh;
+  color: #fff;
 `;
 
 const Img = styled.img`
+  margin-left: 16px;
   width: 17px;
   height: auto;
 `;
