@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import QrReader from "react-qr-scanner";
 import styled from "styled-components";
-import { MdFlipCameraAndroid } from "react-icons/md";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function QrScan() {
-  const [userId, setUserId] = useState("No result");
-  const [facingMode, setFacingMode] = useState("environment");
+  const [facingMode, setFacingMode] = useState("user");
+  const [result, setResult] = useState("No result");
+
+  let handleScan = (data) => {
+    if (data) {
+      setResult(data);
+    }
+  };
 
   const QrStyle = {
     width: "100%",
@@ -16,12 +20,6 @@ function QrScan() {
 
   const goBack = () => {
     window.history.back(); // 뒤로 가기
-  };
-
-  const onScan = (data) => {
-    if (data) {
-      setUserId(data.text);
-    }
   };
 
   const onError = (err) => {
@@ -35,12 +33,6 @@ function QrScan() {
       setFacingMode("environment");
     }
   };
-
-  const onCloseButtonClick = () => {
-    setUserId("No result");
-  };
-
-  useEffect(() => {}, [userId]);
 
   return (
     <div className="page">
@@ -65,24 +57,16 @@ function QrScan() {
               />
             </svg>
           </QRHeader>
-          {userId === "No result" ? (
-            <QrScanPage>
-              {/*  style={QrStyle} */}
-              <QrReader onScan={onScan} onError={onError} facingmode={facingMode} style={QrStyle} />
-              <QRFooter>
-                <CameraButton onClick={onCameraButtonClick}>
-                  <MdFlipCameraAndroid />
-                </CameraButton>
-              </QRFooter>
-            </QrScanPage>
-          ) : (
-            <QrResultPage>
-              <CloseIcon onClick={onCloseButtonClick}>
-                <AiOutlineCloseCircle />
-              </CloseIcon>
-              <QrResultBox>QR 결과</QrResultBox>
-            </QrResultPage>
-          )}
+          <QrScanPage>
+            <QrReader delay={300} onScan={handleScan} onError={onError} facingmode={facingMode} style={QrStyle} />
+            <QRResult>
+              <p style={{ marginBottom: "5px" }}>{result.text}</p>
+              {result === "No result" ? <p></p> : <p>명함 등록이 완료되었습니다.</p>}
+            </QRResult>
+            <QRFooter>
+              <CameraButton onClick={onCameraButtonClick}></CameraButton>
+            </QRFooter>
+          </QrScanPage>
         </div>
       </div>
     </div>
@@ -92,7 +76,8 @@ function QrScan() {
 const QrScanPage = styled.div`
   height: calc(100vh - 44px);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CameraButton = styled.button`
@@ -130,6 +115,18 @@ const QRHeader = styled.div`
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
   }
+`;
+
+const QRResult = styled.div`
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  text-align: center;
+  position: absolute;
+  bottom: 120px;
 `;
 
 const QRFooter = styled.div`
