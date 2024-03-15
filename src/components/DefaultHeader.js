@@ -1,16 +1,20 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
 import Search from "../images/search_black.png";
 
 const DefaultHeader = () => {
+  const navigate = useNavigate();
+
+  const handleToQrScan = () => {
+    navigate("/qrscan");
+  };
+
   return (
     <HeaderContainer>
       <Title>PONNECT</Title>
-      <div className="search-img">
-        <img
-          src={Search}
-          alt="QR 인식"
-        />
+      <div className="search-img" onClick={handleToQrScan}>
+        <img src={Search} alt="QR 인식" />
       </div>
     </HeaderContainer>
   );
