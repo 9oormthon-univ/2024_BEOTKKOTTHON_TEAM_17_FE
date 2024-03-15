@@ -53,7 +53,7 @@ const MyPageCenter = styled.div`
 `;
 
 const CardTitle = styled.div`
-  margin-top: 130px;
+  margin-top: 100px;
   font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
