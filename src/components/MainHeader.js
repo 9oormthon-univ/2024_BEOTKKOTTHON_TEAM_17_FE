@@ -15,6 +15,10 @@ const MainHeader = ({ isLoggedIn }) => {
     navigate("/mypage");
   };
 
+  const handleToQrScan = () => {
+    navigate("/qrscan");
+  };
+
   //로그인 여부 => 로그인 버튼이 렌더 or MY 버튼이 렌더
   return (
     <HeaderContainer>
@@ -28,11 +32,8 @@ const MainHeader = ({ isLoggedIn }) => {
 
         {/* MY 버튼 */}
         {/* <HeaderBtn onClick={handleToMypage}>MY</HeaderBtn> */}
-        <div className="search-img">
-          <img
-            src={Search}
-            alt="QR 인식"
-          />
+        <div className="search-img" onClick={handleToQrScan}>
+          <img src={Search} alt="QR 인식" />
         </div>
       </HeaderRight>
     </HeaderContainer>
