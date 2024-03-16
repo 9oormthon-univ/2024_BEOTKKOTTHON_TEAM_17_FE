@@ -73,6 +73,9 @@ function QrScan() {
                 onScan={handleScan}
                 onError={onError}
                 facingMode={facingMode}
+                constraints={{
+                  facingMode: "environment",
+                }}
                 style={QrStyle}
               />
             </QrScanPage>
