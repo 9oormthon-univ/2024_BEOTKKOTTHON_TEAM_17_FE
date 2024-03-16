@@ -14,7 +14,7 @@ function QrScan() {
 
   const QrStyle = {
     width: "100%",
-    height: "300px",
+    height: "100%",
     // margin: "-50px",
   };
 
@@ -27,10 +27,10 @@ function QrScan() {
   };
 
   const onCameraButtonClick = () => {
-    if (facingMode === "environment") {
-      setFacingMode("user");
-    } else if (facingMode === "user") {
+    if (facingMode === "user") {
       setFacingMode("environment");
+    } else if (facingMode === "environment") {
+      setFacingMode("user");
     }
   };
 
@@ -51,14 +51,16 @@ function QrScan() {
               <path
                 d="M1 1L8.5 8.5L16 16M16 1L1 16"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </QRHeader>
-          <QrScanPage>
-            <QrReader delay={300} onScan={handleScan} onError={onError} facingmode={facingMode} style={QrStyle} />
+          <QRTotalPage>
+            <QrScanPage>
+              <QrReader delay={300} onScan={handleScan} onError={onError} facingmode={facingMode} style={QrStyle} />
+            </QrScanPage>
             <QRResult>
               <p style={{ marginBottom: "5px" }}>{result.text}</p>
               {result === "No result" ? <p></p> : <p>명함 등록이 완료되었습니다.</p>}
@@ -66,15 +68,23 @@ function QrScan() {
             <QRFooter>
               <CameraButton onClick={onCameraButtonClick}></CameraButton>
             </QRFooter>
-          </QrScanPage>
+          </QRTotalPage>
         </div>
       </div>
     </div>
   );
 }
 
-const QrScanPage = styled.div`
+const QRTotalPage = styled.div`
   height: calc(100vh - 141px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const QrScanPage = styled.div`
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
