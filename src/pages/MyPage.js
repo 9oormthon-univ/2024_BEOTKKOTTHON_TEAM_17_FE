@@ -13,6 +13,10 @@ const MyPage = () => {
     navigate("/mypage/edit");
   };
 
+  const linkToCustom = () => {
+    navigate("/mypage/custom");
+  };
+
   return (
     <div className="page">
       <div className="center">
@@ -24,12 +28,16 @@ const MyPage = () => {
               <CardContent>정보를 입력하고 명함을 등록해보세요.</CardContent>
               <Card />
               <EditBtnSpace>
-                <CardEditBtn onClick={linkToMyPageEdit}>
-                  <img src={Pencil} alt="편집" style={{ height: "18px" }} />
+                <CardEditBtn onClick={linkToCustom}>
+                  <img
+                    src={Pencil}
+                    alt="편집"
+                    style={{ height: "18px" }}
+                  />
                 </CardEditBtn>
               </EditBtnSpace>
               <BtnSpace>
-                <CardBtn onClick={linkToMyPageEdit}>명함 정보 수정하기</CardBtn>
+                <CardBtn onClick={linkToMyPageEdit}>명함 정보 입력하기</CardBtn>
                 <CardBtn>나의 QR</CardBtn>
               </BtnSpace>
             </MyPageCenter>
@@ -104,6 +112,7 @@ const EditBtnSpace = styled.div`
 
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
+    height: 200px;
   }
 `;
 
