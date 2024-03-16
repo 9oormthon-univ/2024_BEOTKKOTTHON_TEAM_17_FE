@@ -37,47 +37,46 @@ const SignIn = () => {
     navigate("/signup/step1");
   };
 
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportHeight(window.innerHeight);
-    };
+  // const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setViewportHeight(window.innerHeight);
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
-    <FullHeightSection $viewportHeight={viewportHeight}>
-      <DefaultHeader />
-      <Container>
-        <Title>로그인</Title>
-        <Input
-          type="email"
-          name="principal"
-          value={signInData.principal}
-          onChange={handleChangeState}
-          placeholder="아이디 (이메일)"
-        />
-        <Input
-          type="password"
-          name="credential"
-          value={signInData.credential}
-          onChange={handleChangeState}
-          placeholder="비밀번호"
-        />
-        <Button onClick={handleSignIn}>로그인하기</Button>
-        <Button $isFindPassword>비밀번호 찾기</Button>
-        <SignupPrompt>
-          <IsFirst>PONNECT가 처음이신가요?</IsFirst>
-          <SignUpButton onClick={linkToSignUp}>간편 회원가입하기</SignUpButton>
-        </SignupPrompt>
-      </Container>
-    </FullHeightSection>
+    // <FullHeightSection $viewportHeight={viewportHeight}>
+    //   <DefaultHeader />
+    //   <Container>
+    //     <Title>로그인</Title>
+    //     <Input
+    //       type="email"
+    //       name="principal"
+    //       value={signInData.principal}
+    //       onChange={handleChangeState}
+    //       placeholder="아이디 (이메일)"
+    //     />
+    //     <Input
+    //       type="password"
+    //       name="credential"
+    //       value={signInData.credential}
+    //       onChange={handleChangeState}
+    //       placeholder="비밀번호"
+    //     />
+    //     <Button onClick={handleSignIn}>로그인하기</Button>
+    //     <Button $isFindPassword>비밀번호 찾기</Button>
+    //     <SignupPrompt>
+    //       <IsFirst>PONNECT가 처음이신가요?</IsFirst>
+    //       <SignUpButton onClick={linkToSignUp}>간편 회원가입하기</SignUpButton>
+    //     </SignupPrompt>
+    //   </Container>
+    // </FullHeightSection>
 
-    /*
     <div className="page">
       <div className="center">
         <SignInPage>
@@ -110,7 +109,6 @@ const SignIn = () => {
         </SignInPage>
       </div>
     </div>
-    */
   );
 };
 
@@ -155,9 +153,11 @@ const Input = styled.input`
   box-sizing: border-box;
   margin-bottom: 10px;
   border: 1px solid #8c8c8c;
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 37px;
   padding: 10px;
+  outline: none;
 
   &::placeholder {
     color: #8c8c8c;
@@ -167,12 +167,17 @@ const Input = styled.input`
     font-weight: 400;
     line-height: normal;
   }
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
+  }
 `;
 
 const Button = styled.button`
   padding: 10px 20px;
   margin-top: 11px;
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 42px;
   border: none;
   background-color: ${({ $isFindPassword }) => ($isFindPassword ? "white" : "#138EFF")};
@@ -184,9 +189,15 @@ const Button = styled.button`
   font-weight: ${({ $isFindPassword }) => ($isFindPassword ? "400" : "700")};
   font-style: normal;
   line-height: normal;
+  transition: 400ms ease-in-out;
 
   &:hover {
     background-color: ${({ $isFindPassword }) => ($isFindPassword ? "#f8f9fa" : "#007bff")};
+    transition: 400ms ease-in-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
   }
 `;
 
@@ -204,7 +215,8 @@ const SignUpButton = styled(Button)`
   color: #000;
   border: 1px solid #8c8c8c;
   border-radius: 100px;
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 42px;
 
   font-family: Pretendard;
@@ -212,10 +224,16 @@ const SignUpButton = styled(Button)`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: 400ms ease-in-out;
 
   &:hover {
     background: rgba(0, 0, 0, 0.16);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+    transition: 400ms ease-in-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
   }
 `;
 

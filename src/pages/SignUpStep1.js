@@ -76,11 +76,7 @@ const SignUpStep1 = () => {
                 maxLength={13}
                 onChange={handleChange}
               />
-              <NextButton
-                onClick={handleNext}
-                $isActive={isActive}
-                disabled={!isActive}
-              >
+              <NextButton onClick={handleNext} $isActive={isActive} disabled={!isActive}>
                 다음
               </NextButton>
             </Container>
@@ -128,7 +124,8 @@ const BoldSpan = styled.span`
 `;
 
 const Input = styled.input`
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 37px;
 
   box-sizing: border-box;
@@ -136,6 +133,7 @@ const Input = styled.input`
   border: 1px solid #8c8c8c;
 
   padding: 10px;
+  outline: none;
 
   &::placeholder {
     color: #8c8c8c;
@@ -144,6 +142,10 @@ const Input = styled.input`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
   }
 `;
 
@@ -160,8 +162,10 @@ const NextButton = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: 400ms ease-in-out;
 
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 42px;
   ${({ $isActive }) =>
     $isActive &&
@@ -170,6 +174,11 @@ const NextButton = styled.button`
     cursor: pointer;
     &:hover {
       background-color: #006eee;
+      transition: 400ms ease-in-out;
   }
 `}
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
+  }
 `;

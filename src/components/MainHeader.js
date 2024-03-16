@@ -7,6 +7,10 @@ import Search from "../images/search.png";
 const MainHeader = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
+  const handleToMain = () => {
+    navigate("/");
+  };
+
   const handleToSignin = () => {
     navigate("/signin");
   };
@@ -22,20 +26,19 @@ const MainHeader = ({ isLoggedIn }) => {
   //로그인 여부 => 로그인 버튼이 렌더 or MY 버튼이 렌더
   return (
     <HeaderContainer>
-      <Title>PONNECT</Title>
-      <HeaderRight>
-        {isLoggedIn ? (
+      <Title onClick={handleToMain}>PONNECT</Title>
+      {isLoggedIn ? (
+        <HeaderRight>
           <HeaderBtn onClick={handleToMypage}>MY</HeaderBtn>
-        ) : (
+          <div className="search-img" onClick={handleToQrScan}>
+            <img src={Search} alt="QR 인식" />
+          </div>
+        </HeaderRight>
+      ) : (
+        <HeaderRight>
           <HeaderBtn onClick={handleToSignin}>로그인</HeaderBtn>
-        )}
-
-        {/* MY 버튼 */}
-        {/* <HeaderBtn onClick={handleToMypage}>MY</HeaderBtn> */}
-        <div className="search-img" onClick={handleToQrScan}>
-          <img src={Search} alt="QR 인식" />
-        </div>
-      </HeaderRight>
+        </HeaderRight>
+      )}
     </HeaderContainer>
   );
 };
@@ -60,6 +63,7 @@ const Title = styled.div`
   line-height: normal;
 
   margin-left: 15px;
+  cursor: pointer;
 `;
 
 const HeaderRight = styled.div`

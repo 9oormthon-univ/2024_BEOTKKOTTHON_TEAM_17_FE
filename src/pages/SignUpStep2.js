@@ -62,11 +62,7 @@ const SignUpStep2 = () => {
                 placeholder="4자리 이상 입력해주세요."
                 value={userData.password}
               />
-              <Button
-                $isActive={isActive}
-                disabled={!isActive}
-                onClick={handleSubmit}
-              >
+              <Button $isActive={isActive} disabled={!isActive} onClick={handleSubmit}>
                 완료
               </Button>
             </Container>
@@ -132,7 +128,8 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 37px;
 
   box-sizing: border-box;
@@ -140,6 +137,7 @@ const Input = styled.input`
   border: 1px solid #8c8c8c;
 
   padding: 10px;
+  outline: none;
 
   &::placeholder {
     color: #8c8c8c;
@@ -148,6 +146,10 @@ const Input = styled.input`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
   }
 `;
 
@@ -162,8 +164,10 @@ const Button = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: 400ms ease-in-out;
 
-  width: 343px;
+  width: calc(100vw - 32px);
+  max-width: 580px;
   height: 42px;
   ${({ $isActive }) =>
     $isActive &&
@@ -172,6 +176,11 @@ const Button = styled.button`
     cursor: pointer;
     &:hover {
       background-color: #006eee;
+      transition: 400ms ease-in-out;
   }
 `}
+
+  @media (hover: hover) and (pointer: fine) {
+    width: 343px;
+  }
 `;

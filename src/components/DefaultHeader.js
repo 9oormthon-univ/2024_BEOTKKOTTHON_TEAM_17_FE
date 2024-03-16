@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
-import Search from "../images/search_black.png";
+import Search from "../images/search1.png";
 
 const DefaultHeader = () => {
   const navigate = useNavigate();
+
+  const handleToMain = () => {
+    navigate("/");
+  };
 
   const handleToQrScan = () => {
     navigate("/qrscan");
@@ -12,10 +16,10 @@ const DefaultHeader = () => {
 
   return (
     <HeaderContainer>
-      <Title>PONNECT</Title>
-      <div className="search-img" onClick={handleToQrScan}>
+      <Title onClick={handleToMain}>PONNECT</Title>
+      {/* <div className="search-img" onClick={handleToQrScan}>
         <img src={Search} alt="QR 인식" />
-      </div>
+      </div> */}
     </HeaderContainer>
   );
 };
@@ -39,4 +43,5 @@ const Title = styled.div`
   line-height: normal;
 
   margin-left: 15px;
+  cursor: pointer;
 `;

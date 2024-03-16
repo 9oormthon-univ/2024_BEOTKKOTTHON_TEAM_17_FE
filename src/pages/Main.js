@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import "../styles/Main.css";
 import MainLogo from "../images/main.png";
@@ -8,17 +9,17 @@ import { useCookies } from "react-cookie";
 import { isValidToken } from "../uitls/axios";
 
 function Main() {
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportHeight(window.innerHeight);
-    };
+  // const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setViewportHeight(window.innerHeight);
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
@@ -42,22 +43,13 @@ function Main() {
     fetchData();
   }, [token]);
 
-  return (
-    <FullHeightSection $viewportHeight={viewportHeight}>
-      <MainHeader isLoggedIn={isLoggedIn} />
-      <Container>
-        <FiestTextLine>나만의 명함을 만들고 정보 관리를 손쉽게</FiestTextLine>
-        <SecondTextLine>PONNECT</SecondTextLine>
+  const navigate = useNavigate();
 
-        <LogoImg src={MainLogo} />
-        <WalletDiv>
-          <WalletImg src={Wallet} />
-        </WalletDiv>
-      </Container>
-    </FullHeightSection>
-  );
-  /*
-  (
+  const handleToMyCards = () => {
+    navigate("/mycards");
+  };
+
+  return (
     <div className="page">
       <div className="center">
         <MainPage>
@@ -68,31 +60,45 @@ function Main() {
               <SecondTextLine>PONNECT</SecondTextLine>
 
               <LogoImg src={MainLogo} />
-              <WalletDiv>
-                <WalletImg src={Wallet} />
-              </WalletDiv>
+
+              {isLoggedIn ? (
+                <WalletDiv onClick={handleToMyCards}>
+                  <WalletImg src={Wallet} />
+                </WalletDiv>
+              ) : null}
             </Container>
           </div>
         </MainPage>
       </div>
     </div>
+    // <FullHeightSection $viewportHeight={viewportHeight}>
+    //   <MainHeader isLoggedIn={isLoggedIn} />
+    //   <Container>
+    //     <FiestTextLine>나만의 명함을 만들고 정보 관리를 손쉽게</FiestTextLine>
+    //     <SecondTextLine>PONNECT</SecondTextLine>
+
+    //     <LogoImg src={MainLogo} />
+    //     <WalletDiv>
+    //       <WalletImg src={Wallet} />
+    //     </WalletDiv>
+    //   </Container>
+    // </FullHeightSection>
   );
-  */
 }
 
 export default Main;
 
-// const MainPage = styled.div`
-//   background: linear-gradient(180deg, #138eff 27.96%, #006eee 89.04%);
-// `;
-
-// 동적 높이를 받아 스타일을 적용하는 컴포넌트
-const FullHeightSection = styled.div`
-  width: 100%;
-  height: ${({ $viewportHeight }) => `${$viewportHeight}px`};
-  overflow: hidden;
+const MainPage = styled.div`
   background: linear-gradient(180deg, #138eff 27.96%, #006eee 89.04%);
 `;
+
+// 동적 높이를 받아 스타일을 적용하는 컴포넌트
+// const FullHeightSection = styled.div`
+//   width: 100%;
+//   height: ${({ $viewportHeight }) => `${$viewportHeight}px`};
+//   overflow: hidden;
+//   background: linear-gradient(180deg, #138eff 27.96%, #006eee 89.04%);
+// `;
 
 // 스크롤이 생기지 않게 최대 길이를 제한
 const Container = styled.div`
@@ -139,6 +145,7 @@ const WalletDiv = styled.div`
   align-items: flex-end;
 
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 const WalletImg = styled.img`
