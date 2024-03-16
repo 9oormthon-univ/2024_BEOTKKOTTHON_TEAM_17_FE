@@ -4,11 +4,13 @@ const API_KEY = process.env.REACT_APP_API;
 
 export const submitSignUp = async (userData, setCookie) => {
   try {
-    const formData = new FormData();
-    formData.append("signUp", JSON.stringify(userData));
-
     const url = `${API_KEY}` + "/api/auth/sign-up";
-    const res = await axios.post(url, formData);
+    const config = {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    };
+    const res = await axios.post(url, userData, config);
     const token = res.headers.authorization;
     setCookie("jwt-token", token, { path: "/", secure: true });
     return res.data;
