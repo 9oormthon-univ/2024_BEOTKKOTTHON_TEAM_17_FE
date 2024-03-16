@@ -35,7 +35,7 @@ const MyCardsList = ({ onToggle }) => {
         <MyCardsHeaderTitle onClick={handleToCategoryLink}>명함 분류함</MyCardsHeaderTitle>
       </MyCardsHeader>
       <MyCardsSearch>
-        <img src={Search} alt="검색" style={{ height: "20px" }} />
+        <img src={Search} alt="검색" style={{ height: "20px", marginLeft: "16px" }} />
         <MyCardsSearchInput
           type="text"
           value={searchData}
@@ -110,7 +110,6 @@ const MyCardsSearch = styled.div`
   font-weight: 500;
 
   display: flex;
-  justify-content: space-around;
   align-items: center;
 
   @media (hover: hover) and (pointer: fine) {
@@ -119,7 +118,7 @@ const MyCardsSearch = styled.div`
 `;
 
 const MyCardsSearchInput = styled.input`
-  width: 90vw;
+  width: calc(100vw - 16px -20px - 13px);
   border: none;
   outline: none;
 
@@ -127,6 +126,8 @@ const MyCardsSearchInput = styled.input`
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
+
+  margin-left: 13px;
 
   &::placeholder {
     color: #8c8c8c;
@@ -137,7 +138,7 @@ const MyCardsSearchInput = styled.input`
   }
 
   @media (hover: hover) and (pointer: fine) {
-    width: calc(375px * 0.9);
+    width: calc(375px - 16px -20px - 13px);
   }
 `;
 
