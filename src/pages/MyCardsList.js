@@ -118,7 +118,7 @@ const MyCardsSearch = styled.div`
 `;
 
 const MyCardsSearchInput = styled.input`
-  width: calc(100vw - 16px -20px - 13px);
+  width: calc(100vw - 16px - 20px - 13px - 16px);
   border: none;
   outline: none;
 
@@ -138,7 +138,7 @@ const MyCardsSearchInput = styled.input`
   }
 
   @media (hover: hover) and (pointer: fine) {
-    width: calc(375px - 16px -20px - 13px);
+    width: calc(375px - 16px - 20px - 13px - 16px);
   }
 `;
 
