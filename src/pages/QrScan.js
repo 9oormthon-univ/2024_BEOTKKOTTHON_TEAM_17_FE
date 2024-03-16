@@ -3,7 +3,7 @@ import QrReader from "react-qr-scanner";
 import styled from "styled-components";
 
 function QrScan() {
-  const [facingMode, setFacingMode] = useState("user");
+  const [facingMode, setFacingMode] = useState("rear");
   const [result, setResult] = useState("No result");
 
   let handleScan = (data) => {
@@ -27,10 +27,10 @@ function QrScan() {
   };
 
   const onCameraButtonClick = () => {
-    if (facingMode === "user") {
-      setFacingMode("environment");
-    } else if (facingMode === "environment") {
-      setFacingMode("user");
+    if (facingMode === "rear") {
+      setFacingMode("front");
+    } else if (facingMode === "front") {
+      setFacingMode("rear");
     }
   };
 
@@ -89,6 +89,7 @@ const QrScanPage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: -80px;
 `;
 
 const CameraButton = styled.button`
