@@ -10,6 +10,7 @@ import MyCards from "./pages/MyCards";
 import QrScan from "./pages/QrScan";
 
 import "./App.css";
+import CardCustom from "./pages/CardCustom";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/mypage/edit" element={<MyPageEdit />} />
         <Route exact path="/mycards" element={<MyCards />} />
         <Route exact path="/qrscan" element={<QrScan />} />
+        <Route exact path="/mypage/custom" element={<CardCustom />}/>
       </Routes>
     </div>
   );
