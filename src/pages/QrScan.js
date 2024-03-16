@@ -188,71 +188,76 @@
 
 // // export default QrScan;
 
-import React, { useEffect, useRef, useState } from "react";
-import { BrowserMultiFormatReader, BarcodeFormat, DecodeHintType } from "@zxing/library";
+import { useEffect } from "react";
+import { Html5Qrcode } from "html5-qrcode";
 
-const QrScan = () => {
-  const [localStream, setLocalStream] = useState(null);
-  const cameraRef = useRef(null);
-  const [text, setText] = useState("");
+function QrScan() {
+  const qrcodeRegionId = "reader";
+  let html5QrCode = "";
+  const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    console.log("Scan Result: ", decodedText);
+    html5QrCode
+      .stop()
+      .then((ignore) => {
+        console.log("QR Code scanning is stopped.");
+      })
+      .catch((err) => {
+        console.log("Stop failed, handle it.");
+      });
+  };
+  const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-  const hints = new Map();
-  const formats = [
-    BarcodeFormat.QR_CODE,
-    BarcodeFormat.DATA_MATRIX,
-    BarcodeFormat.CODE_128,
-    BarcodeFormat.CODABAR,
-    BarcodeFormat.EAN_13,
-    BarcodeFormat.EAN_8,
-    BarcodeFormat.CODE_39,
-    BarcodeFormat.CODE_93,
-  ];
-  hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
+  // Scan using camera
+  const startScanning = () => {
+    html5QrCode.start({ facingMode: { exact: "user" } }, config, qrCodeSuccessCallback);
+  };
 
-  const scanner = new BrowserMultiFormatReader(hints, 500);
+  // Scan using image upload
+  const handleImageUpload = (e) => {
+    const imageFile = e.target.files[0];
+    html5QrCode
+      .scanFile(imageFile, true)
+      .then((decodedText) => {
+        // success, use decodedText
+        console.log("Text decoded from QR code", decodedText);
+      })
+      .catch((err) => {
+        // failure, handle it.
+        console.log(`Error scanning file. Reason: ${err}`);
+      });
+  };
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then((stream) => {
-      setLocalStream(stream);
-      if (cameraRef.current) {
-        cameraRef.current.srcObject = stream;
-        cameraRef.current.play();
-      }
-    });
-
-    return () => {
-      if (localStream) {
-        const tracks = localStream.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
-    };
+    html5QrCode = new Html5Qrcode("reader");
   }, []);
 
-  useEffect(() => {
-    if (!localStream || !cameraRef.current) return;
-
-    scanner.decodeFromVideoElement(cameraRef.current, (result, err) => {
-      if (result) {
-        setText(result.text);
-      } else if (err && err !== "NotFoundException") {
-        console.error(err);
-      }
-    });
-
-    return () => {
-      scanner.reset();
-    };
-  }, [localStream]);
-
   return (
-    <div>
-      <video
-        ref={cameraRef}
-        style={{ width: "100%" }}
-      />
-      <div>Result: {text}</div>
-    </div>
+    <>
+      <h1>QR Scanner</h1>
+      <div
+        id={qrcodeRegionId}
+        width="600px"
+      >
+        {/* Camera Scan */}
+        <button onClick={startScanning}>Scan QR Code</button>
+
+        {/* File upload Scan */}
+        <label
+          htmlFor="qr-input-file"
+          className="inline-block bg-primary-blue rounded-lg px-6 py-4 text-white font-bold cursor-pointer text-lg"
+        >
+          Upload Image
+        </label>
+        <input
+          className="text-white bg-primary-blue font-semibold hidden"
+          type="file"
+          id="qr-input-file"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+      </div>
+    </>
   );
-};
+}
 
 export default QrScan;
