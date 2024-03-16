@@ -42,6 +42,10 @@ const Title = styled.div`
   font-weight: 800;
   line-height: normal;
 
+  height: 25.6px;
+  display: flex;
+  align-items: center;
+
   margin-left: 15px;
   cursor: pointer;
 `;
