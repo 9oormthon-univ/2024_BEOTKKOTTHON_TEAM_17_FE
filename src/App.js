@@ -7,6 +7,8 @@ import SignIn from "./pages/SignIn";
 import MyPage from "./pages/MyPage";
 import MyPageEdit from "./pages/MyPageEdit";
 import MyCards from "./pages/MyCards";
+import MyCardsList from "./pages/MyCardsList";
+import MyCardsCategory from "./pages/MyCardsCategory";
 import QrScan from "./pages/QrScan";
 
 import "./App.css";
@@ -23,8 +25,10 @@ function App() {
         <Route exact path="/mypage" element={<MyPage />} />
         <Route exact path="/mypage/edit" element={<MyPageEdit />} />
         <Route exact path="/mycards" element={<MyCards />} />
+        <Route exact path="/mycards/list" element={<MyCardsList />} />
+        <Route exact path="/mycards/category" element={<MyCardsCategory />} />
         <Route exact path="/qrscan" element={<QrScan />} />
-        <Route exact path="/mypage/custom" element={<CardCustom />}/>
+        <Route exact path="/mypage/custom" element={<CardCustom />} />
       </Routes>
     </div>
   );
