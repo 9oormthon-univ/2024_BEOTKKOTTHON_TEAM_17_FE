@@ -192,56 +192,65 @@ import React, { useEffect, useRef, useState } from "react";
 import { BrowserMultiFormatReader, BarcodeFormat, DecodeHintType } from "@zxing/library";
 
 const QrScan = () => {
-  const videoRef = useRef(null);
+  const [localStream, setLocalStream] = useState(null);
+  const cameraRef = useRef(null);
   const [text, setText] = useState("");
+
   const hints = new Map();
-  const formats = [BarcodeFormat.QR_CODE]; // QR 코드 포맷만 지정
+  const formats = [
+    BarcodeFormat.QR_CODE,
+    BarcodeFormat.DATA_MATRIX,
+    BarcodeFormat.CODE_128,
+    BarcodeFormat.CODABAR,
+    BarcodeFormat.EAN_13,
+    BarcodeFormat.EAN_8,
+    BarcodeFormat.CODE_39,
+    BarcodeFormat.CODE_93,
+  ];
   hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
-  const codeReader = new BrowserMultiFormatReader(hints, 500);
+
+  const scanner = new BrowserMultiFormatReader(hints, 500);
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: { facingMode: "environment" },
-      })
-      .then((stream) => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-          scan();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then((stream) => {
+      setLocalStream(stream);
+      if (cameraRef.current) {
+        cameraRef.current.srcObject = stream;
+        cameraRef.current.play();
+      }
+    });
 
     return () => {
-      codeReader.reset();
-      if (videoRef.current && videoRef.current.srcObject) {
-        let tracks = videoRef.current.srcObject.getTracks();
+      if (localStream) {
+        const tracks = localStream.getTracks();
         tracks.forEach((track) => track.stop());
       }
     };
   }, []);
 
-  const scan = () => {
-    codeReader.decodeFromVideoElement(videoRef.current, (result, err) => {
+  useEffect(() => {
+    if (!localStream || !cameraRef.current) return;
+
+    scanner.decodeFromVideoElement(cameraRef.current, (result, err) => {
       if (result) {
-        console.log(result);
         setText(result.text);
       } else if (err && err !== "NotFoundException") {
         console.error(err);
       }
     });
-  };
+
+    return () => {
+      scanner.reset();
+    };
+  }, [localStream]);
 
   return (
     <div>
       <video
-        ref={videoRef}
+        ref={cameraRef}
         style={{ width: "100%" }}
       />
-      <div>결과: {text}</div>
+      <div>Result: {text}</div>
     </div>
   );
 };
