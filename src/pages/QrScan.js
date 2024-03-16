@@ -195,23 +195,25 @@ const QrScan = () => {
   const videoRef = useRef(null);
   const [text, setText] = useState("");
   const hints = new Map();
-  const formats = [
-    BarcodeFormat.QR_CODE,
-    BarcodeFormat.DATA_MATRIX,
-    BarcodeFormat.CODE_128,
-    BarcodeFormat.CODABAR,
-    BarcodeFormat.EAN_13,
-    BarcodeFormat.EAN_8,
-    BarcodeFormat.CODE_39,
-    BarcodeFormat.CODE_93,
-  ];
+  const formats = [BarcodeFormat.QR_CODE]; // QR 코드 포맷만 지정
   hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
   const codeReader = new BrowserMultiFormatReader(hints, 500);
-
   useEffect(() => {
+    let selectedDeviceId;
+
     navigator.mediaDevices
-      .getUserMedia({
-        video: { facingMode: "environment" },
+      .enumerateDevices()
+      .then((devices) => {
+        const videoDevices = devices.filter((device) => device.kind === "videoinput");
+        if (videoDevices.length > 1) {
+          // 후면 카메라를 선택하기 위한 로직 추가
+          // 예: videoDevices[1].deviceId를 사용
+          selectedDeviceId = videoDevices[1].deviceId;
+        }
+
+        return navigator.mediaDevices.getUserMedia({
+          video: selectedDeviceId ? { deviceId: { exact: selectedDeviceId } } : { facingMode: "environment" },
+        });
       })
       .then((stream) => {
         if (videoRef.current) {
@@ -223,14 +225,6 @@ const QrScan = () => {
       .catch((error) => {
         console.error(error);
       });
-
-    return () => {
-      codeReader.reset();
-      if (videoRef.current && videoRef.current.srcObject) {
-        let tracks = videoRef.current.srcObject.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
-    };
   }, []);
 
   const scan = () => {
