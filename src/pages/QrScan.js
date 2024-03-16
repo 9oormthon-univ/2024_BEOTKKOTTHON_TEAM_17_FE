@@ -3,7 +3,8 @@ import QrReader from "react-qr-scanner";
 import styled from "styled-components";
 
 function QrScan() {
-  const [facingMode, setFacingMode] = useState("rear");
+  // const [facingMode, setFacingMode] = useState("rear");
+  const [facingMode, setFacingMode] = useState("environment");
   const [result, setResult] = useState("No result");
 
   let handleScan = (data) => {
@@ -26,11 +27,19 @@ function QrScan() {
     console.log(err);
   };
 
+  // const onCameraButtonClick = () => {
+  //   if (facingMode === "rear") {
+  //     setFacingMode("front");
+  //   } else if (facingMode === "front") {
+  //     setFacingMode("rear");
+  //   }
+  // };
+
   const onCameraButtonClick = () => {
-    if (facingMode === "rear") {
-      setFacingMode("front");
-    } else if (facingMode === "front") {
-      setFacingMode("rear");
+    if (facingMode === "environment") {
+      setFacingMode("user");
+    } else if (facingMode === "user") {
+      setFacingMode("environment");
     }
   };
 
@@ -59,7 +68,13 @@ function QrScan() {
           </QRHeader>
           <QRTotalPage>
             <QrScanPage>
-              <QrReader delay={300} onScan={handleScan} onError={onError} facingmode={facingMode} style={QrStyle} />
+              <QrReader
+                delay={300}
+                onScan={handleScan}
+                onError={onError}
+                facingMode={facingMode}
+                style={QrStyle}
+              />
             </QrScanPage>
             <QRResult>
               <p style={{ marginBottom: "5px" }}>{result.text}</p>
