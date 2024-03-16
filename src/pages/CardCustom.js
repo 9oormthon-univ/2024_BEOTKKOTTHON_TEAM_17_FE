@@ -23,23 +23,6 @@ const CardCustom = () => {
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
 
-  // useEffect(() => {
-  //   const canvas = canvasRef.current;
-  //   const context = canvas.getContext("2d");
-
-  //   context.clearRect(0, 0, _constants.containerWidth, _constants.containerHeight);
-  //   context.fillStyle = "#FFE3E7";
-  //   context.fillRect(0, 0, _constants.containerWidth, _constants.containerHeight);
-
-  //   addedImages.forEach((imgInfo, idx) => {
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
-  //     };
-  //     img.src = imgInfo.src;
-  //   });
-  // }, [addedImages]);
-
   useEffect(() => {
     const resizeCanvas = () => {
       const canvas = canvasRef.current;
@@ -77,50 +60,6 @@ const CardCustom = () => {
 
     return () => window.removeEventListener("resize", resizeCanvas);
   }, [addedImages]); // addedImages가 변경될 때마다 useEffect를 다시 실행합니다.
-
-  // useEffect(() => {
-  //   const resizeCanvas = () => {
-  //     const canvas = canvasRef.current;
-  //     const context = canvas.getContext("2d");
-
-  //     const ratio = window.devicePixelRatio || 1;
-
-  //     // 화면 크기에 따라 캔버스 크기를 조정
-  //     let calculatedWidth = (window.innerWidth - 32) * ratio;
-  //     // if (calculatedWidth > 400) {
-  //     //   calculatedWidth = 343;
-  //     // }
-  //     const calculatedHeight = _constants.containerHeight * ratio;
-
-  //     canvas.width = calculatedWidth;
-  //     canvas.height = calculatedHeight;
-
-  //     // CSS 크기를 조정하여 화면에 표시되는 크기를 조절
-  //     canvas.style.width = `${calculatedWidth / ratio}px`;
-  //     canvas.style.height = `${calculatedHeight / ratio}px`;
-
-  //     context.scale(ratio, ratio);
-
-  //     // 그리기 작업을 수행
-  //     context.clearRect(0, 0, canvas.width, canvas.height);
-  //     context.fillStyle = "#FFE3E7";
-  //     context.fillRect(0, 0, canvas.width / ratio, canvas.height / ratio);
-
-  //     addedImages.forEach((imgInfo) => {
-  //       // 이미지 로딩과 그리기 로직
-  //       const img = new Image();
-  //       img.onload = () => {
-  //         context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
-  //       };
-  //       img.src = imgInfo.src;
-  //     });
-  //   };
-
-  //   window.addEventListener("resize", resizeCanvas);
-  //   resizeCanvas();
-
-  //   return () => window.removeEventListener("resize", resizeCanvas);
-  // }, [addedImages]);
 
   const addImageToCanvas = (name, src) => {
     // setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 50, height: 50 }]);
@@ -174,6 +113,7 @@ const CardCustom = () => {
     });
   };
 
+  /*
   const onTouchStart = (e) => {
     const touch = e.touches[0];
     const mouseX = touch.clientX;
@@ -200,6 +140,39 @@ const CardCustom = () => {
         })
       );
     }
+  };
+
+  const onTouchEnd = () => {
+    setDragging(false);
+    setDraggingIdx(null);
+  };
+  */
+
+  const onTouchStart = (e) => {
+    const touch = e.touches[0];
+    const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+    const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+    addedImages.forEach((img, idx) => {
+      if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
+        setDragging(true);
+        setDraggingIdx(idx);
+      }
+    });
+  };
+
+  const onTouchMove = (e) => {
+    if (!dragging) return;
+    const touch = e.touches[0];
+    const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+    const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+    setAddedImages(
+      addedImages.map((img, idx) => {
+        if (idx === draggingIdx) {
+          return { ...img, x: offsetX - img.width / 2, y: offsetY - img.height / 2 };
+        }
+        return img;
+      })
+    );
   };
 
   const onTouchEnd = () => {
@@ -239,14 +212,9 @@ const CardCustom = () => {
               </ImageSelection>
               <StyledCanvas
                 ref={canvasRef}
-                onMouseDown={onMouseDown}
-                onMouseMove={onMouseMove}
-                onMouseUp={onMouseUp}
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
-                // width={_constants.containerWidth}
-                // height={_constants.containerHeight}
               />
 
               <button onClick={handleCompletion}>수정 완료</button>
@@ -273,16 +241,6 @@ const CustomPageCenter = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-/*
-const StyledCanvas = styled.canvas`
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 0px #e8e8e8;
-
-  display: block;
-  margin: auto;
-  background-color: #ffe3e7;
-  
-`;*/
 
 const StyledCanvas = styled.canvas`
   border-radius: 10px;
