@@ -223,7 +223,7 @@ function QrScan() {
   let html5QrCode = "";
   const qrCodeSuccessCallback = (decodedText, decodedResult) => {
     console.log("Scan Result: ", decodedText);
-    navigate(`${decodedText}`);
+    window.location.href = decodedText;
     setResult(decodedText);
     html5QrCode
       .stop()
