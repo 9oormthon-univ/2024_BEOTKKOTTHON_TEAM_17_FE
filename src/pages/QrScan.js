@@ -36,11 +36,24 @@ function QrScan() {
 
   // Scan using camera
   const startScanning = () => {
-    html5QrCode.start({ facingMode: { exact: MyfacingMode } }, config, qrCodeSuccessCallback);
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+    // html5QrCode.start({ facingMode: { exact: MyfacingMode } }, config, qrCodeSuccessCallback);
   };
 
   useEffect(() => {
     html5QrCode = new Html5Qrcode("reader");
+
+    return () => {
+      html5QrCode
+        .stop() // QR 코드 스캔 중지
+        .then(() => {
+          console.log("QR Scanning stopped.");
+        })
+        .catch((err) => {
+          console.log("Unable to stop QR scanning.", err);
+        });
+    };
   }, []);
 
   return (
@@ -67,7 +80,10 @@ function QrScan() {
             </svg>
           </QRHeader>
           <QRTotalPage>
-            <div id={qrcodeRegionId} width="600px">
+            <div
+              id={qrcodeRegionId}
+              width="600px"
+            >
               {/* Camera Scan */}
               <button onClick={startScanning}>Scan QR Code</button>
             </div>
