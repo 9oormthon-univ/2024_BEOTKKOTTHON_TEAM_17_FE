@@ -9,6 +9,7 @@ import pencilImg from "../images/pencil.png";
 import Card from "../components/Card";
 import BackQRHeader from "../components/BackQRHeader";
 import ColorPalette from "../components/ColorPalette";
+import { useUserInfo } from "../store/store";
 
 const _constants = {
   containerWidth: 343,
@@ -16,6 +17,7 @@ const _constants = {
 };
 
 const CardCustom = () => {
+  const { userInfo } = useUserInfo();
   const canvasRef = useRef(null);
   const [addedImages, setAddedImages] = useState([]);
   const [dragging, setDragging] = useState(false);
@@ -185,7 +187,7 @@ const CardCustom = () => {
             <CustomPageCenter>
               <MainText>명함 커스텀</MainText>
               <GuideText>색상 변경 및 스티커를 활용해 나만의 명함을 만들어보세요.</GuideText>
-              <Card />
+              <Card userData={userInfo} />
               <ImageSelection>
                 <img
                   src={walletImg}
@@ -222,7 +224,7 @@ const CardCustom = () => {
               <button onClick={handleCompletion}>수정 완료</button>
 
               <Test>
-                <Card />
+                <Card userData={userInfo} />
               </Test>
 
               <ColorPalette />

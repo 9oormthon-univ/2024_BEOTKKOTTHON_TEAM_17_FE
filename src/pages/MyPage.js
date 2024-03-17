@@ -35,7 +35,7 @@ const MyPage = () => {
             <MyPageCenter>
               <CardTitle>{userInfo.name}님의 명함</CardTitle>
               <CardContent>정보를 입력하고 명함을 등록해보세요.</CardContent>
-              <Card />
+              <Card userData={userInfo} />
               <EditBtnSpace>
                 <CardEditBtn onClick={linkToCustom}>
                   <img
