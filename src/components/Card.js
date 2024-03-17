@@ -61,11 +61,9 @@ const Card = ({ userData }) => {
     .slice(0, 3);
 
   return (
-    <CardBox
-      bgColor={userData.bgColor}
-      textColor={userData.textColor}
-    >
-      {/* <CustomImage
+    <CardBox bgColor={userData.bgColor} textColor={userData.textColor}>
+      <CardBoxIn>
+        {/* <CustomImage
         src={School}
         alt="Example"
         x={298}
@@ -73,32 +71,33 @@ const Card = ({ userData }) => {
         width={30}
         height={30}
       /> */}
-      <CardNameSpace>
-        <CardName>{userData.name}</CardName>
-        {primaryInfoKey && (
-          <IconAndText>
-            {iconMapping[primaryInfoKey]}
-            <CardText>{userData[primaryInfoKey]}</CardText>
-          </IconAndText>
-        )}
-      </CardNameSpace>
+        <CardNameSpace>
+          <CardName>{userData.name}</CardName>
+          {primaryInfoKey && (
+            <IconAndText>
+              {iconMapping[primaryInfoKey]}
+              <CardText>{userData[primaryInfoKey]}</CardText>
+            </IconAndText>
+          )}
+        </CardNameSpace>
 
-      <CardSpace style={{ marginTop: "10px" }}>
-        <MdEmail color="#fff" />
-        <CardText>{userData.email}</CardText>
-      </CardSpace>
-      <CardContents>
-        <CardSpace>
-          <FaPhoneAlt color="#fff" />
-          <CardText>{userData.phone}</CardText>
+        <CardSpace style={{ marginTop: "10px" }}>
+          <MdEmail color="#fff" />
+          <CardText>{userData.email}</CardText>
         </CardSpace>
-        {secondaryInfos.map((info) => (
-          <CardSpace key={info.key}>
-            {iconMapping[info.key]}
-            <CardText>{info.value}</CardText>
+        <CardContents>
+          <CardSpace>
+            <FaPhoneAlt color="#fff" />
+            <CardText>{userData.phone}</CardText>
           </CardSpace>
-        ))}
-      </CardContents>
+          {secondaryInfos.map((info) => (
+            <CardSpace key={info.key}>
+              {iconMapping[info.key]}
+              <CardText>{info.value}</CardText>
+            </CardSpace>
+          ))}
+        </CardContents>
+      </CardBoxIn>
     </CardBox>
   );
 };
@@ -114,7 +113,8 @@ const CardBox = styled.div`
   color: ${(props) => props.textColor || "#000"};
   box-shadow: 0 0 5px 0 #e8e8e8;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (hover: hover) and (pointer: fine) {
     width: 343px;
@@ -122,6 +122,14 @@ const CardBox = styled.div`
   }
 
   position: relative;
+`;
+
+const CardBoxIn = styled.div`
+  width: calc(100% - 32px);
+  height: calc(100% - 24px);
+
+  display: flex;
+  flex-direction: column;
 `;
 
 const CardName = styled.div`
