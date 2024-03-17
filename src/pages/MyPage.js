@@ -3,14 +3,20 @@ import BackQRHeader from "../components/BackQRHeader";
 import Card from "../components/Card";
 import "../styles/Main.css";
 import styled from "styled-components";
-import { useCookies } from "react-cookie";
-import { isValidToken, getMyInfo } from "../uitls/axios";
+import { useUserInfo } from "../store/store";
 import { useEffect } from "react";
 
 import Pencil from "../images/pencil.png";
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const { userInfo } = useUserInfo();
+
+  useEffect(() => {
+    if (!userInfo.name) {
+      navigate("/");
+    }
+  }, []);
 
   const linkToMyPageEdit = () => {
     navigate("/mypage/edit");
@@ -20,37 +26,6 @@ const MyPage = () => {
     navigate("/mypage/custom");
   };
 
-  const [cookies] = useCookies();
-  const token = cookies["jwt-token"];
-
-  // 마운트 시점에 토큰 유효성을 검사하고, 유효하다면 my info API 요청
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!token) {
-          console.log("토큰이 존재하지 않습니다.");
-          navigate("/");
-        }
-
-        // 토큰 유효성 검사
-        const validationResponse = await isValidToken(token);
-        if (validationResponse && validationResponse.status === 200) {
-          const userInfoResponse = await getMyInfo(token);
-          if (userInfoResponse && userInfoResponse.status === 200) {
-            console.log(userInfoResponse);
-          }
-        } else {
-          console.log("토큰이 유효하지 않습니다.");
-          navigate("/");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div className="page">
       <div className="center">
@@ -58,7 +33,7 @@ const MyPage = () => {
           <div className="page-space">
             <BackQRHeader />
             <MyPageCenter>
-              <CardTitle>김구름님의 명함</CardTitle>
+              <CardTitle>{userInfo.name}님의 명함</CardTitle>
               <CardContent>정보를 입력하고 명함을 등록해보세요.</CardContent>
               <Card />
               <EditBtnSpace>

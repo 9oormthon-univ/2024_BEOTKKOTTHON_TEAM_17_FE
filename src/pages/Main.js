@@ -6,7 +6,8 @@ import MainLogo from "../images/main.png";
 import Wallet from "../images/wallet_circle.png";
 import MainHeader from "../components/MainHeader";
 import { useCookies } from "react-cookie";
-import { isValidToken } from "../uitls/axios";
+import { getMyInfo, isValidToken } from "../uitls/axios";
+import { useUserInfo } from "../store/store";
 
 function Main() {
   // const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
@@ -23,17 +24,28 @@ function Main() {
 
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
+  const { setUserInfo } = useUserInfo();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await isValidToken(token);
-        if (response.status === 200) {
-          setIsLoggedIn(true);
+        if (!token) {
+          navigate("/");
+        }
+
+        const validationResponse = await isValidToken(token);
+
+        if (validationResponse && validationResponse.status === 200) {
+          const userInfoResponse = await getMyInfo(token);
+          if (userInfoResponse && userInfoResponse.status === 200) {
+            setIsLoggedIn(true);
+            setUserInfo(userInfoResponse.data);
+          }
         } else {
           setIsLoggedIn(false);
+          navigate("/");
         }
       } catch (error) {
         console.log(error);

@@ -36,9 +36,8 @@ function QrScan() {
 
   // Scan using camera
   const startScanning = () => {
-    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
-
-    // html5QrCode.start({ facingMode: { exact: MyfacingMode } }, config, qrCodeSuccessCallback);
+    html5QrCode.start({ facingMode: { exact: "environment" } }, config, qrCodeSuccessCallback);
+    // html5QrCode.start({ facingMode: { exact: "MyfacingMode" } }, config, qrCodeSuccessCallback);
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 // SignUpStep2.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useSignUpStore from "../store/store";
+import { useSignUpStore } from "../store/store";
 import styled from "styled-components";
 import BackHeader from "../components/BackHeader";
 import { submitSignUp } from "../uitls/axios";
@@ -62,7 +62,11 @@ const SignUpStep2 = () => {
                 placeholder="4자리 이상 입력해주세요."
                 value={userData.password}
               />
-              <Button $isActive={isActive} disabled={!isActive} onClick={handleSubmit}>
+              <Button
+                $isActive={isActive}
+                disabled={!isActive}
+                onClick={handleSubmit}
+              >
                 완료
               </Button>
             </Container>

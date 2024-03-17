@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import useSignUpStore from "../store/store";
+import { useSignUpStore } from "../store/store";
 import BackHeader from "../components/BackHeader";
 import "../styles/Main.css";
 
@@ -76,7 +76,11 @@ const SignUpStep1 = () => {
                 maxLength={13}
                 onChange={handleChange}
               />
-              <NextButton onClick={handleNext} $isActive={isActive} disabled={!isActive}>
+              <NextButton
+                onClick={handleNext}
+                $isActive={isActive}
+                disabled={!isActive}
+              >
                 다음
               </NextButton>
             </Container>

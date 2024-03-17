@@ -2,37 +2,63 @@ import styled from "styled-components";
 import Mail from "../images/message.png";
 import School from "../images/school.png";
 import Phone from "../images/call.png";
-
+import { useUserInfo } from "../store/store";
 const Card = () => {
+  const { userInfo } = useUserInfo();
+
   return (
     <CardBox>
       <CardNameSpace>
         <CardName>김 구 름</CardName>
         <SchoolSpace>
-          <img src={School} alt="학교" style={{ height: "10px" }} />
+          <img
+            src={School}
+            alt="학교"
+            style={{ height: "10px" }}
+          />
           <CardText>구름대학교</CardText>
         </SchoolSpace>
       </CardNameSpace>
 
       <CardSpace style={{ marginTop: "10px" }}>
-        <img src={Mail} alt="메일" style={{ width: "15px" }} />
+        <img
+          src={Mail}
+          alt="메일"
+          style={{ width: "15px" }}
+        />
         <CardText>cloud1234@naver.com</CardText>
       </CardSpace>
       <CardContents>
         <CardSpace>
-          <img src={Phone} alt="전화번호" style={{ width: "15px" }} />
+          <img
+            src={Phone}
+            alt="전화번호"
+            style={{ width: "15px" }}
+          />
           <CardText>010-1234-5678</CardText>
         </CardSpace>
         <CardSpace>
-          <img src={Phone} alt="전화번호" style={{ width: "15px" }} />
+          <img
+            src={Phone}
+            alt="전화번호"
+            style={{ width: "15px" }}
+          />
           <CardText>cloud1234_</CardText>
         </CardSpace>
         <CardSpace>
-          <img src={Phone} alt="전화번호" style={{ width: "15px" }} />
+          <img
+            src={Phone}
+            alt="전화번호"
+            style={{ width: "15px" }}
+          />
           <CardText>cloud1234@naver.com</CardText>
         </CardSpace>
         <CardSpace>
-          <img src={Phone} alt="전화번호" style={{ width: "15px" }} />
+          <img
+            src={Phone}
+            alt="전화번호"
+            style={{ width: "15px" }}
+          />
           <CardText>https://blog.naver.com/cloud/223377506812</CardText>
         </CardSpace>
       </CardContents>
