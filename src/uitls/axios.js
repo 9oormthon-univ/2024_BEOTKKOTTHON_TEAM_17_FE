@@ -76,11 +76,9 @@ export const subscribeCard = async (memberId, navigate, token) => {
     if (res.status === 200) {
       navigate("/mycards");
       console.log(res.data);
-    } else {
-      navigate("/mypage");
-      console.log("실패");
     }
   } catch (error) {
-    throw error;
+    navigate("/mypage");
+    console.log("실패");
   }
 };
