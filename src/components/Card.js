@@ -3,11 +3,21 @@ import Mail from "../images/message.png";
 import School from "../images/school.png";
 import Phone from "../images/call.png";
 import { useUserInfo } from "../store/store";
+import CustomImage from "./CustomImage";
+
 const Card = () => {
   const { userInfo } = useUserInfo();
 
   return (
     <CardBox>
+      <CustomImage
+        src={School}
+        alt="Example"
+        x={130.6}
+        y={42}
+        width={30}
+        height={30}
+      />
       <CardNameSpace>
         <CardName>김 구 름</CardName>
         <SchoolSpace>
@@ -75,7 +85,6 @@ const CardBox = styled.div`
   border-radius: 10px;
   background: #ffe3e7;
   box-shadow: 0 0 5px 0 #e8e8e8;
-
   display: flex;
   flex-direction: column;
 
@@ -83,6 +92,8 @@ const CardBox = styled.div`
     width: 343px;
     height: 200px;
   }
+
+  position: relative;
 `;
 
 const CardName = styled.div`
