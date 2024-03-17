@@ -62,3 +62,25 @@ export const getMyInfo = async (token) => {
     throw error;
   }
 };
+
+export const subscribeCard = async (memberId, navigate, token) => {
+  try {
+    const config = {
+      method: "post",
+      url: `${API_KEY}/api/card/save/${memberId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    if (res.status === 200) {
+      navigate("/mycards");
+      console.log(res.data);
+    } else {
+      navigate("/mypage");
+      console.log("실패");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
