@@ -56,47 +56,57 @@ function QrScan() {
   }, []);
 
   return (
-    <div className="page">
-      <div className="center">
-        <div className="page-space">
-          <QRHeader>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="17"
-              viewBox="0 0 17 17"
-              fill="none"
-              style={{ marginLeft: "16px", cursor: "pointer" }}
-              onClick={goBack}
-            >
-              <path
-                d="M1 1L8.5 8.5L16 16M16 1L1 16"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </QRHeader>
-          <QRTotalPage>
-            <div
-              id={qrcodeRegionId}
-              width="600px"
-            >
-              {/* Camera Scan */}
-              <button onClick={startScanning}>Scan QR Code</button>
-            </div>
-            <QRResult>
-              <p style={{ marginBottom: "5px" }}>{result}</p>
-              {result === "" ? <p></p> : <p>명함 등록이 완료되었습니다.</p>}
-            </QRResult>
-            <QRFooter>
-              <CameraButton onClick={onCameraButtonClick}></CameraButton>
-            </QRFooter>
-          </QRTotalPage>
-        </div>
+    // <div className="page">
+    //   <div className="center">
+    //     <div className="page-space">
+    //       <QRHeader>
+    //         <svg
+    //           xmlns="http://www.w3.org/2000/svg"
+    //           width="17"
+    //           height="17"
+    //           viewBox="0 0 17 17"
+    //           fill="none"
+    //           style={{ marginLeft: "16px", cursor: "pointer" }}
+    //           onClick={goBack}
+    //         >
+    //           <path
+    //             d="M1 1L8.5 8.5L16 16M16 1L1 16"
+    //             stroke="white"
+    //             strokeWidth="1.5"
+    //             strokeLinecap="round"
+    //             strokeLinejoin="round"
+    //           />
+    //         </svg>
+    //       </QRHeader>
+    //       <QRTotalPage>
+    //         <div
+    //           id={qrcodeRegionId}
+    //           width="600px"
+    //         >
+    //           {/* Camera Scan */}
+    //           <button onClick={startScanning}>Scan QR Code</button>
+    //         </div>
+    //         <QRResult>
+    //           <p style={{ marginBottom: "5px" }}>{result}</p>
+    //           {result === "" ? <p></p> : <p>명함 등록이 완료되었습니다.</p>}
+    //         </QRResult>
+    //         <QRFooter>
+    //           <CameraButton onClick={onCameraButtonClick}></CameraButton>
+    //         </QRFooter>
+    //       </QRTotalPage>
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+      <h1>QR Scanner</h1>
+      <div
+        id={qrcodeRegionId}
+        width="600px"
+      >
+        {/* Camera Scan */}
+        <button onClick={startScanning}>Scan QR Code</button>
       </div>
-    </div>
+    </>
   );
 }
 
