@@ -42,6 +42,7 @@ function QrScan() {
 
   useEffect(() => {
     html5QrCode = new Html5Qrcode("reader");
+    startScanning();
 
     return () => {
       html5QrCode
@@ -98,13 +99,31 @@ function QrScan() {
     //   </div>
     // </div>
     <>
-      <h1>QR Scanner</h1>
+      <QRHeader>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="17"
+          height="17"
+          viewBox="0 0 17 17"
+          fill="none"
+          style={{ marginLeft: "16px", cursor: "pointer" }}
+          onClick={goBack}
+        >
+          <path
+            d="M1 1L8.5 8.5L16 16M16 1L1 16"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </QRHeader>
       <div
         id={qrcodeRegionId}
         width="600px"
       >
-        {/* Camera Scan */}
-        <button onClick={startScanning}>Scan QR Code</button>
+        {/* Camera Scan
+        <button onClick={startScanning}>Scan QR Code</button> */}
       </div>
     </>
   );
