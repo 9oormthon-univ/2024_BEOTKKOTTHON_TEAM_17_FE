@@ -21,18 +21,18 @@ import { MdEmail } from "react-icons/md";
 
 const iconMapping = {
   instagram: <FaInstagram color="#E1306C" />,
-  youtube: <FaYoutube />,
-  facebook: <FaFacebook />,
-  linkedIn: <FaLinkedin />,
-  organization: <FaSchool />,
+  youtube: <FaYoutube color="#fff" />,
+  facebook: <FaFacebook color="#fff" />,
+  linkedIn: <FaLinkedin color="#fff" />,
+  organization: <FaSchool color="#fff" />,
   link: <FaLink />,
   content: <FaPencilAlt />,
-  x: <FaSquareXTwitter />,
-  tiktok: <FaTiktok />,
-  naver: <SiNaver />,
-  notefolio: <SiDeepnote />,
-  behance: <FaBehance />,
-  github: <FaGithub />,
+  x: <FaSquareXTwitter color="#fff" />,
+  tiktok: <FaTiktok color="#fff" />,
+  naver: <SiNaver color="#fff" />,
+  notefolio: <SiDeepnote color="#3BC1CC" />,
+  behance: <FaBehance color="#1769FF" />,
+  github: <FaGithub color="#fff" />,
   kakao: <RiKakaoTalkFill color="#FEE500" />,
 };
 
@@ -84,12 +84,12 @@ const Card = ({ userData }) => {
       </CardNameSpace>
 
       <CardSpace style={{ marginTop: "10px" }}>
-        <MdEmail />
+        <MdEmail color="#fff" />
         <CardText>{userData.email}</CardText>
       </CardSpace>
       <CardContents>
         <CardSpace>
-          <FaPhoneAlt />
+          <FaPhoneAlt color="#fff" />
           <CardText>{userData.phone}</CardText>
         </CardSpace>
         {secondaryInfos.map((info) => (
