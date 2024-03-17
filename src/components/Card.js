@@ -13,8 +13,8 @@ const Card = () => {
       <CustomImage
         src={School}
         alt="Example"
-        x={280.43}
-        y={147.41}
+        x={298}
+        y={0}
         width={30}
         height={30}
       />
