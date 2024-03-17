@@ -5,17 +5,32 @@ import "../styles/Main.css";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
 import { useEffect } from "react";
-
+import { getMyInfo } from "../uitls/axios";
 import Pencil from "../images/pencil.png";
+import { useCookies } from "react-cookie";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { userInfo } = useUserInfo();
+  const { userInfo, setUserInfo } = useUserInfo();
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
 
   useEffect(() => {
-    if (!userInfo.name) {
-      navigate("/");
+    async function fetchData() {
+      try {
+        if (!token) {
+          navigate("/");
+        }
+        const userInfoResponse = await getMyInfo(token);
+        if (userInfoResponse && userInfoResponse.status === 200) {
+          setUserInfo(userInfoResponse.data);
+        }
+      } catch (error) {
+        console.log(error);
+        navigate("/");
+      }
     }
+    fetchData();
   }, []);
 
   const linkToMyPageEdit = () => {

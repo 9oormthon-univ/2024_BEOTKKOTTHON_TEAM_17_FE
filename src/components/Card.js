@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Mail from "../images/message.png";
 
 import {
+  FaPhoneAlt,
   FaSchool,
   FaInstagram,
   FaYoutube,
@@ -16,6 +17,7 @@ import {
 import { SiNaver, SiDeepnote } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
 const iconMapping = {
   instagram: <FaInstagram color="#E1306C" />,
@@ -35,22 +37,6 @@ const iconMapping = {
 };
 
 const Card = ({ userData }) => {
-  const additionalInfoKey = [
-    "organisation",
-    "link",
-    "content",
-    "instagram",
-    "youtube",
-    "facebook",
-    "x",
-    "tiktok",
-    "naver",
-    "linkedIn",
-    "notefolio",
-    "behance",
-    "github",
-    "kakao",
-  ];
   // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = ["organization", "content", "link"].find((key) => userData[key] !== null);
 
@@ -98,14 +84,14 @@ const Card = ({ userData }) => {
       </CardNameSpace>
 
       <CardSpace style={{ marginTop: "10px" }}>
-        <img
-          src={Mail}
-          alt="메일"
-          style={{ width: "15px" }}
-        />
+        <MdEmail />
         <CardText>{userData.email}</CardText>
       </CardSpace>
       <CardContents>
+        <CardSpace>
+          <FaPhoneAlt />
+          <CardText>{userData.phone}</CardText>
+        </CardSpace>
         {secondaryInfos.map((info) => (
           <CardSpace key={info.key}>
             {iconMapping[info.key]}
