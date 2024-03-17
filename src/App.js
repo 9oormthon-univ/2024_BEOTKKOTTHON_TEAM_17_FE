@@ -76,7 +76,7 @@ function App() {
         />
         <Route
           exact
-          path="/redirect"
+          path="/redirect/*"
           element={<QrRedirect />}
         />
       </Routes>
