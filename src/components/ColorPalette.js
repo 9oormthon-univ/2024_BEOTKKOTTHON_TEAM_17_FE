@@ -6,7 +6,7 @@ import { useUserInfo } from "../store/store";
 import styled from "styled-components";
 import PlusCircleButton from "./PlusCircleButton";
 
-const ColorPalette = () => {
+const ColorPalette = ({ setCustomBackColor, setCustomTextColor }) => {
   const { userInfo } = useUserInfo();
   const initialColors = [
     `${userInfo.bgColor}`,
@@ -36,6 +36,7 @@ const ColorPalette = () => {
   const addColor = () => {
     colors[0] = color;
     setShowWheel(false);
+    setCustomBackColor(color);
   };
 
   return (
@@ -48,7 +49,10 @@ const ColorPalette = () => {
           circleSpacing={10} // 색상 원 사이의 간격
           colors={colors}
           color={color}
-          onChangeComplete={({ hex }) => setColor(hex)}
+          onChangeComplete={({ hex }) => {
+            setColor(hex);
+            setCustomBackColor(hex);
+          }}
         />
       </PickerContainer>
       {showWheel && (

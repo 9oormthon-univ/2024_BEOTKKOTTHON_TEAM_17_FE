@@ -18,7 +18,7 @@ import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import CustomImage from "./CustomImage";
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const iconMapping = {
   instagram: <FaInstagram color="#E1306C" />,
@@ -37,7 +37,7 @@ const iconMapping = {
   kakao: <RiKakaoTalkFill color="#FEE500" />,
 };
 
-const Card = ({ userData }) => {
+const WrapCard = ({ userData }) => {
   // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = ["organization", "content", "link"].find((key) => userData[key] !== null);
 
@@ -69,7 +69,6 @@ const Card = ({ userData }) => {
     }
   };
 
-
   // 상대적인 스티커 좌표를 구하기 위함
   const cardRef = useRef();
   const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
@@ -83,12 +82,6 @@ const Card = ({ userData }) => {
       });
     }
   }, []);
-
-  const formatNameWithSpace = (name) => {
-    if (!name) return "";
-    return name.split("").join(" ");
-  };
-
 
   return (
     <CardBox
@@ -107,7 +100,7 @@ const Card = ({ userData }) => {
         />
 
         <CardNameSpace>
-          <CardName>{formatNameWithSpace(userData.name)}</CardName>
+          <CardName>{userData.name}</CardName>
           {primaryInfoKey && (
             <IconAndText>
               {iconMapping[primaryInfoKey]}
@@ -137,14 +130,14 @@ const Card = ({ userData }) => {
   );
 };
 
-export default Card;
+export default React.memo(WrapCard);
 
 const CardBox = styled.div`
   width: calc(100vw - 32px);
   max-width: 580px;
   height: 200px;
   border-radius: 10px;
-  background: ${(props) => props.bgColor || "#ffe3e7"};
+  background-color: rgba(0, 0, 0, 0);
   color: ${(props) => props.textColor || "#000"};
   box-shadow: 0 0 5px 0 #e8e8e8;
   display: flex;
