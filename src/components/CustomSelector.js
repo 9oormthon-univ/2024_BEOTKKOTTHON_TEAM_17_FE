@@ -2,8 +2,9 @@ import Smile from "../images/smile.png";
 import Palette from "../images/palette.png";
 import styled from "styled-components";
 import React, { useState } from "react";
+import ColorPalette from "./ColorPalette";
 
-const CustomSelector = () => {
+const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStickers }) => {
   const [activeComponent, setActiveComponent] = useState("");
 
   return (
@@ -20,6 +21,13 @@ const CustomSelector = () => {
           onClick={() => setActiveComponent("Smile")}
         />
       </RoundedDiv>
+      {activeComponent === "Palette" && (
+        <ColorPalette
+          setCustomBackColor={setCustomBackColor}
+          setCustomTextColor={setCustomTextColor}
+        />
+      )}
+      {/* {activeComponent === "Smile" && <Stickers setCustomStickers={setCustomStickers} />} */}
     </>
   );
 };

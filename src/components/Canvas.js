@@ -11,7 +11,7 @@ const _constants = {
   containerHeight: 200,
 };
 
-const Canvas = () => {
+const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   const {
     userInfo: { bgColor },
   } = useUserInfo();
@@ -30,7 +30,7 @@ const Canvas = () => {
       canvas.height = _constants.containerHeight; // 높이는 200px로 고정
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = `${bgColor}`;
+      context.fillStyle = `${customBackColor}`;
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       addedImages.forEach((imgInfo) => {
@@ -46,7 +46,7 @@ const Canvas = () => {
     resizeCanvas(); // 초기 로드 시에도 캔버스 크기를 설정
 
     return () => window.removeEventListener("resize", resizeCanvas);
-  }, [addedImages]); // addedImages가 변경될 때마다 useEffect를 다시 실행
+  }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
 
   useEffect(() => {
     // 이벤트 리스너에 추가할 로직
