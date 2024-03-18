@@ -1,15 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useUserInfo } from "../store/store";
+import { getMyInfo } from "../uitls/axios";
+import { useCookies } from "react-cookie";
 import BackQRHeader from "../components/BackQRHeader";
 import MyCardsList from "./MyCardsList";
 import MyCardsCategory from "./MyCardsCategory";
 
 const MyCards = () => {
+  const navigate = useNavigate();
   const [showList, setShowList] = useState(true);
 
   const handleToggleComponent = () => {
     setShowList((prevState) => !prevState); // 컴포넌트를 토글하는 함수
   };
+
+  const { userInfo, setUserInfo } = useUserInfo();
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (!token) {
+          navigate("/");
+        }
+        const userInfoResponse = await getMyInfo(token);
+        if (userInfoResponse && userInfoResponse.status === 200) {
+          setUserInfo(userInfoResponse.data);
+          console.log(userInfo);
+        }
+      } catch (error) {
+        console.log(error);
+        navigate("/");
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="page">
@@ -17,7 +45,7 @@ const MyCards = () => {
         <MyCardsPage>
           <div className="page-space">
             <BackQRHeader />
-            <MyCardsTitle>김구름님의 명함첩</MyCardsTitle>
+            <MyCardsTitle>{userInfo.name}님의 명함첩</MyCardsTitle>
             {showList ? (
               <MyCardsList onToggle={handleToggleComponent} />
             ) : (

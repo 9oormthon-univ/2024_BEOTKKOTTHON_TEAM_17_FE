@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Card from "../components/Card";
+import { useUserInfo } from "../store/store";
+import { getMyInfo } from "../uitls/axios";
+import { useCookies } from "react-cookie";
 import Search from "../images/search3.png";
 import NoMatched from "../images/no_matched.png";
 
@@ -28,6 +32,29 @@ const MyCardsList = ({ onToggle }) => {
     onToggle(); // 클릭 이벤트 발생 시 onToggle 함수 호출
   };
 
+  const { userInfo, setUserInfo } = useUserInfo();
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (!token) {
+          navigate("/");
+        }
+        const userInfoResponse = await getMyInfo(token);
+        if (userInfoResponse && userInfoResponse.status === 200) {
+          setUserInfo(userInfoResponse.data);
+          console.log(userInfo);
+        }
+      } catch (error) {
+        console.log(error);
+        navigate("/");
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div>
       <MyCardsHeader>
@@ -45,10 +72,25 @@ const MyCardsList = ({ onToggle }) => {
         />
       </MyCardsSearch>
       {/* 등록된 명함이 없을 때 */}
-      <NoneCards>
+      {/* <NoneCards>
         <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
         <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
-      </NoneCards>
+      </NoneCards> */}
+      {/* 등록된 명함이 있을 때 */}
+      <div className="CardLists">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <CardListsCard key={index}>
+            <Test>
+              <Card userData={userInfo} />
+            </Test>
+            <CardInfo>
+              <CardInfoName>김땡땡</CardInfoName>
+              <CardInfoContent>010-1234-5678</CardInfoContent>
+              <CardInfoContent>kimddangddang@naver.com</CardInfoContent>
+            </CardInfo>
+          </CardListsCard>
+        ))}
+      </div>
     </div>
   );
 };
@@ -153,4 +195,54 @@ const NoneCards = styled.div`
   font-weight: 500;
 
   margin-top: 100px;
+`;
+
+const CardListsCard = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px 16px;
+  width: calc(100vw - 32px);
+  height: calc(100px - 40px);
+  border-bottom: 1px solid #8c8c8c;
+
+  @media (hover: hover) and (pointer: fine) {
+    width: calc(375px - 32px);
+  }
+`;
+
+const Test = styled.div`
+  transform: scale(0.4);
+  width: 0;
+`;
+
+const CardInfo = styled.div`
+  margin-left: calc(140px + 33px);
+
+  @media (min-width: 435px) {
+    margin-left: calc(180px + 33px);
+  }
+
+  @media (min-width: 530px) {
+    margin-left: calc(200px + 33px);
+  }
+
+  @media (hover: hover) and (pointer: fine) and (min-width: 0px) {
+    margin-left: calc(140px + 33px);
+  }
+`;
+
+const CardInfoName = styled.div`
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  padding-bottom: 6px;
+`;
+
+const CardInfoContent = styled.div`
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  margin-top: 5px;
 `;
