@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Card from "../components/Card";
+import ModalCard from "../components/ModalCard";
 import { useOtherInfo } from "../store/store";
 import { getListInfo } from "../uitls/axios";
 import { useCookies } from "react-cookie";
@@ -11,6 +12,8 @@ import NoMatched from "../images/no_matched.png";
 const MyCardsList = ({ onToggle }) => {
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleInputChange = (e) => {
     setSearchData(e.target.value);
@@ -63,6 +66,19 @@ const MyCardsList = ({ onToggle }) => {
     }
   };
 
+  const handleCardClick = (user) => {
+    setSelectedUser(user);
+    openModal();
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <MyCardsHeader>
@@ -88,7 +104,7 @@ const MyCardsList = ({ onToggle }) => {
         <div className="CardLists">
           {Array.isArray(otherInfo) &&
             otherInfo.map((user, index) => (
-              <CardListsCard key={index}>
+              <CardListsCard key={index} onClick={() => handleCardClick(user)}>
                 <Test>
                   <Card userData={user} />
                 </Test>
@@ -101,6 +117,7 @@ const MyCardsList = ({ onToggle }) => {
             ))}
         </div>
       )}
+      {isModalOpen && <ModalCard user={selectedUser} onClose={closeModal} />}
     </div>
   );
 };
@@ -214,6 +231,8 @@ const CardListsCard = styled.div`
   width: calc(100vw - 32px);
   height: calc(100px - 40px);
   border-bottom: 1px solid #8c8c8c;
+
+  cursor: pointer;
 
   @media (hover: hover) and (pointer: fine) {
     width: calc(375px - 32px);

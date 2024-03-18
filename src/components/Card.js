@@ -68,6 +68,11 @@ const Card = ({ userData }) => {
     }
   };
 
+  const formatNameWithSpace = (name) => {
+    if (!name) return "";
+    return name.split("").join(" ");
+  };
+
   return (
     <CardBox bgColor={userData.bgColor} textColor={userData.textColor}>
       <CardBoxIn>
@@ -80,7 +85,7 @@ const Card = ({ userData }) => {
         height={30}
       /> */}
         <CardNameSpace>
-          <CardName>{userData.name}</CardName>
+          <CardName>{formatNameWithSpace(userData.name)}</CardName>
           {primaryInfoKey && (
             <IconAndText>
               {iconMapping[primaryInfoKey]}
