@@ -69,6 +69,7 @@ const Card = ({ userData }) => {
     }
   };
 
+
   // 상대적인 스티커 좌표를 구하기 위함
   const cardRef = useRef();
   const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
@@ -82,6 +83,12 @@ const Card = ({ userData }) => {
       });
     }
   }, []);
+
+  const formatNameWithSpace = (name) => {
+    if (!name) return "";
+    return name.split("").join(" ");
+  };
+
 
   return (
     <CardBox
@@ -100,7 +107,7 @@ const Card = ({ userData }) => {
         />
 
         <CardNameSpace>
-          <CardName>{userData.name}</CardName>
+          <CardName>{formatNameWithSpace(userData.name)}</CardName>
           {primaryInfoKey && (
             <IconAndText>
               {iconMapping[primaryInfoKey]}
