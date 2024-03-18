@@ -18,6 +18,7 @@ import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import CustomImage from "./CustomImage";
+import { useRef, useEffect, useState } from "react";
 
 const iconMapping = {
   instagram: <FaInstagram color="#E1306C" />,
@@ -68,17 +69,32 @@ const Card = ({ userData }) => {
     }
   };
 
+  // 상대적인 스티커 좌표를 구하기 위함
+  const cardRef = useRef();
+  const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
+
+  // 카드 컴포넌트가 마운트될 때마다 카드 컴포넌트의 상대적 위치를 구함
+  useEffect(() => {
+    if (cardRef.current) {
+      setCardDimensions({
+        width: cardRef.current.offsetWidth,
+        height: cardRef.current.offsetHeight,
+      });
+    }
+  }, []);
+
   return (
     <CardBox
       bgColor={userData.bgColor}
       textColor={userData.textColor}
+      ref={cardRef}
     >
       <CardBoxIn>
         <CustomImage
           src={Wallet}
           alt="Example"
-          x={298}
-          y={170}
+          x={cardDimensions.width * 0.9085365853658537}
+          y={cardDimensions.height * 0.85}
           width={30}
           height={30}
         />

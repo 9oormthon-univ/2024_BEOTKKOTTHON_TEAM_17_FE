@@ -171,7 +171,10 @@ const Canvas = () => {
   const handleCompletion = () => {
     console.log("캔버스에 존재하는 이미지들과 좌표:");
     addedImages.forEach((img) => {
-      console.log(`이미지: ${img.name}, x: ${img.x}, y: ${img.y}`);
+      //   console.log(`이미지: ${img.name}, x: ${img.x}, y: ${img.y}`);
+      const relativeX = img.x / canvasRef.current.width;
+      const relativeY = img.y / canvasRef.current.height;
+      console.log(`이미지: ${img.name}, relative x: ${relativeX}, relative y: ${relativeY}`);
     });
   };
   return (
