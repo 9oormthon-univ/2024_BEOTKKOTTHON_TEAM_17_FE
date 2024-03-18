@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import Mail from "../images/message.png";
-
+import Wallet from "../images/wallet.png";
 import {
   FaPhoneAlt,
   FaSchool,
@@ -18,6 +17,7 @@ import { SiNaver, SiDeepnote } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import CustomImage from "./CustomImage";
 
 const iconMapping = {
   instagram: <FaInstagram color="#E1306C" />,
@@ -25,8 +25,8 @@ const iconMapping = {
   facebook: <FaFacebook color="#fff" />,
   linkedIn: <FaLinkedin color="#fff" />,
   organization: <FaSchool color="#fff" />,
-  link: <FaLink />,
-  content: <FaPencilAlt />,
+  link: <FaLink color="#000" />,
+  content: <FaPencilAlt color="#000" />,
   x: <FaSquareXTwitter color="#fff" />,
   tiktok: <FaTiktok color="#fff" />,
   naver: <SiNaver color="#fff" />,
@@ -69,16 +69,20 @@ const Card = ({ userData }) => {
   };
 
   return (
-    <CardBox bgColor={userData.bgColor} textColor={userData.textColor}>
+    <CardBox
+      bgColor={userData.bgColor}
+      textColor={userData.textColor}
+    >
       <CardBoxIn>
-        {/* <CustomImage
-        src={School}
-        alt="Example"
-        x={298}
-        y={0}
-        width={30}
-        height={30}
-      /> */}
+        <CustomImage
+          src={Wallet}
+          alt="Example"
+          x={298}
+          y={170}
+          width={30}
+          height={30}
+        />
+
         <CardNameSpace>
           <CardName>{userData.name}</CardName>
           {primaryInfoKey && (
@@ -90,12 +94,12 @@ const Card = ({ userData }) => {
         </CardNameSpace>
 
         <CardSpace style={{ marginTop: "10px" }}>
-          <MdEmail color="#fff" />
+          <MdEmail color="#000" />
           <CardText>{userData.email}</CardText>
         </CardSpace>
         <CardContents>
           <CardSpace>
-            <FaPhoneAlt color="#fff" />
+            <FaPhoneAlt color="#000" />
             <CardText>{formatPhoneNumber(userData.phone)}</CardText>
           </CardSpace>
           {secondaryInfos.map((info) => (
