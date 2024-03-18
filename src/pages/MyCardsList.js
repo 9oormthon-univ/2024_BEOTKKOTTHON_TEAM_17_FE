@@ -79,25 +79,26 @@ const MyCardsList = ({ onToggle }) => {
           placeholder="이름, 이메일 등으로 검색해보세요"
         />
       </MyCardsSearch>
-      {otherInfo.length === 0 ? (
+      {Array.isArray(otherInfo) && otherInfo.length === 0 ? (
         <NoneCards>
           <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
           <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
         </NoneCards>
       ) : (
         <div className="CardLists">
-          {otherInfo.map((user, index) => (
-            <CardListsCard key={index}>
-              <Test>
-                <Card userData={user} />
-              </Test>
-              <CardInfo>
-                <CardInfoName>{user.name}</CardInfoName>
-                <CardInfoContent>{formatPhoneNumber(user.phone)}</CardInfoContent>
-                <CardInfoContent>{user.email}</CardInfoContent>
-              </CardInfo>
-            </CardListsCard>
-          ))}
+          {Array.isArray(otherInfo) &&
+            otherInfo.map((user, index) => (
+              <CardListsCard key={index}>
+                <Test>
+                  <Card userData={user} />
+                </Test>
+                <CardInfo>
+                  <CardInfoName>{user.name}</CardInfoName>
+                  <CardInfoContent>{formatPhoneNumber(user.phone)}</CardInfoContent>
+                  <CardInfoContent>{user.email}</CardInfoContent>
+                </CardInfo>
+              </CardListsCard>
+            ))}
         </div>
       )}
     </div>
