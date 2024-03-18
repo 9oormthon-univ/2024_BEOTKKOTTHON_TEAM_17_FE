@@ -48,3 +48,38 @@ export const useUserInfo = create(
     }
   )
 );
+
+export const useOtherInfo = create(
+  persist(
+    (set, get) => ({
+      otherInfo: {
+        cardId: 0,
+        userId: 0,
+        name: "",
+        email: "",
+        phone: "",
+        qrUrl: "",
+        organisation: null, //소속
+        link: null, //링크
+        content: null, //추가 글
+        instagram: null,
+        youtube: null,
+        facebook: null,
+        x: null,
+        tiktok: null,
+        naver: null,
+        linkedIn: null,
+        notefolio: null,
+        behance: null,
+        github: null,
+        kakao: null,
+        bgColor: "#ffe3e7",
+        textColor: "#000",
+      },
+      setOtherInfo: (otherInfo) => set({ otherInfo }),
+    }),
+    {
+      name: "other-info-storage",
+    }
+  )
+);

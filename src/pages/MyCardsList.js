@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Card from "../components/Card";
-import { useUserInfo } from "../store/store";
-import { getMyInfo } from "../uitls/axios";
+import { useOtherInfo } from "../store/store";
+import { getListInfo } from "../uitls/axios";
 import { useCookies } from "react-cookie";
 import Search from "../images/search3.png";
 import NoMatched from "../images/no_matched.png";
@@ -32,7 +32,7 @@ const MyCardsList = ({ onToggle }) => {
     onToggle(); // 클릭 이벤트 발생 시 onToggle 함수 호출
   };
 
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { otherInfo, setOtherInfo } = useOtherInfo();
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
 
@@ -42,10 +42,10 @@ const MyCardsList = ({ onToggle }) => {
         if (!token) {
           navigate("/");
         }
-        const userInfoResponse = await getMyInfo(token);
-        if (userInfoResponse && userInfoResponse.status === 200) {
-          setUserInfo(userInfoResponse.data);
-          console.log(userInfo);
+        const otherInfoResponse = await getListInfo(token);
+        if (otherInfoResponse && otherInfoResponse.status === 200) {
+          setOtherInfo(otherInfoResponse.data);
+          console.log(otherInfo);
         }
       } catch (error) {
         console.log(error);
@@ -54,6 +54,14 @@ const MyCardsList = ({ onToggle }) => {
     }
     fetchData();
   }, []);
+
+  const formatPhoneNumber = (phoneNumber) => {
+    if (phoneNumber) {
+      return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    } else {
+      return ""; // 또는 다른 기본값으로 설정
+    }
+  };
 
   return (
     <div>
@@ -71,26 +79,27 @@ const MyCardsList = ({ onToggle }) => {
           placeholder="이름, 이메일 등으로 검색해보세요"
         />
       </MyCardsSearch>
-      {/* 등록된 명함이 없을 때 */}
-      {/* <NoneCards>
-        <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
-        <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
-      </NoneCards> */}
-      {/* 등록된 명함이 있을 때 */}
-      <div className="CardLists">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <CardListsCard key={index}>
-            <Test>
-              <Card userData={userInfo} />
-            </Test>
-            <CardInfo>
-              <CardInfoName>김땡땡</CardInfoName>
-              <CardInfoContent>010-1234-5678</CardInfoContent>
-              <CardInfoContent>kimddangddang@naver.com</CardInfoContent>
-            </CardInfo>
-          </CardListsCard>
-        ))}
-      </div>
+      {otherInfo.length === 0 ? (
+        <NoneCards>
+          <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
+          <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
+        </NoneCards>
+      ) : (
+        <div className="CardLists">
+          {otherInfo.map((user, index) => (
+            <CardListsCard key={index}>
+              <Test>
+                <Card userData={user} />
+              </Test>
+              <CardInfo>
+                <CardInfoName>{user.name}</CardInfoName>
+                <CardInfoContent>{formatPhoneNumber(user.phone)}</CardInfoContent>
+                <CardInfoContent>{user.email}</CardInfoContent>
+              </CardInfo>
+            </CardListsCard>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

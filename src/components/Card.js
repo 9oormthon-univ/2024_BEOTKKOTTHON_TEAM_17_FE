@@ -60,6 +60,14 @@ const Card = ({ userData }) => {
     .filter((info) => info.value !== null)
     .slice(0, 3);
 
+  const formatPhoneNumber = (phoneNumber) => {
+    if (phoneNumber) {
+      return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    } else {
+      return ""; // 또는 다른 기본값으로 설정
+    }
+  };
+
   return (
     <CardBox bgColor={userData.bgColor} textColor={userData.textColor}>
       <CardBoxIn>
@@ -88,7 +96,7 @@ const Card = ({ userData }) => {
         <CardContents>
           <CardSpace>
             <FaPhoneAlt color="#fff" />
-            <CardText>{userData.phone}</CardText>
+            <CardText>{formatPhoneNumber(userData.phone)}</CardText>
           </CardSpace>
           {secondaryInfos.map((info) => (
             <CardSpace key={info.key}>

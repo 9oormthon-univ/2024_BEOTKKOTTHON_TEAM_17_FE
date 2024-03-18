@@ -26,24 +26,13 @@ const BackHeader = ({ isMyPage }) => {
   return (
     <HeaderContainer>
       <div className="backarrow-img">
-        <Img
-          onClick={goBack}
-          style={{ cursor: "pointer" }}
-          src={BackArrow}
-          alt="뒤로가기"
-        />
+        <Img onClick={goBack} style={{ cursor: "pointer" }} src={BackArrow} alt="뒤로가기" />
       </div>
       {isMyPage ? (
         <HeaderBtn onClick={handleToLogOut}>로그아웃</HeaderBtn>
       ) : (
-        <div
-          className="search-img"
-          onClick={handleToQrScan}
-        >
-          <img
-            src={Search}
-            alt="QR 인식"
-          />
+        <div className="search-img" onClick={handleToQrScan}>
+          <img src={Search} alt="QR 인식" />
         </div>
       )}
     </HeaderContainer>
@@ -68,21 +57,24 @@ const Img = styled.img`
 `;
 
 const HeaderBtn = styled.div`
-  color: #138eff;
+  color: #000;
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
 
   width: 50px;
   height: 24px;
-  border-radius: 100px;
-  border: 1.5px solid #138eff;
 
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin-right: 14px;
+  transition: 400ms ease-in-out;
+
+  &:hover {
+    color: #138eff;
+    transition: 400ms ease-in-out;
+  }
 `;

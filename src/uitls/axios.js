@@ -63,6 +63,22 @@ export const getMyInfo = async (token) => {
   }
 };
 
+export const getListInfo = async (token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/list`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const subscribeCard = async (memberId, navigate, token) => {
   try {
     const config = {
