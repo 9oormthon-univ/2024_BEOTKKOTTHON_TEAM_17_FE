@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import Card from "../components/Card";
 import BackQRHeader from "../components/BackQRHeader";
-import ColorPalette from "../components/ColorPalette";
 import { useUserInfo } from "../store/store";
 
 import CustomSelector from "../components/CustomSelector";

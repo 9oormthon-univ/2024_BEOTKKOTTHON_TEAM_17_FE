@@ -6,19 +6,26 @@ import schoolImg from "../images/school.png";
 import callImg from "../images/call.png";
 import pencilImg from "../images/pencil.png";
 
+import WrapCard from "./WrapCard";
+
 const _constants = {
   containerWidth: 343,
   containerHeight: 200,
 };
 
 const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
-  const {
-    userInfo: { bgColor },
-  } = useUserInfo();
+  const { userInfo } = useUserInfo();
   const canvasRef = useRef(null);
   const [addedImages, setAddedImages] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
+
+  const [showCard, setShowCard] = useState(true);
+
+  const toggleDrag = (isDragging) => {
+    setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
+    setDragging(isDragging);
+  };
 
   useEffect(() => {
     const resizeCanvas = () => {
@@ -76,15 +83,15 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
       );
     };
 
-    // 캔버스에 touchmove 이벤트 리스너를 추가합니다.
+    // 캔버스에 touchmove 이벤트 리스너를 추가
     const canvas = canvasRef.current;
     canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
 
-    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거
     return () => {
       canvas.removeEventListener("touchmove", handleTouchMove, { passive: false });
     };
-  }, [dragging, addedImages, draggingIdx]);
+  }, [showCard, dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
     const img = new Image();
@@ -99,7 +106,7 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     const mouseY = e.nativeEvent.offsetY;
     addedImages.forEach((img, idx) => {
       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-        setDragging(true);
+        toggleDrag(true);
         setDraggingIdx(idx);
       }
     });
@@ -121,7 +128,7 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   };
 
   const onMouseUp = () => {
-    setDragging(false);
+    toggleDrag(false);
     setDraggingIdx(null);
   };
 
@@ -131,7 +138,7 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
     addedImages.forEach((img, idx) => {
       if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
-        setDragging(true);
+        toggleDrag(true);
         setDraggingIdx(idx);
         e.preventDefault();
       }
@@ -164,17 +171,17 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   };
 
   const onTouchEnd = () => {
-    setDragging(false);
+    toggleDrag(false);
     setDraggingIdx(null);
   };
 
   const handleCompletion = () => {
-    console.log("캔버스에 존재하는 이미지들과 좌표:");
+    console.log("캔버스에 존재하는 스티커의 상대 좌표:");
     addedImages.forEach((img) => {
       //   console.log(`이미지: ${img.name}, x: ${img.x}, y: ${img.y}`);
       const relativeX = img.x / canvasRef.current.width;
       const relativeY = img.y / canvasRef.current.height;
-      console.log(`이미지: ${img.name}, relative x: ${relativeX}, relative y: ${relativeY}`);
+      console.log(`스티커: ${img.name}, Relative x: ${relativeX}, Relative y: ${relativeY}`);
     });
   };
   return (
@@ -211,6 +218,11 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
         />
+        {showCard && (
+          <CardWrapper>
+            <WrapCard userData={userInfo} />
+          </CardWrapper>
+        )}
       </CanvasContainer>
       <button onClick={handleCompletion}>수정 완료</button>
     </>
@@ -248,6 +260,8 @@ const CanvasContainer = styled.div`
     width: 343px;
     height: 200px;
   }
+
+  position: relative;
 `;
 
 const StyledCanvas = styled.canvas`
@@ -261,4 +275,12 @@ const StyledCanvas = styled.canvas`
     width: 343px;
     height: 200px;
   }
+`;
+
+const CardWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  pointer-events: none;
 `;
