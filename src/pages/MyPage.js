@@ -1,16 +1,18 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BackQRHeader from "../components/BackQRHeader";
 import Card from "../components/Card";
+import Modal from "../components/Modal";
 import "../styles/Main.css";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
-import { useEffect } from "react";
 import { getMyInfo } from "../uitls/axios";
 import Pencil from "../images/pencil.png";
 import { useCookies } from "react-cookie";
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { userInfo, setUserInfo } = useUserInfo();
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
@@ -42,6 +44,14 @@ const MyPage = () => {
     navigate("/mypage/custom");
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="page">
       <div className="center">
@@ -54,17 +64,14 @@ const MyPage = () => {
               <Card userData={userInfo} />
               <EditBtnSpace>
                 <CardEditBtn onClick={linkToCustom}>
-                  <img
-                    src={Pencil}
-                    alt="편집"
-                    style={{ height: "18px" }}
-                  />
+                  <img src={Pencil} alt="편집" style={{ height: "18px" }} />
                 </CardEditBtn>
               </EditBtnSpace>
               <BtnSpace>
                 <CardBtn onClick={linkToMyPageEdit}>명함 정보 입력하기</CardBtn>
-                <CardBtn>나의 QR</CardBtn>
+                <CardBtn onClick={openModal}>나의 QR</CardBtn>
               </BtnSpace>
+              {isModalOpen && <Modal onClose={closeModal} user={userInfo} />}
             </MyPageCenter>
           </div>
         </MyPageBack>
