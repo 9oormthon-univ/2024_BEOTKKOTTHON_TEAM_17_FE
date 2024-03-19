@@ -56,7 +56,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
 
   useEffect(() => {
-    // 이벤트 리스너에 추가할 로직
     const handleTouchMove = (event) => {
       if (!dragging) return;
       event.preventDefault();
@@ -93,10 +92,9 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
-    if (addedImages.some((img) => img.name === name)) {
-      // 이미 추가된 이미지는 재사용
-      return;
-    }
+    // if (addedImages.some((img) => img.name === name)) {
+    //   return;
+    // }
     const img = new Image();
     img.onload = () => {
       setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
@@ -263,7 +261,7 @@ const ImageSelection = styled.div`
 `;
 
 const CanvasContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 10px;
 
   width: calc(100vw - 32px);
   max-width: 580px;

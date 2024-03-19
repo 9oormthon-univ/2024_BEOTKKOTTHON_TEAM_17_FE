@@ -44,7 +44,6 @@ export default CardCustom;
 
 const CustomPage = styled.div`
   background: #fff;
-  border: 1px solid black;
 `;
 
 const CustomPageCenter = styled.div`
