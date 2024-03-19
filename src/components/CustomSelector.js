@@ -7,6 +7,16 @@ import StickerModal from "./StickerModal";
 
 const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStickers }) => {
   const [activeComponent, setActiveComponent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setActiveComponent("Smile");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -19,7 +29,7 @@ const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStick
         <Image
           src={Smile}
           alt="Smile"
-          onClick={() => setActiveComponent("Smile")}
+          onClick={openModal}
         />
       </RoundedDiv>
       {activeComponent === "Palette" && (
@@ -28,7 +38,12 @@ const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStick
           setCustomTextColor={setCustomTextColor}
         />
       )}
-      {activeComponent === "Smile" && <StickerModal setCustomStickers={setCustomStickers} />}
+      {isModalOpen && (
+        <StickerModal
+          onClose={closeModal}
+          setCustomStickers={setCustomStickers}
+        />
+      )}
     </>
   );
 };
