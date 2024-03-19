@@ -86,14 +86,17 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     // 캔버스에 touchmove 이벤트 리스너를 추가
     const canvas = canvasRef.current;
     canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
-
     // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거
     return () => {
       canvas.removeEventListener("touchmove", handleTouchMove, { passive: false });
     };
-  }, [showCard, dragging, addedImages, draggingIdx]);
+  }, [dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
+    if (addedImages.some((img) => img.name === name)) {
+      // 이미 추가된 이미지는 재사용
+      return;
+    }
     const img = new Image();
     img.onload = () => {
       setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
@@ -114,16 +117,18 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
 
   const onMouseMove = (e) => {
     if (dragging) {
-      const mouseX = e.nativeEvent.offsetX;
-      const mouseY = e.nativeEvent.offsetY;
-      setAddedImages(
-        addedImages.map((img, idx) => {
-          if (idx === draggingIdx) {
-            return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-          }
-          return img;
-        })
-      );
+      window.requestAnimationFrame(() => {
+        const mouseX = e.nativeEvent.offsetX;
+        const mouseY = e.nativeEvent.offsetY;
+        setAddedImages(
+          addedImages.map((img, idx) => {
+            if (idx === draggingIdx) {
+              return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
+            }
+            return img;
+          })
+        );
+      });
     }
   };
 
@@ -147,27 +152,29 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
 
   const onTouchMove = (e) => {
     if (!dragging) return;
-    const touch = e.touches[0];
-    const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-    const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+    window.requestAnimationFrame(() => {
+      const touch = e.touches[0];
+      const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+      const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
 
-    const newX = Math.min(
-      Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
-      canvasRef.current.width - addedImages[draggingIdx].width
-    );
-    const newY = Math.min(
-      Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
-      canvasRef.current.height - addedImages[draggingIdx].height
-    );
-    e.preventDefault();
-    setAddedImages(
-      addedImages.map((img, idx) => {
-        if (idx === draggingIdx) {
-          return { ...img, x: newX, y: newY };
-        }
-        return img;
-      })
-    );
+      const newX = Math.min(
+        Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
+        canvasRef.current.width - addedImages[draggingIdx].width
+      );
+      const newY = Math.min(
+        Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
+        canvasRef.current.height - addedImages[draggingIdx].height
+      );
+      e.preventDefault();
+      setAddedImages(
+        addedImages.map((img, idx) => {
+          if (idx === draggingIdx) {
+            return { ...img, x: newX, y: newY };
+          }
+          return img;
+        })
+      );
+    });
   };
 
   const onTouchEnd = () => {
@@ -185,7 +192,7 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     });
   };
   return (
-    <>
+    <CanvasDiv>
       <ImageSelection>
         <img
           src={walletImg}
@@ -220,16 +227,25 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
         />
         {showCard && (
           <CardWrapper>
-            <WrapCard userData={userInfo} />
+            <WrapCard
+              userData={userInfo}
+              customTextColor={customTextColor}
+            />
           </CardWrapper>
         )}
       </CanvasContainer>
       <button onClick={handleCompletion}>수정 완료</button>
-    </>
+    </CanvasDiv>
   );
 };
 
 export default Canvas;
+
+const CanvasDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ImageSelection = styled.div`
   display: flex;
@@ -247,6 +263,8 @@ const ImageSelection = styled.div`
 `;
 
 const CanvasContainer = styled.div`
+  margin-top: 100px;
+
   width: calc(100vw - 32px);
   max-width: 580px;
   height: 200px;
