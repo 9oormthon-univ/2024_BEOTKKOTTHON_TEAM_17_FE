@@ -10,7 +10,7 @@ import MyCards from "./pages/MyCards";
 import MyCardsList from "./pages/MyCardsList";
 import MyCardsCategory from "./pages/MyCardsCategory";
 import QrScan from "./pages/QrScan";
-
+import EditAdditional from "./pages/EditAdditiomal";
 import "./App.css";
 import CardCustom from "./pages/CardCustom";
 import QrRedirect from "./components/QrRedirect";
@@ -48,6 +48,11 @@ function App() {
           exact
           path="/mypage/edit"
           element={<MyPageEdit />}
+        />
+        <Route
+          exact
+          path="/mypage/edit/additional"
+          element={<EditAdditional />}
         />
         <Route
           exact
