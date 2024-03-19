@@ -80,5 +80,5 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
+  margin-right: 7px;
 `;

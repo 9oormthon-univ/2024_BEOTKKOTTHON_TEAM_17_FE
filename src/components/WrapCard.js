@@ -37,7 +37,7 @@ const iconMapping = {
   kakao: <RiKakaoTalkFill color="#FEE500" />,
 };
 
-const WrapCard = ({ userData }) => {
+const WrapCard = ({ userData, customTextColor }) => {
   // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = ["organization", "content", "link"].find((key) => userData[key] !== null);
 
@@ -91,7 +91,7 @@ const WrapCard = ({ userData }) => {
   return (
     <CardBox
       bgColor={userData.bgColor}
-      textColor={userData.textColor}
+      textColor={customTextColor}
       ref={cardRef}
     >
       <CardBoxIn>

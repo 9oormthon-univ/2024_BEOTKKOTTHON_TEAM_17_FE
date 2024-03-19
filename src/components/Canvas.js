@@ -5,7 +5,7 @@ import walletImg from "../images/wallet.png";
 import schoolImg from "../images/school.png";
 import callImg from "../images/call.png";
 import pencilImg from "../images/pencil.png";
-
+import { useDragAndDrop } from "../uitls/dragNdrop";
 import WrapCard from "./WrapCard";
 
 const _constants = {
@@ -22,6 +22,12 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
 
   const [showCard, setShowCard] = useState(true);
 
+  const { onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = useDragAndDrop(
+    setAddedImages,
+    setDragging,
+    setDraggingIdx,
+    canvasRef
+  );
   const toggleDrag = (isDragging) => {
     setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
     setDragging(isDragging);
@@ -56,7 +62,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
 
   useEffect(() => {
-    // 이벤트 리스너에 추가할 로직
     const handleTouchMove = (event) => {
       if (!dragging) return;
       event.preventDefault();
@@ -93,10 +98,11 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
-    if (addedImages.some((img) => img.name === name)) {
-      // 이미 추가된 이미지는 재사용
-      return;
-    }
+
+    // if (addedImages.some((img) => img.name === name)) {
+    //   return;
+    // }
+
     const img = new Image();
     img.onload = () => {
       setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
@@ -104,83 +110,85 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     img.src = src;
   };
 
-  const onMouseDown = (e) => {
-    const mouseX = e.nativeEvent.offsetX;
-    const mouseY = e.nativeEvent.offsetY;
-    addedImages.forEach((img, idx) => {
-      if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-        toggleDrag(true);
-        setDraggingIdx(idx);
-      }
-    });
-  };
 
-  const onMouseMove = (e) => {
-    if (dragging) {
-      window.requestAnimationFrame(() => {
-        const mouseX = e.nativeEvent.offsetX;
-        const mouseY = e.nativeEvent.offsetY;
-        setAddedImages(
-          addedImages.map((img, idx) => {
-            if (idx === draggingIdx) {
-              return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-            }
-            return img;
-          })
-        );
-      });
-    }
-  };
+  // const onTouchStart = (e) => {
+  //   const touch = e.touches[0];
+  //   const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+  //   const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+  //   addedImages.forEach((img, idx) => {
+  //     if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
+  //       toggleDrag(true);
+  //       setDraggingIdx(idx);
+  //       e.preventDefault();
+  //     }
+  //   });
+  // };
 
-  const onMouseUp = () => {
-    toggleDrag(false);
-    setDraggingIdx(null);
-  };
+  // const onTouchMove = (e) => {
+  //   if (!dragging) return;
+  //   window.requestAnimationFrame(() => {
+  //     const touch = e.touches[0];
+  //     const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+  //     const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
 
-  const onTouchStart = (e) => {
-    const touch = e.touches[0];
-    const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-    const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-    addedImages.forEach((img, idx) => {
-      if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
-        toggleDrag(true);
-        setDraggingIdx(idx);
-        e.preventDefault();
-      }
-    });
-  };
+  //     const newX = Math.min(
+  //       Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
+  //       canvasRef.current.width - addedImages[draggingIdx].width
+  //     );
+  //     const newY = Math.min(
+  //       Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
+  //       canvasRef.current.height - addedImages[draggingIdx].height
+  //     );
+  //     e.preventDefault();
+  //     setAddedImages(
+  //       addedImages.map((img, idx) => {
+  //         if (idx === draggingIdx) {
+  //           return { ...img, x: newX, y: newY };
+  //         }
+  //         return img;
+  //       })
+  //     );
+  //   });
+  // };
 
-  const onTouchMove = (e) => {
-    if (!dragging) return;
-    window.requestAnimationFrame(() => {
-      const touch = e.touches[0];
-      const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-      const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+  // const onTouchEnd = () => {
+  //   toggleDrag(false);
+  //   setDraggingIdx(null);
+  // };
 
-      const newX = Math.min(
-        Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
-        canvasRef.current.width - addedImages[draggingIdx].width
-      );
-      const newY = Math.min(
-        Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
-        canvasRef.current.height - addedImages[draggingIdx].height
-      );
-      e.preventDefault();
-      setAddedImages(
-        addedImages.map((img, idx) => {
-          if (idx === draggingIdx) {
-            return { ...img, x: newX, y: newY };
-          }
-          return img;
-        })
-      );
-    });
-  };
+//   const onMouseDown = (e) => {
+//     const mouseX = e.nativeEvent.offsetX;
+//     const mouseY = e.nativeEvent.offsetY;
+//     addedImages.forEach((img, idx) => {
+//       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
+//         toggleDrag(true);
+//         setDraggingIdx(idx);
+//       }
+//     });
+//   };
 
-  const onTouchEnd = () => {
-    toggleDrag(false);
-    setDraggingIdx(null);
-  };
+//   const onMouseMove = (e) => {
+//     if (dragging) {
+//       window.requestAnimationFrame(() => {
+//         const mouseX = e.nativeEvent.offsetX;
+//         const mouseY = e.nativeEvent.offsetY;
+//         setAddedImages(
+//           addedImages.map((img, idx) => {
+//             if (idx === draggingIdx) {
+//               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
+//             }
+//             return img;
+//           })
+//         );
+//       });
+//     }
+//   };
+
+//   const onMouseUp = () => {
+//     toggleDrag(false);
+//     setDraggingIdx(null);
+//   };
+
 
   const handleCompletion = () => {
     console.log("캔버스에 존재하는 스티커의 상대 좌표:");
@@ -192,7 +200,7 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     });
   };
   return (
-    <>
+    <CanvasDiv>
       <ImageSelection>
         <img
           src={walletImg}
@@ -218,25 +226,34 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
       <CanvasContainer>
         <StyledCanvas
           ref={canvasRef}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onMouseMove={onMouseMove}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
+          onTouchStart={(e) => onTouchStart(e, addedImages)}
+          onTouchMove={(e) => onTouchMove(e, dragging, draggingIdx, addedImages)}
+          onTouchEnd={() => onTouchEnd(setDragging, setDraggingIdx)}
+          onMouseDown={(e) => onMouseDown(e, addedImages)}
+          onMouseMove={(e) => onMouseMove(e, dragging, draggingIdx, addedImages)}
+          onMouseUp={() => onMouseUp(setDragging, setDraggingIdx)}
         />
         {showCard && (
           <CardWrapper>
-            <WrapCard userData={userInfo} />
+            <WrapCard
+              userData={userInfo}
+              customTextColor={customTextColor}
+            />
           </CardWrapper>
         )}
       </CanvasContainer>
       <button onClick={handleCompletion}>수정 완료</button>
-    </>
+    </CanvasDiv>
   );
 };
 
 export default Canvas;
+
+const CanvasDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ImageSelection = styled.div`
   display: flex;
@@ -254,6 +271,8 @@ const ImageSelection = styled.div`
 `;
 
 const CanvasContainer = styled.div`
+  margin-top: 10px;
+
   width: calc(100vw - 32px);
   max-width: 580px;
   height: 200px;

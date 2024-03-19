@@ -22,7 +22,6 @@ const CardCustom = () => {
             <CustomPageCenter>
               <MainText>명함 커스텀</MainText>
               <GuideText>색상 변경 및 스티커를 활용해 나만의 명함을 만들어보세요.</GuideText>
-              <Card userData={userInfo} />
               <Canvas
                 customBackColor={customBackColor}
                 customTextColor={customTextColor}
@@ -33,10 +32,6 @@ const CardCustom = () => {
                 setCustomTextColor={setCustomTextColor}
                 setCustomStickers={setCustomStickers}
               />
-
-              <Test>
-                <Card userData={userInfo} />
-              </Test>
             </CustomPageCenter>
           </div>
         </CustomPage>
@@ -49,7 +44,6 @@ export default CardCustom;
 
 const CustomPage = styled.div`
   background: #fff;
-  border: 1px solid black;
 `;
 
 const CustomPageCenter = styled.div`
@@ -84,8 +78,4 @@ const GuideText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-`;
-
-const Test = styled.div`
-  transform: scale(0.5);
 `;
