@@ -98,15 +98,18 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
+
     // if (addedImages.some((img) => img.name === name)) {
     //   return;
     // }
+
     const img = new Image();
     img.onload = () => {
       setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
     };
     img.src = src;
   };
+
 
   // const onTouchStart = (e) => {
   //   const touch = e.touches[0];
@@ -152,6 +155,40 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   //   toggleDrag(false);
   //   setDraggingIdx(null);
   // };
+
+//   const onMouseDown = (e) => {
+//     const mouseX = e.nativeEvent.offsetX;
+//     const mouseY = e.nativeEvent.offsetY;
+//     addedImages.forEach((img, idx) => {
+//       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
+//         toggleDrag(true);
+//         setDraggingIdx(idx);
+//       }
+//     });
+//   };
+
+//   const onMouseMove = (e) => {
+//     if (dragging) {
+//       window.requestAnimationFrame(() => {
+//         const mouseX = e.nativeEvent.offsetX;
+//         const mouseY = e.nativeEvent.offsetY;
+//         setAddedImages(
+//           addedImages.map((img, idx) => {
+//             if (idx === draggingIdx) {
+//               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
+//             }
+//             return img;
+//           })
+//         );
+//       });
+//     }
+//   };
+
+//   const onMouseUp = () => {
+//     toggleDrag(false);
+//     setDraggingIdx(null);
+//   };
+
 
   const handleCompletion = () => {
     console.log("캔버스에 존재하는 스티커의 상대 좌표:");
