@@ -3,6 +3,7 @@ import Palette from "../images/palette.png";
 import styled from "styled-components";
 import React, { useState } from "react";
 import ColorPalette from "./ColorPalette";
+import StickerModal from "./StickerModal";
 
 const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStickers }) => {
   const [activeComponent, setActiveComponent] = useState("");
@@ -27,7 +28,7 @@ const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStick
           setCustomTextColor={setCustomTextColor}
         />
       )}
-      {/* {activeComponent === "Smile" && <Stickers setCustomStickers={setCustomStickers} />} */}
+      {activeComponent === "Smile" && <StickerModal setCustomStickers={setCustomStickers} />}
     </>
   );
 };

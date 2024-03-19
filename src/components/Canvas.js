@@ -5,7 +5,7 @@ import walletImg from "../images/wallet.png";
 import schoolImg from "../images/school.png";
 import callImg from "../images/call.png";
 import pencilImg from "../images/pencil.png";
-
+import { useDragAndDrop } from "../uitls/dragNdrop";
 import WrapCard from "./WrapCard";
 
 const _constants = {
@@ -22,6 +22,12 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
 
   const [showCard, setShowCard] = useState(true);
 
+  const { onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = useDragAndDrop(
+    setAddedImages,
+    setDragging,
+    setDraggingIdx,
+    canvasRef
+  );
   const toggleDrag = (isDragging) => {
     setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
     setDragging(isDragging);
@@ -102,83 +108,50 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     img.src = src;
   };
 
-  const onMouseDown = (e) => {
-    const mouseX = e.nativeEvent.offsetX;
-    const mouseY = e.nativeEvent.offsetY;
-    addedImages.forEach((img, idx) => {
-      if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-        toggleDrag(true);
-        setDraggingIdx(idx);
-      }
-    });
-  };
+  // const onTouchStart = (e) => {
+  //   const touch = e.touches[0];
+  //   const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+  //   const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
+  //   addedImages.forEach((img, idx) => {
+  //     if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
+  //       toggleDrag(true);
+  //       setDraggingIdx(idx);
+  //       e.preventDefault();
+  //     }
+  //   });
+  // };
 
-  const onMouseMove = (e) => {
-    if (dragging) {
-      window.requestAnimationFrame(() => {
-        const mouseX = e.nativeEvent.offsetX;
-        const mouseY = e.nativeEvent.offsetY;
-        setAddedImages(
-          addedImages.map((img, idx) => {
-            if (idx === draggingIdx) {
-              return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-            }
-            return img;
-          })
-        );
-      });
-    }
-  };
+  // const onTouchMove = (e) => {
+  //   if (!dragging) return;
+  //   window.requestAnimationFrame(() => {
+  //     const touch = e.touches[0];
+  //     const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
+  //     const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
 
-  const onMouseUp = () => {
-    toggleDrag(false);
-    setDraggingIdx(null);
-  };
+  //     const newX = Math.min(
+  //       Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
+  //       canvasRef.current.width - addedImages[draggingIdx].width
+  //     );
+  //     const newY = Math.min(
+  //       Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
+  //       canvasRef.current.height - addedImages[draggingIdx].height
+  //     );
+  //     e.preventDefault();
+  //     setAddedImages(
+  //       addedImages.map((img, idx) => {
+  //         if (idx === draggingIdx) {
+  //           return { ...img, x: newX, y: newY };
+  //         }
+  //         return img;
+  //       })
+  //     );
+  //   });
+  // };
 
-  const onTouchStart = (e) => {
-    const touch = e.touches[0];
-    const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-    const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-    addedImages.forEach((img, idx) => {
-      if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
-        toggleDrag(true);
-        setDraggingIdx(idx);
-        e.preventDefault();
-      }
-    });
-  };
-
-  const onTouchMove = (e) => {
-    if (!dragging) return;
-    window.requestAnimationFrame(() => {
-      const touch = e.touches[0];
-      const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-      const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-
-      const newX = Math.min(
-        Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
-        canvasRef.current.width - addedImages[draggingIdx].width
-      );
-      const newY = Math.min(
-        Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
-        canvasRef.current.height - addedImages[draggingIdx].height
-      );
-      e.preventDefault();
-      setAddedImages(
-        addedImages.map((img, idx) => {
-          if (idx === draggingIdx) {
-            return { ...img, x: newX, y: newY };
-          }
-          return img;
-        })
-      );
-    });
-  };
-
-  const onTouchEnd = () => {
-    toggleDrag(false);
-    setDraggingIdx(null);
-  };
+  // const onTouchEnd = () => {
+  //   toggleDrag(false);
+  //   setDraggingIdx(null);
+  // };
 
   const handleCompletion = () => {
     console.log("캔버스에 존재하는 스티커의 상대 좌표:");
@@ -216,12 +189,12 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
       <CanvasContainer>
         <StyledCanvas
           ref={canvasRef}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onMouseMove={onMouseMove}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
+          onTouchStart={(e) => onTouchStart(e, addedImages)}
+          onTouchMove={(e) => onTouchMove(e, dragging, draggingIdx, addedImages)}
+          onTouchEnd={() => onTouchEnd(setDragging, setDraggingIdx)}
+          onMouseDown={(e) => onMouseDown(e, addedImages)}
+          onMouseMove={(e) => onMouseMove(e, dragging, draggingIdx, addedImages)}
+          onMouseUp={() => onMouseUp(setDragging, setDraggingIdx)}
         />
         {showCard && (
           <CardWrapper>
