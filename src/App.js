@@ -10,10 +10,11 @@ import MyCards from "./pages/MyCards";
 import MyCardsList from "./pages/MyCardsList";
 import MyCardsCategory from "./pages/MyCardsCategory";
 import QrScan from "./pages/QrScan";
-
 import "./App.css";
 import CardCustom from "./pages/CardCustom";
 import QrRedirect from "./components/QrRedirect";
+import SelectAdditional from "./pages/SelectAdditional";
+import AdditionalDetails from "./pages/AdditionalDetails";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route exact path="/signup/step2" element={<SignUpStep2 />} />
         <Route exact path="/mypage" element={<MyPage />} />
         <Route exact path="/mypage/edit" element={<MyPageEdit />} />
+        <Route exact path="/mypage/edit/additional" element={<SelectAdditional />} />
+        <Route exact path="/mypage/edit/additional/detail" element={<AdditionalDetails />} />
         <Route exact path="/mycards" element={<MyCards />} />
         <Route exact path="/mycards/list" element={<MyCardsList />} />
         <Route exact path="/mycards/category" element={<MyCardsCategory />} />

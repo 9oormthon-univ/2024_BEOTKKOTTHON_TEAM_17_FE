@@ -37,7 +37,7 @@ const iconMapping = {
   kakao: <RiKakaoTalkFill color="#FEE500" />,
 };
 
-const WrapCard = ({ userData }) => {
+const WrapCard = ({ userData, customTextColor }) => {
   // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = ["organization", "content", "link"].find((key) => userData[key] !== null);
 
@@ -69,6 +69,11 @@ const WrapCard = ({ userData }) => {
     }
   };
 
+  const formatNameWithSpace = (name) => {
+    if (!name) return "";
+    return name.split("").join(" ");
+  };
+
   // 상대적인 스티커 좌표를 구하기 위함
   const cardRef = useRef();
   const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
@@ -86,7 +91,7 @@ const WrapCard = ({ userData }) => {
   return (
     <CardBox
       bgColor={userData.bgColor}
-      textColor={userData.textColor}
+      textColor={customTextColor}
       ref={cardRef}
     >
       <CardBoxIn>
@@ -100,7 +105,7 @@ const WrapCard = ({ userData }) => {
         />
 
         <CardNameSpace>
-          <CardName>{userData.name}</CardName>
+          <CardName>{formatNameWithSpace(userData.name)}</CardName>
           {primaryInfoKey && (
             <IconAndText>
               {iconMapping[primaryInfoKey]}

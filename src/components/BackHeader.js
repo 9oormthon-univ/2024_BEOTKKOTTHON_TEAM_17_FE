@@ -10,7 +10,12 @@ const BackHeader = () => {
   return (
     <HeaderContainer>
       <div className="backarrow-img">
-        <Img onClick={goBack} style={{ cursor: "pointer" }} src={BackArrow} alt="뒤로가기" />
+        <Img
+          onClick={goBack}
+          style={{ cursor: "pointer" }}
+          src={BackArrow}
+          alt="뒤로가기"
+        />
       </div>
     </HeaderContainer>
   );
@@ -24,6 +29,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   color: #fff;
 
+  height: 24px;
   padding: 10px 4px;
 `;
 

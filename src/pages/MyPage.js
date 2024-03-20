@@ -26,6 +26,7 @@ const MyPage = () => {
         const userInfoResponse = await getMyInfo(token);
         if (userInfoResponse && userInfoResponse.status === 200) {
           setUserInfo(userInfoResponse.data);
+          console.log(userInfoResponse);
           console.log(userInfo);
         }
       } catch (error) {
