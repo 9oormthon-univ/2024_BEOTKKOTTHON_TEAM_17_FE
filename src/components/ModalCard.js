@@ -26,6 +26,7 @@ const ModalCard = ({ user, onClose }) => {
             <ModalCardImg>
               <Card userData={user} />
             </ModalCardImg>
+            <CardDeleteBtn>삭제하기</CardDeleteBtn>
           </ModalContent>
         </ModalWrap>
       </ModalSpace>
@@ -42,6 +43,9 @@ const ModalWrap = styled.div`
   height: 405px;
   z-index: 2;
   background-color: #fff;
+
+  position: fixed;
+  bottom: 0;
 
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
@@ -64,7 +68,7 @@ const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  // background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.25);
   top: 0;
   left: 0;
   z-index: 1;
@@ -85,7 +89,10 @@ const ModalClose = styled.div`
 `;
 
 const ModalContent = styled.div`
-  text-align: center;
+  // text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ModalTitle = styled.div`
@@ -93,11 +100,37 @@ const ModalTitle = styled.div`
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
-  margin-top: 53px;
+  margin-top: 25px;
 `;
 
 const ModalCardImg = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 25.5px;
+  margin-top: 23.5px;
+`;
+
+const CardDeleteBtn = styled.div`
+  // width: 200px;
+  width: 55vw;
+  max-width: 420px;
+  height: 42px;
+  border-radius: 100px;
+  background: #138eff;
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+
+  margin-top: 24px;
+  cursor: pointer;
+
+  @media (hover: hover) and (pointer: fine) {
+    width: calc(375px * 0.55);
+  }
 `;
