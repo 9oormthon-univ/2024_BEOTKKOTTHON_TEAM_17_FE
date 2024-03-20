@@ -1,53 +1,52 @@
-import BackHeader from "../components/BackHeader";
-import "../styles/Main.css";
-import styled from "styled-components";
-import { GuideText, MainText } from "../styles/Title";
-import { useUserInfo } from "../store/store";
 import React, { useState, useEffect } from "react";
-import PlusInfoBtn from "../components/PlusInfoBtn";
-import { useNavigate } from "react-router-dom";
-import { mappedNameList, exceptCannotSelectList, exceptCannotTransmitList } from "../components/MappedName";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import BackHeader from "../components/BackHeader";
+import styled from "styled-components";
+import { MainText, GuideText } from "../styles/Title";
+import { useUserInfo } from "../store/store";
+import { mappedNameList, exceptCannotTransmitList } from "../components/MappedName";
 
-const MyPageEdit = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const AdditionalDetails = () => {
+  const location = useLocation();
+  const { selected } = location.state || { selected: [] };
+
+  const [selectedOptions, setSelectedOptions] = useState(selected);
+
   const { userInfo } = useUserInfo();
-
-  // userInfoToSubmit은 userInfo에서 cardId, userId, qrUrl, bgColor, .. 등이 빠진 새로운 객체
   const userInfoToSubmit = Object.fromEntries(
     Object.entries(userInfo).filter(([key, value]) => !exceptCannotTransmitList.includes(key))
   );
 
-  // const [localUserInfo, setLocalUserInfo] = useState(userInfo);
+  //   const [localUserInfo, setLocalUserInfo] = useState(userInfo);
   const [localUserInfo, setLocalUserInfo] = useState(userInfoToSubmit);
-
-  const navigate = useNavigate();
-
-  const mappedName = mappedNameList;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setLocalUserInfo({ ...localUserInfo, [name]: value });
   };
 
-  const linkToNext = () => {
-    const selectedOptions = Object.entries(localUserInfo)
-      .filter(([key, value]) => value !== null && !exceptCannotSelectList.includes(key))
-      .map(([key]) => key);
-    navigate("/mypage/edit/additional", { state: { selected: selectedOptions } });
-  };
+  const [formFields, setFormFields] = useState(() => {
+    const fields = selected.reduce((acc, key) => {
+      acc[key] = userInfo[key] || "";
+      return acc;
+    }, {});
+    return { ...userInfo, ...fields };
+  });
 
-  const saveLocalInfo = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    console.log(selectedOptions);
     console.log(localUserInfo);
-  };
+  }, []);
+
   return (
     <div className="page">
       <div className="center">
-        <EditPageBack>
+        <PageBack>
           <div className="page-space">
             <BackHeader />
-            <EditPageCenter>
+            <PageCenter>
               <MainText>{localUserInfo.name}님의 명함 정보</MainText>
               <GuideText style={{ marginBottom: "16px" }}>
                 연동된 정보 외에 최대 4개의 정보를 입력하실 수 있어요.
@@ -87,57 +86,40 @@ const MyPageEdit = () => {
                   placeholder="기분, 감정 등 내 상태를 6자 이내로 작성해보세요."
                 />
               </Container>
-              {Object.entries(localUserInfo).map(([key, value]) => {
-                if (
-                  value !== null &&
-                  ![
-                    "name",
-                    "phone",
-                    "email",
-                    "status",
-                    "cardId",
-                    "userId",
-                    "qrUrl",
-                    "bgColor",
-                    "textColor",
-                    "stickerDtoList",
-                  ].includes(key)
-                ) {
-                  const title = mappedName[key] || key;
-                  return (
-                    <>
-                      <CustomGuide>{title}</CustomGuide>
-                      <Container>
-                        <Input
-                          id={key}
-                          name={key}
-                          value={localUserInfo[key]}
-                          onChange={handleChange}
-                        />
-                      </Container>
-                    </>
-                  );
-                }
-                return null;
-              })}
-              <PlusInfoBtn onClick={linkToNext} />
-              <SubText>추가 정보 입력하기</SubText>
-              <CompleteBtn onClick={saveLocalInfo}>저장하기</CompleteBtn>
-            </EditPageCenter>
+              {selected.map((key) => (
+                <>
+                  <CustomGuide>{mappedNameList[key]}</CustomGuide>
+                  <Container>
+                    <Input
+                      key={key}
+                      name={key}
+                      value={localUserInfo[key]}
+                      onChange={handleChange}
+                    />
+                  </Container>
+                </>
+              ))}
+              <CompleteBtn
+                onClick={() => {
+                  console.log(localUserInfo);
+                }}
+              >
+                저장하기
+              </CompleteBtn>
+            </PageCenter>
           </div>
-        </EditPageBack>
+        </PageBack>
       </div>
     </div>
   );
 };
+export default AdditionalDetails;
 
-export default MyPageEdit;
-
-const EditPageBack = styled.div`
+const PageBack = styled.div`
   background: #fff;
 `;
 
-const EditPageCenter = styled.div`
+const PageCenter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,7 +168,7 @@ const Input = styled.input`
 `;
 
 const CompleteBtn = styled.div`
-  margin-top: 9px;
+  margin-top: 30px;
   margin-bottom: 20px;
   cursor: pointer;
 
@@ -208,16 +190,4 @@ const CompleteBtn = styled.div`
   @media (hover: hover) and (pointer: fine) {
     width: 343px;
   }
-`;
-
-const SubText = styled.div`
-  color: #000;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-
-  margin-top: 17px;
-  margin-bottom: 54px;
 `;

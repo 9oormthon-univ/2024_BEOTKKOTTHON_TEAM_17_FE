@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Card from "../components/Card";
-import BackQRHeader from "../components/BackQRHeader";
+import BackHeader from "../components/BackHeader";
 import { useUserInfo } from "../store/store";
 
 import CustomSelector from "../components/CustomSelector";
 import Canvas from "../components/Canvas";
 
+import { MainText, GuideText } from "../styles/Title";
 const CardCustom = () => {
   const { userInfo } = useUserInfo();
   const [customBackColor, setCustomBackColor] = useState(`${userInfo.bgColor}`);
@@ -18,7 +18,7 @@ const CardCustom = () => {
       <div className="center">
         <CustomPage>
           <div className="page-space">
-            <BackQRHeader />
+            <BackHeader />
             <CustomPageCenter>
               <MainText>명함 커스텀</MainText>
               <GuideText>색상 변경 및 스티커를 활용해 나만의 명함을 만들어보세요.</GuideText>
@@ -50,32 +50,4 @@ const CustomPageCenter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const MainText = styled.div`
-  align-self: flex-start;
-  margin-top: 20px;
-  margin-bottom: 17px;
-  margin-left: 16px;
-
-  color: #000;
-  leading-trim: both;
-  text-edge: cap;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
-const GuideText = styled.div`
-  align-self: flex-start;
-  margin-left: 16px;
-
-  color: #000;
-  font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 `;

@@ -6,7 +6,7 @@ import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
 import Search from "../images/search1.png";
 
-const BackHeader = ({ isMyPage }) => {
+const BackQRHeader = ({ isMyPage }) => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["jwt-token"]);
 
@@ -26,20 +26,31 @@ const BackHeader = ({ isMyPage }) => {
   return (
     <HeaderContainer>
       <div className="backarrow-img">
-        <Img onClick={goBack} style={{ cursor: "pointer" }} src={BackArrow} alt="뒤로가기" />
+        <Img
+          onClick={goBack}
+          style={{ cursor: "pointer" }}
+          src={BackArrow}
+          alt="뒤로가기"
+        />
       </div>
       {isMyPage ? (
         <HeaderBtn onClick={handleToLogOut}>로그아웃</HeaderBtn>
       ) : (
-        <div className="search-img" onClick={handleToQrScan}>
-          <img src={Search} alt="QR 인식" />
+        <div
+          className="search-img"
+          onClick={handleToQrScan}
+        >
+          <img
+            src={Search}
+            alt="QR 인식"
+          />
         </div>
       )}
     </HeaderContainer>
   );
 };
 
-export default BackHeader;
+export default BackQRHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
