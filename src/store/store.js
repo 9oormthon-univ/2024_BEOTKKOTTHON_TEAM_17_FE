@@ -87,3 +87,24 @@ export const useOtherInfo = create(
     }
   )
 );
+
+const useStickerStore = create((set, get) => ({
+  // 선택된 스티커를 관리
+  selectedStickers: [],
+
+  // 선택된 스티커 추가 또는 제거
+  toggleSticker: (sticker) =>
+    set((state) => ({
+      selectedStickers: state.selectedStickers.includes(sticker)
+        ? state.selectedStickers.filter((s) => s !== sticker) // 이미 선택된 스티커 제거
+        : [...state.selectedStickers, sticker], // 새로운 스티커 추가
+    })),
+
+  // 카테고리별 스티커 정보
+  stickerCategories: {
+    wallet: ["wallet1", "wallet2", "wallet3"],
+  },
+
+  // 카테고리별 스티커 목록을 가져오는 함수
+  getStickersByCategory: (category) => get().stickerCategories[category] || [],
+}));
