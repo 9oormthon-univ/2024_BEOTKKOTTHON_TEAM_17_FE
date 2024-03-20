@@ -91,11 +91,7 @@ const Card = ({ userData }) => {
   };
 
   return (
-    <CardBox
-      bgColor={userData.bgColor}
-      textColor={userData.textColor}
-      ref={cardRef}
-    >
+    <CardBox bgColor={userData.bgColor} textColor={userData.textColor} ref={cardRef}>
       <CardBoxIn>
         <CustomImage
           src={Wallet}
@@ -106,32 +102,36 @@ const Card = ({ userData }) => {
           height={30}
         />
 
-        <CardNameSpace>
-          <CardName>{formatNameWithSpace(userData.name)}</CardName>
-          {primaryInfoKey && (
-            <IconAndText>
-              {iconMapping[primaryInfoKey]}
-              <CardText>{userData[primaryInfoKey]}</CardText>
-            </IconAndText>
-          )}
-        </CardNameSpace>
+        <CardLeftRight>
+          <CardNameSpace>
+            <CardName>{formatNameWithSpace(userData.name)}</CardName>
+            {primaryInfoKey && (
+              <IconAndText>
+                {iconMapping[primaryInfoKey]}
+                <CardText>{userData[primaryInfoKey]}</CardText>
+              </IconAndText>
+            )}
+          </CardNameSpace>
 
-        <CardSpace style={{ marginTop: "10px" }}>
-          <MdEmail color="#000" />
-          <CardText>{userData.email}</CardText>
-        </CardSpace>
-        <CardContents>
-          <CardSpace>
-            <FaPhoneAlt color="#000" />
-            <CardText>{formatPhoneNumber(userData.phone)}</CardText>
-          </CardSpace>
-          {secondaryInfos.map((info) => (
-            <CardSpace key={info.key}>
-              {iconMapping[info.key]}
-              <CardText>{info.value}</CardText>
+          <CardRight>
+            <CardSpace style={{ marginTop: "0" }}>
+              <MdEmail color="#000" />
+              <CardText>{userData.email}</CardText>
             </CardSpace>
-          ))}
-        </CardContents>
+            <CardContents>
+              <CardSpace>
+                <FaPhoneAlt color="#000" />
+                <CardText>{formatPhoneNumber(userData.phone)}</CardText>
+              </CardSpace>
+              {secondaryInfos.map((info) => (
+                <CardSpace key={info.key}>
+                  {iconMapping[info.key]}
+                  <CardText>{info.value}</CardText>
+                </CardSpace>
+              ))}
+            </CardContents>
+          </CardRight>
+        </CardLeftRight>
       </CardBoxIn>
     </CardBox>
   );
@@ -194,7 +194,9 @@ const CardContents = styled.div`
 
 const CardNameSpace = styled.div`
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CardSpace = styled.div`
@@ -206,4 +208,14 @@ const CardSpace = styled.div`
 const IconAndText = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const CardLeftRight = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`;
+
+const CardRight = styled.div`
+  margin-left: 18px;
 `;

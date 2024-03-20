@@ -10,13 +10,7 @@ const ModalCard = ({ user, onClose }) => {
         <ModalWrap>
           <ModalCloseSpace>
             <ModalClose onClick={onClose}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                 <path
                   d="M1 1L8.5 8.5L16 16M16 1L1 16"
                   stroke="black"
@@ -135,8 +129,14 @@ const CardDeleteBtn = styled.div`
 
   margin-top: 24px;
   cursor: pointer;
+  transition: 400ms ease-in-out;
 
   @media (hover: hover) and (pointer: fine) {
     width: calc(375px * 0.55);
+  }
+
+  &:hover {
+    background-color: #006eee;
+    transition: 400ms ease-in-out;
   }
 `;
