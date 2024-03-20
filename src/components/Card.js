@@ -54,6 +54,8 @@ const Card = ({ userData }) => {
     "behance",
     "github",
     "kakao",
+    //"link",
+    //"content",
   ];
 
   const secondaryInfos = secondaryInfoKeys
@@ -68,7 +70,6 @@ const Card = ({ userData }) => {
       return ""; // 또는 다른 기본값으로 설정
     }
   };
-
 
   // 상대적인 스티커 좌표를 구하기 위함
   const cardRef = useRef();
@@ -88,7 +89,6 @@ const Card = ({ userData }) => {
     if (!name) return "";
     return name.split("").join(" ");
   };
-
 
   return (
     <CardBox

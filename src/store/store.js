@@ -23,8 +23,9 @@ export const useUserInfo = create(
         name: "",
         email: "",
         phone: "",
+        status: null,
         qrUrl: "",
-        organisation: null, //소속
+        organization: null, //소속
         link: null, //링크
         content: null, //추가 글
         instagram: null,
@@ -40,6 +41,7 @@ export const useUserInfo = create(
         kakao: null,
         bgColor: "#ffe3e7",
         textColor: "#000",
+        stickerDtoList: [],
       },
       setUserInfo: (userInfo) => set({ userInfo }),
     }),
@@ -55,6 +57,7 @@ export const useOtherInfo = create(
       otherInfo: {
         cardId: 0,
         userId: 0,
+        status: null,
         name: "",
         email: "",
         phone: "",
@@ -75,6 +78,7 @@ export const useOtherInfo = create(
         kakao: null,
         bgColor: "#ffe3e7",
         textColor: "#000",
+        stickerDtoList: [],
       },
       setOtherInfo: (otherInfo) => set({ otherInfo }),
     }),
