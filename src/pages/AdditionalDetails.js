@@ -5,7 +5,7 @@ import BackHeader from "../components/BackHeader";
 import styled from "styled-components";
 import { MainText, GuideText } from "../styles/Title";
 import { useUserInfo } from "../store/store";
-import { mappedNameList } from "../components/MappedName";
+import { mappedNameList, exceptCannotTransmitList } from "../components/MappedName";
 
 const AdditionalDetails = () => {
   const location = useLocation();
@@ -14,7 +14,12 @@ const AdditionalDetails = () => {
   const [selectedOptions, setSelectedOptions] = useState(selected);
 
   const { userInfo } = useUserInfo();
-  const [localUserInfo, setLocalUserInfo] = useState(userInfo);
+  const userInfoToSubmit = Object.fromEntries(
+    Object.entries(userInfo).filter(([key, value]) => !exceptCannotTransmitList.includes(key))
+  );
+
+  //   const [localUserInfo, setLocalUserInfo] = useState(userInfo);
+  const [localUserInfo, setLocalUserInfo] = useState(userInfoToSubmit);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

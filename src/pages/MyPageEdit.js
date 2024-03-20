@@ -6,14 +6,21 @@ import { useUserInfo } from "../store/store";
 import React, { useState, useEffect } from "react";
 import PlusInfoBtn from "../components/PlusInfoBtn";
 import { useNavigate } from "react-router-dom";
-import { mappedNameList } from "../components/MappedName";
+import { mappedNameList, exceptCannotSelectList, exceptCannotTransmitList } from "../components/MappedName";
 
 const MyPageEdit = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const { userInfo } = useUserInfo();
-  const [localUserInfo, setLocalUserInfo] = useState(userInfo);
+
+  // userInfoToSubmit은 userInfo에서 cardId, userId, qrUrl, bgColor, .. 등이 빠진 새로운 객체
+  const userInfoToSubmit = Object.fromEntries(
+    Object.entries(userInfo).filter(([key, value]) => !exceptCannotTransmitList.includes(key))
+  );
+
+  // const [localUserInfo, setLocalUserInfo] = useState(userInfo);
+  const [localUserInfo, setLocalUserInfo] = useState(userInfoToSubmit);
 
   const navigate = useNavigate();
 
@@ -26,22 +33,7 @@ const MyPageEdit = () => {
 
   const linkToNext = () => {
     const selectedOptions = Object.entries(localUserInfo)
-      .filter(
-        ([key, value]) =>
-          value !== null &&
-          ![
-            "status",
-            "email",
-            "name",
-            "phone",
-            "cardId",
-            "userId",
-            "qrUrl",
-            "bgColor",
-            "textColor",
-            "stickerDtoList",
-          ].includes(key)
-      )
+      .filter(([key, value]) => value !== null && !exceptCannotSelectList.includes(key))
       .map(([key]) => key);
     navigate("/mypage/edit/additional", { state: { selected: selectedOptions } });
   };
