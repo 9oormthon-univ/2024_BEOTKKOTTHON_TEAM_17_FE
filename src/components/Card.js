@@ -134,7 +134,8 @@ const Card = ({ userData }) => {
             y={cardDimensions.height * sticker.posY}
             width={30}
             height={30}
-            zIndex={sticker.zIndex}
+            // zIndex={sticker.zIndex}
+            zIndex={-10}
           />
         ))}
 
@@ -197,7 +198,7 @@ const CardBoxIn = styled.div`
 
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 0;
 `;
 
 const CardName = styled.div`
