@@ -79,6 +79,23 @@ export const getListInfo = async (token) => {
   }
 };
 
+export const getSearchInfo = async (token, searchData) => {
+  try {
+    const searchKeyword = encodeURIComponent(searchData.trim()); // 한글이나 특수문자를 URL 안전한 형태로 인코딩
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/list?search=${searchKeyword}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const subscribeCard = async (memberId, navigate, token) => {
   try {
     const config = {

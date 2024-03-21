@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import ModalCard from "../components/ModalCard";
 import { useOtherInfo } from "../store/store";
-import { getListInfo } from "../uitls/axios";
+import { getListInfo, getSearchInfo } from "../uitls/axios";
 import { useCookies } from "react-cookie";
 import Search from "../images/search3.png";
 import NoMatched from "../images/no_matched.png";
@@ -14,15 +14,11 @@ const MyCardsList = ({ onToggle }) => {
   const [searchData, setSearchData] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [searchedInfo, setSearchedInfo] = useState([]);
 
   const handleInputChange = (e) => {
     setSearchData(e.target.value);
-  };
-
-  const handleSearch = () => {
-    if (searchData.trim() !== "") {
-      navigate("/"); // 검색어를 trim하여 공백을 제거하고 검색합니다. - 임시로 메인 페이지 이동
-    }
+    handleSearch();
   };
 
   const handleOnKeyPress = (e) => {
@@ -58,6 +54,25 @@ const MyCardsList = ({ onToggle }) => {
     fetchData();
   }, []);
 
+  const handleSearch = async () => {
+    if (searchData.trim() !== "") {
+      try {
+        if (!token) {
+          navigate("/");
+          return;
+        }
+        const searchRes = await getSearchInfo(token, searchData);
+        if (searchRes && searchRes.status === 200) {
+          setSearchedInfo(searchRes.data); // 검색 결과를 상태에 저장
+          console.log(searchRes.data);
+        }
+      } catch (error) {
+        console.log(error);
+        // 오류 처리
+      }
+    }
+  };
+
   const formatPhoneNumber = (phoneNumber) => {
     if (phoneNumber) {
       return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
@@ -86,7 +101,12 @@ const MyCardsList = ({ onToggle }) => {
         <MyCardsHeaderTitle onClick={handleToCategoryLink}>명함 분류함</MyCardsHeaderTitle>
       </MyCardsHeader>
       <MyCardsSearch>
-        <img src={Search} alt="검색" style={{ height: "20px", marginLeft: "16px" }} />
+        <img
+          src={Search}
+          alt="검색"
+          style={{ height: "20px", marginLeft: "16px", cursor: "pointer" }}
+          onClick={handleSearch}
+        />
         <MyCardsSearchInput
           type="text"
           value={searchData}
@@ -95,27 +115,103 @@ const MyCardsList = ({ onToggle }) => {
           placeholder="이름, 이메일 등으로 검색해보세요"
         />
       </MyCardsSearch>
-      {Array.isArray(otherInfo) && otherInfo.length === 0 ? (
-        <NoneCards>
-          <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
-          <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
-        </NoneCards>
+      {searchData.trim() === "" ? (
+        /* 검색하지 않았을 때는 전체 리스트를 보여줌 */
+        <>
+          {Array.isArray(otherInfo) && otherInfo.length === 0 ? (
+            /* 전체 리스트가 없을 때는 등록된 명함이 없다는 메시지 표시 */
+            <NoneCards>
+              <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
+              <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
+            </NoneCards>
+          ) : (
+            /* 전체 리스트가 있을 때는 해당 리스트를 표시 */
+            <div className="CardLists">
+              {Array.isArray(otherInfo) &&
+                otherInfo.map((user, index) => (
+                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                    <Test>
+                      <Card userData={user} />
+                    </Test>
+                    <CardInfo>
+                      <CardInfoName>{user.name}</CardInfoName>
+                      <CardInfoContent>{formatPhoneNumber(user.phone)}</CardInfoContent>
+                      <CardInfoContent>{user.email}</CardInfoContent>
+                    </CardInfo>
+                  </CardListsCard>
+                ))}
+            </div>
+          )}
+        </>
       ) : (
-        <div className="CardLists">
-          {Array.isArray(otherInfo) &&
-            otherInfo.map((user, index) => (
-              <CardListsCard key={index} onClick={() => handleCardClick(user)}>
-                <Test>
-                  <Card userData={user} />
-                </Test>
-                <CardInfo>
-                  <CardInfoName>{user.name}</CardInfoName>
-                  <CardInfoContent>{formatPhoneNumber(user.phone)}</CardInfoContent>
-                  <CardInfoContent>{user.email}</CardInfoContent>
-                </CardInfo>
-              </CardListsCard>
-            ))}
-        </div>
+        /* 검색한 경우에는 검색 결과를 표시 */
+        <>
+          {Array.isArray(searchedInfo) && searchedInfo.length === 0 ? (
+            /* 검색 결과가 없을 때는 검색 결과가 없다는 메시지 표시 */
+            <NoneCards>
+              <p style={{ marginTop: "50px" }}>검색된 명함이 없어요.</p>
+            </NoneCards>
+          ) : (
+            /* 검색 결과가 있을 때는 해당 결과를 표시 */
+            <div className="CardLists">
+              {Array.isArray(searchedInfo) &&
+                searchedInfo.map((user, index) => (
+                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                    <Test>
+                      <Card userData={user} />
+                    </Test>
+                    <CardInfo>
+                      <CardInfoName>
+                        {user.name.includes(searchData) ? (
+                          <>
+                            {user.name.split(searchData).map((part, index) => (
+                              <React.Fragment key={index}>
+                                {index > 0 && <SearchText>{searchData}</SearchText>}
+                                {part}
+                              </React.Fragment>
+                            ))}
+                          </>
+                        ) : (
+                          user.name
+                        )}
+                      </CardInfoName>
+                      <CardInfoContent>
+                        {formatPhoneNumber(user.phone).includes(searchData) ? (
+                          <>
+                            {formatPhoneNumber(user.phone)
+                              .split(searchData)
+                              .map((part, index) => (
+                                <React.Fragment key={index}>
+                                  {index > 0 && <SearchText>{searchData}</SearchText>}
+                                  {part}
+                                </React.Fragment>
+                              ))}
+                          </>
+                        ) : (
+                          formatPhoneNumber(user.phone)
+                        )}
+                      </CardInfoContent>
+
+                      <CardInfoContent>
+                        {user.email.includes(searchData) ? (
+                          <>
+                            {user.email.split(searchData).map((part, index) => (
+                              <React.Fragment key={index}>
+                                {index > 0 && <SearchText>{searchData}</SearchText>}
+                                {part}
+                              </React.Fragment>
+                            ))}
+                          </>
+                        ) : (
+                          user.email
+                        )}
+                      </CardInfoContent>
+                    </CardInfo>
+                  </CardListsCard>
+                ))}
+            </div>
+          )}
+        </>
       )}
       {isModalOpen && <ModalCard user={selectedUser} onClose={closeModal} />}
     </div>
@@ -274,4 +370,9 @@ const CardInfoContent = styled.div`
   font-style: normal;
   font-weight: 500;
   margin-top: 5px;
+`;
+
+const SearchText = styled.span`
+  color: #138eff;
+  font-weight: 700;
 `;

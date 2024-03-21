@@ -1,25 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Card from "../components/Card";
-import ModalDelete from "./ModalDelete";
 
-const ModalCard = ({ user, onClose }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  const handleCardClick = (user) => {
-    setSelectedUser(user);
-    openModal();
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
+const ModalDelete = ({ user, onClose }) => {
   return (
     <div>
       <ModalBackground onClick={onClose} />
@@ -39,23 +21,26 @@ const ModalCard = ({ user, onClose }) => {
             </ModalClose>
           </ModalCloseSpace>
           <ModalContent>
-            <ModalTitle>{user.name}님의 명함</ModalTitle>
-            <ModalCardImg>
-              <Card userData={user} />
-            </ModalCardImg>
-            <CardDeleteBtn onClick={handleCardClick}>삭제하기</CardDeleteBtn>
+            <ModalWarn>!</ModalWarn>
+            <ModalTitle>명함을 정말 삭제하시겠어요?</ModalTitle>
+            <ModalText>
+              삭제를 선택하실 경우,
+              <br />
+              삭제한 명함은 되돌릴 수 없어요.
+            </ModalText>
+            <CardDeleteBtn>삭제</CardDeleteBtn>
+            <CardDeleteBtnNone onClick={onClose}>취소</CardDeleteBtnNone>
           </ModalContent>
         </ModalWrap>
       </ModalSpace>
-      {isModalOpen && <ModalDelete onClose={closeModal} />}
     </div>
   );
 };
 
-export default ModalCard;
+export default ModalDelete;
 
 const ModalWrap = styled.div`
-  box-shadow: 0px 0px 10px 0px rgba(140, 140, 140, 0.5);
+  // box-shadow: 0px 0px 10px 0px rgba(140, 140, 140, 0.5);
   border-radius: 25px 25px 0px 0px;
   width: 100vw;
   height: 405px;
@@ -86,7 +71,7 @@ const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
+  // background-color: rgba(0, 0, 0, 0.25);
   top: 0;
   left: 0;
   z-index: 1;
@@ -113,22 +98,44 @@ const ModalContent = styled.div`
   align-items: center;
 `;
 
-const ModalTitle = styled.div`
+const ModalWarn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background: linear-gradient(180deg, #92cbff -39.42%, #0587ff 32.72%, #0076ff 83.08%);
+
+  color: #fff;
   font-family: Pretendard;
-  font-size: 24px;
+  font-size: 50px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 300;
+
   margin-top: 25px;
 `;
 
-const ModalCardImg = styled.div`
-  display: flex;
-  justify-content: center;
+const ModalTitle = styled.div`
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+
   margin-top: 23.5px;
 `;
 
+const ModalText = styled.div`
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+
+  margin-top: 9px;
+`;
+
 const CardDeleteBtn = styled.div`
-  // width: 200px;
   width: 55vw;
   max-width: 420px;
   height: 42px;
@@ -145,7 +152,7 @@ const CardDeleteBtn = styled.div`
   font-style: normal;
   font-weight: 700;
 
-  margin-top: 24px;
+  margin-top: 30px;
   cursor: pointer;
   transition: 400ms ease-in-out;
 
@@ -155,6 +162,37 @@ const CardDeleteBtn = styled.div`
 
   &:hover {
     background-color: #006eee;
+    transition: 400ms ease-in-out;
+  }
+`;
+
+const CardDeleteBtnNone = styled.div`
+  width: 55vw;
+  max-width: 420px;
+  height: 42px;
+  border-radius: 100px;
+  background: #f4f4f4;
+  color: #000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 400ms ease-in-out;
+
+  @media (hover: hover) and (pointer: fine) {
+    width: calc(375px * 0.55);
+  }
+
+  &:hover {
+    background-color: #8c8c8c;
     transition: 400ms ease-in-out;
   }
 `;
