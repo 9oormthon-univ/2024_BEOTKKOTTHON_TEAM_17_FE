@@ -1,62 +1,60 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-import walletImg from "../images/wallet.png";
-import arrow from "../images/back_arrow.png";
-import call from "../images/call.png";
-import search from "../images/search2.png";
-import smile from "../images/smile.png";
-import whiteSearch from "../images/search.png";
-import palette from "../images/palette.png";
+import {
+  alphabet1,
+  alphabet2,
+  alphabet3,
+  number1,
+  number2,
+  number3,
+  number4,
+  number5,
+  hobby1,
+  hobby2,
+} from "../uitls/stickers";
+import { alphabetThumbnail, numberThumbnail, hobbyThumbnail } from "../uitls/stickers";
 
 // Dummy data
 const stickerCategories = [
-  { id: "smile", thumbnail: walletImg },
-  { id: "heart", thumbnail: walletImg },
-  { id: "star", thumbnail: walletImg },
-  { id: "moon", thumbnail: walletImg },
-  { id: "sun", thumbnail: walletImg },
+  { id: "hobby", thumbnail: hobbyThumbnail },
+  { id: "number", thumbnail: numberThumbnail },
+  { id: "alphabet", thumbnail: alphabetThumbnail },
 ];
+
 const stickers = {
-  smile: [walletImg],
-  heart: Array(8).fill(arrow),
-  star: Array(5).fill(call),
-  moon: [whiteSearch, palette],
-  sun: Array(30).fill(smile),
+  hobby: [
+    { name: "hobby1", src: hobby1 },
+    { name: "hobby2", src: hobby2 },
+  ],
+  number: [
+    { name: "number1", src: number1 },
+    { name: "number2", src: number2 },
+    { name: "number3", src: number3 },
+    { name: "number4", src: number4 },
+    { name: "number5", src: number5 },
+  ],
+  alphabet: [
+    { name: "alphabet1", src: alphabet1 },
+    { name: "alphabet2", src: alphabet2 },
+    { name: "alphabet3", src: alphabet3 },
+  ],
 };
 
-const StickerModal = ({ onClose, setCustomStickers }) => {
-  const [selectedCategory, setSelectedCategory] = useState("smile");
+const StickerModal = ({ onClose, setAddedImages, addedImages }) => {
+  const [selectedCategory, setSelectedCategory] = useState("hobby");
   const [selectedStickers, setSelectedStickers] = useState([]);
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
   };
 
-  const handleSelectSticker = (stickerSrc) => {
-    // setCustomStickers((prev) => [...prev, { src: stickerSrc }]);
-    setCustomStickers((prev) => {
-      // 이미 선택된 스티커는 추가하지 않음
-      if (!prev.find((sticker) => sticker.src === stickerSrc)) {
-        return [...prev, { src: stickerSrc }];
-      }
-      return prev;
-    });
-
-    // 선택된 스티커 상태 업데이트
-    setSelectedStickers((prev) => {
-      const isAlreadySelected = prev.includes(stickerSrc);
-      if (isAlreadySelected) {
-        return prev.filter((src) => src !== stickerSrc); // 이미 선택된 경우 제거
-      } else {
-        return [...prev, stickerSrc]; // 새로운 선택 경우 추가
-      }
-    });
+  const handleSelectSticker = (name, src) => {
+    setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
   };
 
   const handleCheck = () => {
     onClose();
-    console.log(selectedStickers);
   };
   return (
     <div>
@@ -89,13 +87,15 @@ const StickerModal = ({ onClose, setCustomStickers }) => {
             </ModalClose>
           </ModalHeader>
           <Divider />
+
           <StickersContainer>
-            {stickers[selectedCategory].map((stickerSrc, index) => (
+            {stickers[selectedCategory].map((sticker, index) => (
               <Sticker
                 key={index}
-                src={stickerSrc}
-                selected={selectedStickers.includes(stickerSrc)}
-                onClick={() => handleSelectSticker(stickerSrc)}
+                src={sticker.src}
+                alt={sticker.name}
+                selected={selectedStickers.includes(sticker.src)}
+                onClick={() => handleSelectSticker(sticker.name, sticker.src)}
               />
             ))}
           </StickersContainer>
@@ -187,13 +187,6 @@ const Sticker = styled.img`
   box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-
-  ${({ selected }) =>
-    selected &&
-    css`
-      transform: scale(1.1);
-      opacity: 0.4; // 선택 시 투명도 조절
-    `}
 `;
 
 const Divider = styled.div`

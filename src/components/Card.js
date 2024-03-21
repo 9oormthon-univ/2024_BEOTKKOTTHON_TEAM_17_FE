@@ -39,10 +39,9 @@ const iconMapping = {
 };
 
 const Card = ({ userData }) => {
-  // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = userData.status !== null;
 
-  // 나머지 정보 중 최대 3개 선택
+  // 나머지 정보 중 최대 4개 선택
   const secondaryInfoKeys = [
     "organization",
     "instagram",
@@ -102,10 +101,11 @@ const Card = ({ userData }) => {
         <CustomImage
           src={Wallet}
           alt="Example"
-          x={cardDimensions.width * 0.9085365853658537}
-          y={cardDimensions.height * 0.85}
+          x={cardDimensions.width * 0.46019553072625696}
+          y={cardDimensions.height * 0.4296875}
           width={30}
           height={30}
+          zIndex={-100}
         />
 
         <CardLeftRight>
@@ -171,6 +171,7 @@ const CardBoxIn = styled.div`
 
   display: flex;
   flex-direction: column;
+  z-index: 100;
 `;
 
 const CardName = styled.div`

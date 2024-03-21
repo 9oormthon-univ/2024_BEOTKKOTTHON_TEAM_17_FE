@@ -13,7 +13,15 @@ const _constants = {
   containerHeight: 200,
 };
 
-const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages, setAddedImages, canvasRef }) => {
+const Canvas = ({
+  customBackColor,
+  customTextColor,
+  customStickers,
+  addedImages,
+  setAddedImages,
+  canvasRef,
+  addImageToCanvas,
+}) => {
   const { userInfo } = useUserInfo();
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
@@ -26,10 +34,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages,
     setDraggingIdx,
     canvasRef
   );
-  const toggleDrag = (isDragging) => {
-    setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
-    setDragging(isDragging);
-  };
 
   useEffect(() => {
     const resizeCanvas = () => {
@@ -95,120 +99,8 @@ const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages,
     };
   }, [dragging, addedImages, draggingIdx]);
 
-  const addImageToCanvas = (name, src) => {
-    // if (addedImages.some((img) => img.name === name)) {
-    //   return;
-    // }
-
-    const img = new Image();
-    img.onload = () => {
-      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
-    };
-    img.src = src;
-  };
-
-  // const onTouchStart = (e) => {
-  //   const touch = e.touches[0];
-  //   const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-  //   const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-  //   addedImages.forEach((img, idx) => {
-  //     if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
-  //       toggleDrag(true);
-  //       setDraggingIdx(idx);
-  //       e.preventDefault();
-  //     }
-  //   });
-  // };
-
-  // const onTouchMove = (e) => {
-  //   if (!dragging) return;
-  //   window.requestAnimationFrame(() => {
-  //     const touch = e.touches[0];
-  //     const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-  //     const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-
-  //     const newX = Math.min(
-  //       Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
-  //       canvasRef.current.width - addedImages[draggingIdx].width
-  //     );
-  //     const newY = Math.min(
-  //       Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
-  //       canvasRef.current.height - addedImages[draggingIdx].height
-  //     );
-  //     e.preventDefault();
-  //     setAddedImages(
-  //       addedImages.map((img, idx) => {
-  //         if (idx === draggingIdx) {
-  //           return { ...img, x: newX, y: newY };
-  //         }
-  //         return img;
-  //       })
-  //     );
-  //   });
-  // };
-
-  // const onTouchEnd = () => {
-  //   toggleDrag(false);
-  //   setDraggingIdx(null);
-  // };
-
-  //   const onMouseDown = (e) => {
-  //     const mouseX = e.nativeEvent.offsetX;
-  //     const mouseY = e.nativeEvent.offsetY;
-  //     addedImages.forEach((img, idx) => {
-  //       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-  //         toggleDrag(true);
-  //         setDraggingIdx(idx);
-  //       }
-  //     });
-  //   };
-
-  //   const onMouseMove = (e) => {
-  //     if (dragging) {
-  //       window.requestAnimationFrame(() => {
-  //         const mouseX = e.nativeEvent.offsetX;
-  //         const mouseY = e.nativeEvent.offsetY;
-  //         setAddedImages(
-  //           addedImages.map((img, idx) => {
-  //             if (idx === draggingIdx) {
-  //               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-  //             }
-  //             return img;
-  //           })
-  //         );
-  //       });
-  //     }
-  //   };
-
-  //   const onMouseUp = () => {
-  //     toggleDrag(false);
-  //     setDraggingIdx(null);
-  //   };
-
   return (
     <CanvasDiv>
-      <ImageSelection>
-        <img
-          src={walletImg}
-          alt="Wallet"
-          onClick={() => addImageToCanvas("Wallet", walletImg)}
-        />
-        <img
-          src={schoolImg}
-          alt="School"
-          onClick={() => addImageToCanvas("School", schoolImg)}
-        />
-        <img
-          src={callImg}
-          alt="Call"
-          onClick={() => addImageToCanvas("Call", callImg)}
-        />
-        <img
-          src={pencilImg}
-          alt="Pencil"
-          onClick={() => addImageToCanvas("Pencil", pencilImg)}
-        />
-      </ImageSelection>
       <CanvasContainer>
         <StyledCanvas
           ref={canvasRef}
@@ -240,23 +132,8 @@ const CanvasDiv = styled.div`
   align-items: center;
 `;
 
-const ImageSelection = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-
-  margin-bottom: 20px;
-  margin-top: 20px;
-  img {
-    width: 50px;
-    height: 50px;
-    margin: 0 10px;
-    cursor: pointer;
-  }
-`;
-
 const CanvasContainer = styled.div`
-  margin-top: 10px;
+  // margin-top: 129px;
 
   width: calc(100vw - 32px);
   max-width: 580px;
