@@ -1,48 +1,74 @@
 import styled from "styled-components";
 import Wallet from "../images/wallet.png";
-import {
-  FaPhoneAlt,
-  FaSchool,
-  FaInstagram,
-  FaYoutube,
-  FaFacebook,
-  FaLink,
-  FaPencilAlt,
-  FaTiktok,
-  FaLinkedin,
-  FaBehance,
-  FaGithub,
-} from "react-icons/fa";
-import { SiNaver, SiDeepnote } from "react-icons/si";
-import { RiKakaoTalkFill } from "react-icons/ri";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { MdEmail, MdInsertEmoticon } from "react-icons/md";
 import CustomImage from "./CustomImage";
 import { useRef, useEffect, useState } from "react";
 
+import {
+  kakaotalkImg,
+  behanceImg,
+  blogImg,
+  facebookImg,
+  githubImg,
+  instagramImg,
+  linkedInImg,
+  notefolioImg,
+  tiktokImg,
+  xImg,
+  youtubeImg,
+  contentImg,
+  linkImg,
+  organizationImg,
+  phoneImg,
+  mailImg,
+} from "../uitls/snsImg";
+
+import {
+  alphabet1,
+  alphabet2,
+  alphabet3,
+  number1,
+  number2,
+  number3,
+  number4,
+  number5,
+  hobby1,
+  hobby2,
+} from "../uitls/stickers";
+
+const stickerMapping = {
+  alphabet1: alphabet1,
+  alphabet2: alphabet2,
+  alphabet3: alphabet3,
+  number1: number1,
+  number2: number2,
+  number3: number3,
+  number4: number4,
+  number5: number5,
+  hobby1: hobby1,
+  hobby2: hobby2,
+};
+
 const iconMapping = {
-  instagram: <FaInstagram color="#E1306C" />,
-  youtube: <FaYoutube color="#fff" />,
-  facebook: <FaFacebook color="#fff" />,
-  linkedIn: <FaLinkedin color="#fff" />,
-  organization: <FaSchool color="#fff" />,
-  link: <FaLink color="#000" />,
-  content: <FaPencilAlt color="#000" />,
-  x: <FaSquareXTwitter color="#fff" />,
-  tiktok: <FaTiktok color="#fff" />,
-  naver: <SiNaver color="#fff" />,
-  notefolio: <SiDeepnote color="#3BC1CC" />,
-  behance: <FaBehance color="#1769FF" />,
-  github: <FaGithub color="#fff" />,
-  kakao: <RiKakaoTalkFill color="#FEE500" />,
-  status: <MdInsertEmoticon olor="#F3f" />,
+  instagram: instagramImg,
+  youtube: youtubeImg,
+  facebook: facebookImg,
+  linkedIn: linkedInImg,
+  organization: organizationImg,
+  link: linkImg,
+  content: contentImg,
+  x: xImg,
+  tiktok: tiktokImg,
+  naver: blogImg,
+  notefolio: notefolioImg,
+  behance: behanceImg,
+  github: githubImg,
+  kakao: kakaotalkImg,
 };
 
 const Card = ({ userData }) => {
-  // 'organization', 'content', 'link' 중 하나 선택
   const primaryInfoKey = userData.status !== null;
 
-  // 나머지 정보 중 최대 3개 선택
+  // 나머지 정보 중 최대 4개 선택
   const secondaryInfoKeys = [
     "organization",
     "instagram",
@@ -99,39 +125,39 @@ const Card = ({ userData }) => {
       ref={cardRef}
     >
       <CardBoxIn>
-        <CustomImage
-          src={Wallet}
-          alt="Example"
-          x={cardDimensions.width * 0.9085365853658537}
-          y={cardDimensions.height * 0.85}
-          width={30}
-          height={30}
-        />
+        {userData.stickerDtoList.map((sticker, index) => (
+          <CustomImage
+            key={index}
+            src={stickerMapping[sticker.type]}
+            alt={sticker.type}
+            x={cardDimensions.width * sticker.posX}
+            y={cardDimensions.height * sticker.posY}
+            width={30}
+            height={30}
+            zIndex={sticker.zIndex}
+          />
+        ))}
 
         <CardLeftRight>
-          <CardNameSpace>
+          <CardNameSpace style={{ marginRight: "7px" }}>
             <CardName>{formatNameWithSpace(userData.name)}</CardName>
-            {primaryInfoKey && (
-              <IconAndText>
-                <MdInsertEmoticon color="#F3f" />
-                <CardText>{userData.status}</CardText>
-              </IconAndText>
-            )}
+            {primaryInfoKey && <CardText style={{ marginRight: "7px" }}>{userData.status}</CardText>}
           </CardNameSpace>
 
           <CardRight>
             <CardSpace style={{ marginTop: "0" }}>
-              <MdEmail color="#000" />
+              <Logo src={mailImg} />
               <CardText>{userData.email}</CardText>
             </CardSpace>
             <CardContents>
               <CardSpace>
-                <FaPhoneAlt color="#000" />
+                <Logo src={phoneImg} />
                 <CardText>{formatPhoneNumber(userData.phone)}</CardText>
               </CardSpace>
+
               {secondaryInfos.map((info) => (
                 <CardSpace key={info.key}>
-                  {iconMapping[info.key]}
+                  <Logo src={iconMapping[info.key]} />
                   <CardText>{info.value}</CardText>
                 </CardSpace>
               ))}
@@ -171,6 +197,7 @@ const CardBoxIn = styled.div`
 
   display: flex;
   flex-direction: column;
+  z-index: 100;
 `;
 
 const CardName = styled.div`
@@ -179,8 +206,6 @@ const CardName = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-
-  margin-right: 7px;
 `;
 
 const CardText = styled.div`
@@ -224,4 +249,9 @@ const CardLeftRight = styled.div`
 
 const CardRight = styled.div`
   margin-left: 18px;
+`;
+
+const Logo = styled.img`
+  width: 12px;
+  height: auto;
 `;

@@ -7,6 +7,7 @@ const CustomImage = styled.img.attrs((props) => ({
     top: `${props.y}px`,
     width: `${props.width}px`,
     height: `${props.height}px`,
+    zIndex: props.zIndex,
   },
 }))`
   position: absolute;
