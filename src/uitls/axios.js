@@ -108,10 +108,25 @@ export const subscribeCard = async (memberId, navigate, token) => {
     const res = await axios.request(config);
     if (res.status === 200) {
       navigate("/mycards");
-      console.log(res.data);
     }
   } catch (error) {
-    navigate("/mypage");
-    console.log("실패");
+    navigate("/");
+  }
+};
+
+export const saveAdditionalInfoDetails = async (info, token) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `${API_KEY}/api/card/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: info,
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
   }
 };

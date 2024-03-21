@@ -13,10 +13,8 @@ const _constants = {
   containerHeight: 200,
 };
 
-const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
+const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages, setAddedImages, canvasRef }) => {
   const { userInfo } = useUserInfo();
-  const canvasRef = useRef(null);
-  const [addedImages, setAddedImages] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
 
@@ -98,7 +96,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   }, [dragging, addedImages, draggingIdx]);
 
   const addImageToCanvas = (name, src) => {
-
     // if (addedImages.some((img) => img.name === name)) {
     //   return;
     // }
@@ -109,7 +106,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     };
     img.src = src;
   };
-
 
   // const onTouchStart = (e) => {
   //   const touch = e.touches[0];
@@ -156,49 +152,39 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   //   setDraggingIdx(null);
   // };
 
-//   const onMouseDown = (e) => {
-//     const mouseX = e.nativeEvent.offsetX;
-//     const mouseY = e.nativeEvent.offsetY;
-//     addedImages.forEach((img, idx) => {
-//       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-//         toggleDrag(true);
-//         setDraggingIdx(idx);
-//       }
-//     });
-//   };
+  //   const onMouseDown = (e) => {
+  //     const mouseX = e.nativeEvent.offsetX;
+  //     const mouseY = e.nativeEvent.offsetY;
+  //     addedImages.forEach((img, idx) => {
+  //       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
+  //         toggleDrag(true);
+  //         setDraggingIdx(idx);
+  //       }
+  //     });
+  //   };
 
-//   const onMouseMove = (e) => {
-//     if (dragging) {
-//       window.requestAnimationFrame(() => {
-//         const mouseX = e.nativeEvent.offsetX;
-//         const mouseY = e.nativeEvent.offsetY;
-//         setAddedImages(
-//           addedImages.map((img, idx) => {
-//             if (idx === draggingIdx) {
-//               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-//             }
-//             return img;
-//           })
-//         );
-//       });
-//     }
-//   };
+  //   const onMouseMove = (e) => {
+  //     if (dragging) {
+  //       window.requestAnimationFrame(() => {
+  //         const mouseX = e.nativeEvent.offsetX;
+  //         const mouseY = e.nativeEvent.offsetY;
+  //         setAddedImages(
+  //           addedImages.map((img, idx) => {
+  //             if (idx === draggingIdx) {
+  //               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
+  //             }
+  //             return img;
+  //           })
+  //         );
+  //       });
+  //     }
+  //   };
 
-//   const onMouseUp = () => {
-//     toggleDrag(false);
-//     setDraggingIdx(null);
-//   };
+  //   const onMouseUp = () => {
+  //     toggleDrag(false);
+  //     setDraggingIdx(null);
+  //   };
 
-
-  const handleCompletion = () => {
-    console.log("캔버스에 존재하는 스티커의 상대 좌표:");
-    addedImages.forEach((img) => {
-      //   console.log(`이미지: ${img.name}, x: ${img.x}, y: ${img.y}`);
-      const relativeX = img.x / canvasRef.current.width;
-      const relativeY = img.y / canvasRef.current.height;
-      console.log(`스티커: ${img.name}, Relative x: ${relativeX}, Relative y: ${relativeY}`);
-    });
-  };
   return (
     <CanvasDiv>
       <ImageSelection>
@@ -242,7 +228,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
           </CardWrapper>
         )}
       </CanvasContainer>
-      <button onClick={handleCompletion}>수정 완료</button>
     </CanvasDiv>
   );
 };
