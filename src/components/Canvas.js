@@ -35,33 +35,89 @@ const Canvas = ({
     canvasRef
   );
 
+  // useEffect(() => {
+  //   const resizeCanvas = () => {
+  //     const canvas = canvasRef.current;
+  //     const container = canvas.parentElement;
+  //     const context = canvas.getContext("2d");
+
+  // canvas.width = container.offsetWidth;
+  // canvas.height = _constants.containerHeight; // 높이는 200px로 고정
+
+  //     context.clearRect(0, 0, canvas.width, canvas.height);
+  //     context.fillStyle = `${customBackColor}`;
+  //     context.fillRect(0, 0, canvas.width, canvas.height);
+
+  //     addedImages.forEach((imgInfo) => {
+  //       const img = new Image();
+  //       img.onload = () => {
+  //         context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
+  //       };
+  //       img.src = imgInfo.src;
+  //     });
+  //   };
+
+  //   window.addEventListener("resize", resizeCanvas);
+  //   resizeCanvas(); // 초기 로드 시에도 캔버스 크기를 설정
+
+  //   return () => window.removeEventListener("resize", resizeCanvas);
+  // }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
+
   useEffect(() => {
-    const resizeCanvas = () => {
-      const canvas = canvasRef.current;
-      const container = canvas.parentElement;
-      const context = canvas.getContext("2d");
+    // 모든 이미지를 미리 로드하고 이미지 객체를 저장
+    const imageObjects = {};
 
-      canvas.width = container.offsetWidth;
-      canvas.height = _constants.containerHeight; // 높이는 200px로 고정
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = `${customBackColor}`;
-      context.fillRect(0, 0, canvas.width, canvas.height);
-
-      addedImages.forEach((imgInfo) => {
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
         const img = new Image();
-        img.onload = () => {
-          context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
-        };
-        img.src = imgInfo.src;
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
       });
     };
 
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas(); // 초기 로드 시에도 캔버스 크기를 설정
+    const loadAllImages = async () => {
+      const loadPromises = addedImages.map((imgInfo) =>
+        loadImage(imgInfo.src).then((img) => {
+          imageObjects[imgInfo.src] = img;
+        })
+      );
 
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
+      await Promise.all(loadPromises);
+
+      // 이미지 로드 완료 후 캔버스에 처음으로 그리기
+      drawCanvas();
+    };
+
+    loadAllImages();
+
+    const drawCanvas = () => {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      const container = canvas.parentElement;
+
+      canvas.width = container.offsetWidth;
+      canvas.height = _constants.containerHeight;
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = customBackColor;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      addedImages.forEach((imgInfo) => {
+        const img = imageObjects[imgInfo.src];
+        if (img) {
+          context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
+        }
+      });
+    };
+
+    // Resize 이벤트 핸들러에서도 drawCanvas 호출
+    window.addEventListener("resize", drawCanvas);
+
+    return () => {
+      window.removeEventListener("resize", drawCanvas);
+    };
+  }, [addedImages, customBackColor]); // Dependencies에 적절히 조정
 
   useEffect(() => {
     const handleTouchMove = (event) => {
