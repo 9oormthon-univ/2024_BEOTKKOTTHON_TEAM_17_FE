@@ -118,7 +118,7 @@ export const saveAdditionalInfoDetails = async (info, token) => {
   try {
     const config = {
       method: "patch",
-      url: `${API_KEY}/api/card/`,
+      url: `${API_KEY}/api/card`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

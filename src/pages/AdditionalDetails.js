@@ -38,10 +38,11 @@ const AdditionalDetails = () => {
     return { ...userInfo, ...fields };
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      const response = saveAdditionalInfoDetails(localUserInfo, token);
-      console.log(response);
+      const response = await saveAdditionalInfoDetails(localUserInfo, token);
+      setLocalUserInfo(response.data);
+      console.log(localUserInfo);
       navigate("/mypage");
     } catch (error) {
       console.log(error);
@@ -51,6 +52,22 @@ const AdditionalDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log(selectedOptions);
+
+    const preserveKeys = ["email", "name", "phone", "status"];
+
+    const updatedUserInfo = Object.keys(localUserInfo).reduce((acc, key) => {
+      // selected 배열에 키가 존재하거나, 기본적으로 유지되어야 하는 값인 경우 현재 값을 그대로 유지
+      if (selected.includes(key) || exceptCannotTransmitList.includes(key) || preserveKeys.includes(key)) {
+        acc[key] = localUserInfo[key];
+      } else {
+        // selected 배열에 없는 키의 경우 null로 설정
+        acc[key] = null;
+      }
+      return acc;
+    }, {});
+
+    // 업데이트된 정보를 localUserInfo 상태에 설정
+    setLocalUserInfo(updatedUserInfo);
     console.log(localUserInfo);
   }, []);
 
@@ -61,7 +78,7 @@ const AdditionalDetails = () => {
           <div className="page-space">
             <BackHeader />
             <PageCenter>
-              <MainText>{localUserInfo.name}님의 명함 정보</MainText>
+              <MainText>{userInfo.name}님의 명함 정보</MainText>
               <GuideText style={{ marginBottom: "16px" }}>
                 연동된 정보 외에 최대 4개의 정보를 입력하실 수 있어요.
               </GuideText>

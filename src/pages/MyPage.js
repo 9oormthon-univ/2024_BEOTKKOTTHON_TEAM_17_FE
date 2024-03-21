@@ -26,8 +26,7 @@ const MyPage = () => {
         const userInfoResponse = await getMyInfo(token);
         if (userInfoResponse && userInfoResponse.status === 200) {
           setUserInfo(userInfoResponse.data);
-          console.log(userInfoResponse);
-          console.log(userInfo);
+          console.log("내 정보 불러오기 : ", userInfoResponse);
         }
       } catch (error) {
         console.log(error);
