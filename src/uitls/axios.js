@@ -113,3 +113,20 @@ export const subscribeCard = async (memberId, navigate, token) => {
     navigate("/");
   }
 };
+
+export const saveAdditionalInfoDetails = async (info, token) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `${API_KEY}/api/card/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: info,
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -43,6 +43,7 @@ const WrapCard = ({ userData, customTextColor }) => {
 
   // 나머지 정보 중 최대 3개 선택
   const secondaryInfoKeys = [
+    "organization",
     "instagram",
     "youtube",
     "facebook",
@@ -54,6 +55,8 @@ const WrapCard = ({ userData, customTextColor }) => {
     "behance",
     "github",
     "kakao",
+    "content",
+    "link",
   ];
 
   const secondaryInfos = secondaryInfoKeys

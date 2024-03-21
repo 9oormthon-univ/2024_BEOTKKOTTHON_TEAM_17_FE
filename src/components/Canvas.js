@@ -13,16 +13,12 @@ const _constants = {
   containerHeight: 200,
 };
 
-const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
+const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages, setAddedImages, canvasRef }) => {
   const { userInfo } = useUserInfo();
-  const canvasRef = useRef(null);
-  const [addedImages, setAddedImages] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
 
   const [showCard, setShowCard] = useState(true);
-
-  const [addImageToList, setAddImageToList] = useState([]);
 
   const { onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = useDragAndDrop(
     setAddedImages,
@@ -30,6 +26,10 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     setDraggingIdx,
     canvasRef
   );
+  const toggleDrag = (isDragging) => {
+    setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
+    setDragging(isDragging);
+  };
 
   useEffect(() => {
     const resizeCanvas = () => {
@@ -95,6 +95,18 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
     };
   }, [dragging, addedImages, draggingIdx]);
 
+  const addImageToCanvas = (name, src) => {
+    // if (addedImages.some((img) => img.name === name)) {
+    //   return;
+    // }
+
+    const img = new Image();
+    img.onload = () => {
+      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
+    };
+    img.src = src;
+  };
+
   // const onTouchStart = (e) => {
   //   const touch = e.touches[0];
   //   const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
@@ -140,32 +152,38 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
   //   setDraggingIdx(null);
   // };
 
-  const handleCompletion = () => {
-    console.log("캔버스에 존재하는 스티커의 상대 좌표:");
-    addedImages.forEach((img) => {
-      //   console.log(`이미지: ${img.name}, x: ${img.x}, y: ${img.y}`);
-      const relativeX = img.x / canvasRef.current.width;
-      const relativeY = img.y / canvasRef.current.height;
-      console.log(`스티커: ${img.name}, Relative x: ${relativeX}, Relative y: ${relativeY}`);
-    });
-  };
+  //   const onMouseDown = (e) => {
+  //     const mouseX = e.nativeEvent.offsetX;
+  //     const mouseY = e.nativeEvent.offsetY;
+  //     addedImages.forEach((img, idx) => {
+  //       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
+  //         toggleDrag(true);
+  //         setDraggingIdx(idx);
+  //       }
+  //     });
+  //   };
 
-  const addImageToCanvas = () => {
-    addImageToList.forEach((image) => {
-      const img = new Image();
-      img.onload = () => {
-        // 이미지 로드가 완료되면 상태 업데이트
-        setAddedImages((prevImages) => [
-          ...prevImages,
-          {
-            ...image,
-            // 필요하다면 여기에서 추가적인 속성을 설정할 수 있습니다.
-          },
-        ]);
-      };
-      img.src = image.src;
-    });
-  };
+  //   const onMouseMove = (e) => {
+  //     if (dragging) {
+  //       window.requestAnimationFrame(() => {
+  //         const mouseX = e.nativeEvent.offsetX;
+  //         const mouseY = e.nativeEvent.offsetY;
+  //         setAddedImages(
+  //           addedImages.map((img, idx) => {
+  //             if (idx === draggingIdx) {
+  //               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
+  //             }
+  //             return img;
+  //           })
+  //         );
+  //       });
+  //     }
+  //   };
+
+  //   const onMouseUp = () => {
+  //     toggleDrag(false);
+  //     setDraggingIdx(null);
+  //   };
 
   return (
     <CanvasDiv>
@@ -173,42 +191,24 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
         <img
           src={walletImg}
           alt="Wallet"
-          onClick={() =>
-            setAddImageToList([
-              ...addImageToList,
-              { name: "Wallet", src: walletImg, x: 0, y: 0, width: 30, height: 30 },
-            ])
-          }
+          onClick={() => addImageToCanvas("Wallet", walletImg)}
         />
         <img
           src={schoolImg}
           alt="School"
-          onClick={() =>
-            setAddImageToList([
-              ...addImageToList,
-              { name: "School", src: schoolImg, x: 0, y: 0, width: 30, height: 30 },
-            ])
-          }
+          onClick={() => addImageToCanvas("School", schoolImg)}
         />
         <img
           src={callImg}
           alt="Call"
-          onClick={() =>
-            setAddImageToList([...addImageToList, { name: "Call", src: callImg, x: 0, y: 0, width: 30, height: 30 }])
-          }
+          onClick={() => addImageToCanvas("Call", callImg)}
         />
         <img
           src={pencilImg}
           alt="Pencil"
-          onClick={() =>
-            setAddImageToList([
-              ...addImageToList,
-              { name: "Pencil", src: pencilImg, x: 0, y: 0, width: 30, height: 30 },
-            ])
-          }
+          onClick={() => addImageToCanvas("Pencil", pencilImg)}
         />
       </ImageSelection>
-      <button onClick={addImageToCanvas}>추가하기</button>
       <CanvasContainer>
         <StyledCanvas
           ref={canvasRef}
@@ -228,7 +228,6 @@ const Canvas = ({ customBackColor, customTextColor, customStickers }) => {
           </CardWrapper>
         )}
       </CanvasContainer>
-      <button onClick={handleCompletion}>수정 완료</button>
     </CanvasDiv>
   );
 };

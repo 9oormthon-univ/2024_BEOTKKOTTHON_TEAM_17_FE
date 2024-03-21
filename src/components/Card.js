@@ -16,7 +16,7 @@ import {
 import { SiNaver, SiDeepnote } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdInsertEmoticon } from "react-icons/md";
 import CustomImage from "./CustomImage";
 import { useRef, useEffect, useState } from "react";
 
@@ -35,14 +35,16 @@ const iconMapping = {
   behance: <FaBehance color="#1769FF" />,
   github: <FaGithub color="#fff" />,
   kakao: <RiKakaoTalkFill color="#FEE500" />,
+  status: <MdInsertEmoticon olor="#F3f" />,
 };
 
 const Card = ({ userData }) => {
   // 'organization', 'content', 'link' 중 하나 선택
-  const primaryInfoKey = ["organization", "content", "link"].find((key) => userData[key] !== null);
+  const primaryInfoKey = userData.status !== null;
 
   // 나머지 정보 중 최대 3개 선택
   const secondaryInfoKeys = [
+    "organization",
     "instagram",
     "youtube",
     "facebook",
@@ -54,14 +56,14 @@ const Card = ({ userData }) => {
     "behance",
     "github",
     "kakao",
-    //"link",
-    //"content",
+    "content",
+    "link",
   ];
 
   const secondaryInfos = secondaryInfoKeys
     .map((key) => ({ key, value: userData[key] }))
     .filter((info) => info.value !== null)
-    .slice(0, 3);
+    .slice(0, 4);
 
   const formatPhoneNumber = (phoneNumber) => {
     if (phoneNumber) {
@@ -91,7 +93,11 @@ const Card = ({ userData }) => {
   };
 
   return (
-    <CardBox bgColor={userData.bgColor} textColor={userData.textColor} ref={cardRef}>
+    <CardBox
+      bgColor={userData.bgColor}
+      textColor={userData.textColor}
+      ref={cardRef}
+    >
       <CardBoxIn>
         <CustomImage
           src={Wallet}
@@ -107,8 +113,8 @@ const Card = ({ userData }) => {
             <CardName>{formatNameWithSpace(userData.name)}</CardName>
             {primaryInfoKey && (
               <IconAndText>
-                {iconMapping[primaryInfoKey]}
-                <CardText>{userData[primaryInfoKey]}</CardText>
+                <MdInsertEmoticon color="#F3f" />
+                <CardText>{userData.status}</CardText>
               </IconAndText>
             )}
           </CardNameSpace>

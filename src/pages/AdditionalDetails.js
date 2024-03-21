@@ -6,10 +6,14 @@ import styled from "styled-components";
 import { MainText, GuideText } from "../styles/Title";
 import { useUserInfo } from "../store/store";
 import { mappedNameList, exceptCannotTransmitList } from "../components/MappedName";
+import { saveAdditionalInfoDetails } from "../uitls/axios";
 
 const AdditionalDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { selected } = location.state || { selected: [] };
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
 
   const [selectedOptions, setSelectedOptions] = useState(selected);
 
@@ -33,6 +37,16 @@ const AdditionalDetails = () => {
     }, {});
     return { ...userInfo, ...fields };
   });
+
+  const handleSubmit = () => {
+    try {
+      const response = saveAdditionalInfoDetails(localUserInfo, token);
+      console.log(response);
+      navigate("/mypage");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,7 +95,7 @@ const AdditionalDetails = () => {
               <Container>
                 <Input
                   name="status"
-                  // value={localUserInfo.status}
+                  value={localUserInfo.status}
                   onChange={handleChange}
                   placeholder="기분, 감정 등 내 상태를 6자 이내로 작성해보세요."
                 />
@@ -99,13 +113,7 @@ const AdditionalDetails = () => {
                   </Container>
                 </>
               ))}
-              <CompleteBtn
-                onClick={() => {
-                  console.log(localUserInfo);
-                }}
-              >
-                저장하기
-              </CompleteBtn>
+              <CompleteBtn onClick={handleSubmit}>저장하기</CompleteBtn>
             </PageCenter>
           </div>
         </PageBack>

@@ -22,7 +22,7 @@ const stickers = {
   heart: Array(8).fill(arrow),
   star: Array(5).fill(call),
   moon: [whiteSearch, palette],
-  sun: Array(12).fill(smile),
+  sun: Array(30).fill(smile),
 };
 
 const StickerModal = ({ onClose, setCustomStickers }) => {
@@ -122,6 +122,7 @@ const ModalWrap = styled.div`
   border-radius: 25px 25px 0px 0px;
   width: 100vw;
   height: 410px;
+  overflow-y: auto;
   z-index: 2;
   background-color: #fff;
 
