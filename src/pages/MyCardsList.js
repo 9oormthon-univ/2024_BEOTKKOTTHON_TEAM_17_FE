@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Card from "../components/Card";
 import ModalCard from "../components/ModalCard";
+import ModalDelete from "../components/ModalDelete";
 import { useOtherInfo } from "../store/store";
 import { getListInfo, getSearchInfo } from "../uitls/axios";
 import { useCookies } from "react-cookie";
@@ -12,7 +13,8 @@ import NoMatched from "../images/no_matched.png";
 const MyCardsList = ({ onToggle }) => {
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCardOpen, setIsModalCardOpen] = useState(false);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchedInfo, setSearchedInfo] = useState([]);
 
@@ -83,15 +85,12 @@ const MyCardsList = ({ onToggle }) => {
 
   const handleCardClick = (user) => {
     setSelectedUser(user);
-    openModal();
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
+    setIsModalCardOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalCardOpen(false);
+    setIsModalDeleteOpen(false);
   };
 
   return (
@@ -213,7 +212,10 @@ const MyCardsList = ({ onToggle }) => {
           )}
         </>
       )}
-      {isModalOpen && <ModalCard user={selectedUser} onClose={closeModal} />}
+      {isModalCardOpen && (
+        <ModalCard user={selectedUser} onClose={closeModal} onOpenDeleteModal={() => setIsModalDeleteOpen(true)} />
+      )}
+      {isModalDeleteOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
     </div>
   );
 };

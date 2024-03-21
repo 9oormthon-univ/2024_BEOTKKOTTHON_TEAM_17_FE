@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import ModalDelete from "./ModalDelete";
 
-const ModalCard = ({ user, onClose }) => {
+const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -43,11 +43,11 @@ const ModalCard = ({ user, onClose }) => {
             <ModalCardImg>
               <Card userData={user} />
             </ModalCardImg>
-            <CardDeleteBtn onClick={handleCardClick}>삭제하기</CardDeleteBtn>
+            <CardDeleteBtn onClick={onOpenDeleteModal}>삭제하기</CardDeleteBtn>
           </ModalContent>
         </ModalWrap>
       </ModalSpace>
-      {isModalOpen && <ModalDelete onClose={closeModal} />}
+      {isModalOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
     </div>
   );
 };

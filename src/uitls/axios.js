@@ -115,3 +115,23 @@ export const subscribeCard = async (memberId, navigate, token) => {
     console.log("실패");
   }
 };
+
+export const deleteCard = async (memberId, token) => {
+  try {
+    const config = {
+      method: "delete",
+      url: `${API_KEY}/api/card/${memberId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    if (res.status === 200) {
+      console.log(res.data);
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log("실패");
+    window.location.reload();
+  }
+};

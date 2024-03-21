@@ -1,7 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
+import { deleteCard } from "../uitls/axios";
 
 const ModalDelete = ({ user, onClose }) => {
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+  const memberId = user.userId;
+
+  const deleteClick = () => {
+    deleteCard(memberId, token);
+  };
+
   return (
     <div>
       <ModalBackground onClick={onClose} />
@@ -28,7 +38,7 @@ const ModalDelete = ({ user, onClose }) => {
               <br />
               삭제한 명함은 되돌릴 수 없어요.
             </ModalText>
-            <CardDeleteBtn>삭제</CardDeleteBtn>
+            <CardDeleteBtn onClick={deleteClick}>삭제</CardDeleteBtn>
             <CardDeleteBtnNone onClick={onClose}>취소</CardDeleteBtnNone>
           </ModalContent>
         </ModalWrap>
