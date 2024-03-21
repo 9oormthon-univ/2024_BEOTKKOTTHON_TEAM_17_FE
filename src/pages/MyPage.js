@@ -154,7 +154,7 @@ const EditBtnSpace = styled.div`
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
   }
-  z-index: 101;
+  z-index: 1;
 `;
 
 const CardEditBtn = styled.div`
