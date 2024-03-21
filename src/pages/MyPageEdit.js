@@ -17,6 +17,7 @@ const MyPageEdit = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const { userInfo } = useUserInfo();
 
   // userInfoToSubmit은 userInfo에서 cardId, userId, qrUrl, bgColor, .. 등이 빠진 새로운 객체
@@ -43,11 +44,12 @@ const MyPageEdit = () => {
     navigate("/mypage/edit/additional", { state: { selected: selectedOptions } });
   };
 
-  const handleSave = () => {
-    console.log(localUserInfo);
+  const handleSave = async () => {
     try {
-      const response = saveAdditionalInfoDetails(localUserInfo, token);
-      console.log(response);
+      const response = await saveAdditionalInfoDetails(localUserInfo, token);
+      setLocalUserInfo(response.data);
+      console.log(localUserInfo);
+      // console.log(response.data);
       navigate("/mypage");
     } catch (error) {
       console.log(error);
@@ -60,7 +62,7 @@ const MyPageEdit = () => {
           <div className="page-space">
             <BackHeader />
             <EditPageCenter>
-              <MainText>{localUserInfo.name}님의 명함 정보</MainText>
+              <MainText>{userInfo.name}님의 명함 정보</MainText>
               <GuideText style={{ marginBottom: "16px" }}>
                 연동된 정보 외에 최대 4개의 정보를 입력하실 수 있어요.
               </GuideText>
@@ -87,7 +89,7 @@ const MyPageEdit = () => {
                 <Input
                   name="email"
                   value={localUserInfo.email}
-                  onChange={handleChange}
+                  readOnly
                 />
               </Container>
               <CustomGuide>상태</CustomGuide>
