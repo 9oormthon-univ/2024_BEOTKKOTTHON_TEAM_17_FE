@@ -6,24 +6,42 @@ import SmileImg from "../images/smile.png";
 import "../styles/Main.css";
 import BackHeader from "../components/BackHeader";
 import { MainText, GuideText } from "../styles/Title";
+import {
+  kakaotalkImg,
+  behanceImg,
+  blogImg,
+  facebookImg,
+  githubImg,
+  instagramImg,
+  linkedInImg,
+  notefolioImg,
+  tiktokImg,
+  xImg,
+  youtubeImg,
+  contentImg,
+  linkImg,
+  organizationImg,
+  phoneImg,
+  mailImg,
+} from "../uitls/snsImg";
 
 const customOptions = [
-  { key: "organization", label: "소속", icon: SmileImg },
-  { key: "content", label: "직접 추가", icon: SmileImg },
+  { key: "organization", label: "소속", icon: organizationImg },
+  { key: "content", label: "직접 추가", icon: contentImg },
 ];
 const snsOptions = [
-  { key: "instagram", label: "인스타그램", icon: SmileImg },
-  { key: "youtube", label: "유튜브", icon: SmileImg },
-  { key: "facebook", label: "페이스북", icon: SmileImg },
-  { key: "x", label: "X", icon: SmileImg },
-  { key: "tiktok", label: "틱톡", icon: SmileImg },
-  { key: "naver", label: "네이버 블로그", icon: SmileImg },
-  { key: "linkeIn", label: "링크드인", icon: SmileImg },
-  { key: "notefolio", label: "노트폴리오", icon: SmileImg },
-  { key: "behance", label: "비핸스", icon: SmileImg },
-  { key: "github", label: "깃허브", icon: SmileImg },
-  { key: "kakao", label: "카카오톡", icon: SmileImg },
-  { key: "link", label: "링크", icon: SmileImg },
+  { key: "instagram", label: "인스타그램", icon: instagramImg },
+  { key: "youtube", label: "유튜브", icon: youtubeImg },
+  { key: "facebook", label: "페이스북", icon: facebookImg },
+  { key: "x", label: "X", icon: xImg },
+  { key: "tiktok", label: "틱톡", icon: tiktokImg },
+  { key: "naver", label: "네이버 블로그", icon: blogImg },
+  { key: "linkeIn", label: "링크드인", icon: linkedInImg },
+  { key: "notefolio", label: "노트폴리오", icon: notefolioImg },
+  { key: "behance", label: "비핸스", icon: behanceImg },
+  { key: "github", label: "깃허브", icon: githubImg },
+  { key: "kakao", label: "카카오톡", icon: kakaotalkImg },
+  { key: "link", label: "링크", icon: linkImg },
 ];
 
 const AdditionalInfoPage = () => {
@@ -35,6 +53,7 @@ const AdditionalInfoPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     // 이미 선택된 항목들을 최대 선택 가능한 항목 수에 맞추어 상태를 설정
     console.log(location.state);
     if (selectedOptions.length > 4) {

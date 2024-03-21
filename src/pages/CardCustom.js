@@ -35,6 +35,8 @@ const CardCustom = () => {
   useEffect(() => {
     // 저장하기 버튼을 누를시 console에 좌표 출력
     console.log(customStickers);
+    console.log(customBackColor);
+    console.log(customTextColor);
   }, [customStickers]);
 
   const handleResetStickers = () => {
@@ -74,7 +76,7 @@ const CardCustom = () => {
                     <img
                       src={TrashImg}
                       alt="스티커초기화"
-                      style={{ height: "35px" }}
+                      style={{ height: "16px" }}
                     />
                   </StickerResetBtn>
                 </ResetBtnSpace>

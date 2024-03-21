@@ -1,41 +1,42 @@
 import styled from "styled-components";
 import Wallet from "../images/wallet.png";
-import {
-  FaPhoneAlt,
-  FaSchool,
-  FaInstagram,
-  FaYoutube,
-  FaFacebook,
-  FaLink,
-  FaPencilAlt,
-  FaTiktok,
-  FaLinkedin,
-  FaBehance,
-  FaGithub,
-} from "react-icons/fa";
-import { SiNaver, SiDeepnote } from "react-icons/si";
-import { RiKakaoTalkFill } from "react-icons/ri";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { MdEmail, MdInsertEmoticon } from "react-icons/md";
 import CustomImage from "./CustomImage";
 import { useRef, useEffect, useState } from "react";
 
+import {
+  kakaotalkImg,
+  behanceImg,
+  blogImg,
+  facebookImg,
+  githubImg,
+  instagramImg,
+  linkedInImg,
+  notefolioImg,
+  tiktokImg,
+  xImg,
+  youtubeImg,
+  contentImg,
+  linkImg,
+  organizationImg,
+  phoneImg,
+  mailImg,
+} from "../uitls/snsImg";
+
 const iconMapping = {
-  instagram: <FaInstagram color="#E1306C" />,
-  youtube: <FaYoutube color="#fff" />,
-  facebook: <FaFacebook color="#fff" />,
-  linkedIn: <FaLinkedin color="#fff" />,
-  organization: <FaSchool color="#fff" />,
-  link: <FaLink color="#000" />,
-  content: <FaPencilAlt color="#000" />,
-  x: <FaSquareXTwitter color="#fff" />,
-  tiktok: <FaTiktok color="#fff" />,
-  naver: <SiNaver color="#fff" />,
-  notefolio: <SiDeepnote color="#3BC1CC" />,
-  behance: <FaBehance color="#1769FF" />,
-  github: <FaGithub color="#fff" />,
-  kakao: <RiKakaoTalkFill color="#FEE500" />,
-  status: <MdInsertEmoticon olor="#F3f" />,
+  instagram: instagramImg,
+  youtube: youtubeImg,
+  facebook: facebookImg,
+  linkedIn: linkedInImg,
+  organization: organizationImg,
+  link: linkImg,
+  content: contentImg,
+  x: xImg,
+  tiktok: tiktokImg,
+  naver: blogImg,
+  notefolio: notefolioImg,
+  behance: behanceImg,
+  github: githubImg,
+  kakao: kakaotalkImg,
 };
 
 const Card = ({ userData }) => {
@@ -113,7 +114,6 @@ const Card = ({ userData }) => {
             <CardName>{formatNameWithSpace(userData.name)}</CardName>
             {primaryInfoKey && (
               <IconAndText>
-                <MdInsertEmoticon color="#F3f" />
                 <CardText>{userData.status}</CardText>
               </IconAndText>
             )}
@@ -121,17 +121,18 @@ const Card = ({ userData }) => {
 
           <CardRight>
             <CardSpace style={{ marginTop: "0" }}>
-              <MdEmail color="#000" />
+              <Logo src={mailImg} />
               <CardText>{userData.email}</CardText>
             </CardSpace>
             <CardContents>
               <CardSpace>
-                <FaPhoneAlt color="#000" />
+                <Logo src={phoneImg} />
                 <CardText>{formatPhoneNumber(userData.phone)}</CardText>
               </CardSpace>
+
               {secondaryInfos.map((info) => (
                 <CardSpace key={info.key}>
-                  {iconMapping[info.key]}
+                  <Logo src={iconMapping[info.key]} />
                   <CardText>{info.value}</CardText>
                 </CardSpace>
               ))}
@@ -225,4 +226,9 @@ const CardLeftRight = styled.div`
 
 const CardRight = styled.div`
   margin-left: 18px;
+`;
+
+const Logo = styled.img`
+  width: 12px;
+  height: auto;
 `;
