@@ -97,7 +97,7 @@ const ModalHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 22px;
+  height: 58px;
 
   position: relative;
 `;
@@ -150,7 +150,10 @@ const ModalClose = styled.div`
 `;
 
 const ModalContent = styled.div`
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
 `;
 
 const ModalTitle = styled.div`

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
 import walletImg from "../images/wallet.png";
 import arrow from "../images/back_arrow.png";
 import call from "../images/call.png";
 import search from "../images/search2.png";
 import smile from "../images/smile.png";
+import whiteSearch from "../images/search.png";
+import palette from "../images/palette.png";
 
 // Dummy data
 const stickerCategories = [
@@ -15,22 +18,45 @@ const stickerCategories = [
   { id: "sun", thumbnail: walletImg },
 ];
 const stickers = {
-  smile: Array(15).fill(walletImg),
+  smile: [walletImg],
   heart: Array(8).fill(arrow),
   star: Array(5).fill(call),
-  moon: Array(9).fill(search),
-  sun: Array(12).fill(smile),
+  moon: [whiteSearch, palette],
+  sun: Array(30).fill(smile),
 };
 
 const StickerModal = ({ onClose, setCustomStickers }) => {
   const [selectedCategory, setSelectedCategory] = useState("smile");
+  const [selectedStickers, setSelectedStickers] = useState([]);
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
   };
 
   const handleSelectSticker = (stickerSrc) => {
-    setCustomStickers((prev) => [...prev, { src: stickerSrc }]);
+    // setCustomStickers((prev) => [...prev, { src: stickerSrc }]);
+    setCustomStickers((prev) => {
+      // 이미 선택된 스티커는 추가하지 않음
+      if (!prev.find((sticker) => sticker.src === stickerSrc)) {
+        return [...prev, { src: stickerSrc }];
+      }
+      return prev;
+    });
+
+    // 선택된 스티커 상태 업데이트
+    setSelectedStickers((prev) => {
+      const isAlreadySelected = prev.includes(stickerSrc);
+      if (isAlreadySelected) {
+        return prev.filter((src) => src !== stickerSrc); // 이미 선택된 경우 제거
+      } else {
+        return [...prev, stickerSrc]; // 새로운 선택 경우 추가
+      }
+    });
+  };
+
+  const handleCheck = () => {
+    onClose();
+    console.log(selectedStickers);
   };
   return (
     <div>
@@ -45,7 +71,7 @@ const StickerModal = ({ onClose, setCustomStickers }) => {
                 onClick={() => handleSelectCategory(category.id)}
               />
             ))}
-            <ModalClose onClick={onClose}>
+            <ModalClose onClick={handleCheck}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="17"
@@ -68,6 +94,7 @@ const StickerModal = ({ onClose, setCustomStickers }) => {
               <Sticker
                 key={index}
                 src={stickerSrc}
+                selected={selectedStickers.includes(stickerSrc)}
                 onClick={() => handleSelectSticker(stickerSrc)}
               />
             ))}
@@ -95,6 +122,7 @@ const ModalWrap = styled.div`
   border-radius: 25px 25px 0px 0px;
   width: 100vw;
   height: 410px;
+  overflow-y: auto;
   z-index: 2;
   background-color: #fff;
 
@@ -149,7 +177,8 @@ const Thumbnail = styled.img`
 const StickersContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow-y: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
 `;
 
 const Sticker = styled.img`
@@ -157,12 +186,20 @@ const Sticker = styled.img`
   padding: 10px;
   box-sizing: border-box;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      transform: scale(1.1);
+      opacity: 0.4; // 선택 시 투명도 조절
+    `}
 `;
 
 const Divider = styled.div`
   height: 1px;
   background-color: #8c8c8c;
   width: 100%;
-  margin: 0 auto; 
-  margin-bottom: 22px; /
+  margin: 0 auto;
+  margin-bottom: 22px;
 `;

@@ -137,10 +137,6 @@ const PaletteContainer = styled.div`
   display: flex;
   justify-contnet: center;
   align-itmes: center;
-
-  @media (hover: hover) and (pointer: fine) {
-    width: 375px;
-  }
 `;
 
 const CardORText = styled.div`
@@ -150,7 +146,7 @@ const CardORText = styled.div`
   width: 111px;
   height: 32px;
 
-  position: fixed;
+  position: absolute;
   bottom: 45px;
   left: 0;
 
@@ -163,7 +159,7 @@ const CardORText = styled.div`
   background-color: #f8f8f8;
 
   @media (hover: hover) and (pointer: fine) {
-    position: absolute; // fixed에서 absolute로 변경
+    position: absolute;
     bottom: 45px;
     left: calc(50% - 187.5px);
   }
@@ -173,9 +169,9 @@ const PickerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
 
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   border: 1px solid #bdbdbd;

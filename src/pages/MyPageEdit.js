@@ -7,8 +7,13 @@ import React, { useState, useEffect } from "react";
 import PlusInfoBtn from "../components/PlusInfoBtn";
 import { useNavigate } from "react-router-dom";
 import { mappedNameList, exceptCannotSelectList, exceptCannotTransmitList } from "../components/MappedName";
+import { saveAdditionalInfoDetails } from "../uitls/axios";
+import { useCookies } from "react-cookie";
 
 const MyPageEdit = () => {
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,8 +43,15 @@ const MyPageEdit = () => {
     navigate("/mypage/edit/additional", { state: { selected: selectedOptions } });
   };
 
-  const saveLocalInfo = () => {
+  const handleSave = () => {
     console.log(localUserInfo);
+    try {
+      const response = saveAdditionalInfoDetails(localUserInfo, token);
+      console.log(response);
+      navigate("/mypage");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="page">
@@ -82,7 +94,7 @@ const MyPageEdit = () => {
               <Container>
                 <Input
                   name="status"
-                  // value={localUserInfo.status}
+                  value={localUserInfo.status}
                   onChange={handleChange}
                   placeholder="기분, 감정 등 내 상태를 6자 이내로 작성해보세요."
                 />
@@ -122,7 +134,7 @@ const MyPageEdit = () => {
               })}
               <PlusInfoBtn onClick={linkToNext} />
               <SubText>추가 정보 입력하기</SubText>
-              <CompleteBtn onClick={saveLocalInfo}>저장하기</CompleteBtn>
+              <CompleteBtn onClick={handleSave}>저장하기</CompleteBtn>
             </EditPageCenter>
           </div>
         </EditPageBack>
