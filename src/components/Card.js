@@ -22,6 +22,32 @@ import {
   mailImg,
 } from "../uitls/snsImg";
 
+import {
+  alphabet1,
+  alphabet2,
+  alphabet3,
+  number1,
+  number2,
+  number3,
+  number4,
+  number5,
+  hobby1,
+  hobby2,
+} from "../uitls/stickers";
+
+const stickerMapping = {
+  alphabet1: alphabet1,
+  alphabet2: alphabet2,
+  alphabet3: alphabet3,
+  number1: number1,
+  number2: number2,
+  number3: number3,
+  number4: number4,
+  number5: number5,
+  hobby1: hobby1,
+  hobby2: hobby2,
+};
+
 const iconMapping = {
   instagram: instagramImg,
   youtube: youtubeImg,
@@ -99,24 +125,23 @@ const Card = ({ userData }) => {
       ref={cardRef}
     >
       <CardBoxIn>
-        <CustomImage
-          src={Wallet}
-          alt="Example"
-          x={cardDimensions.width * 0.46019553072625696}
-          y={cardDimensions.height * 0.4296875}
-          width={30}
-          height={30}
-          zIndex={-100}
-        />
+        {userData.stickerDtoList.map((sticker, index) => (
+          <CustomImage
+            key={index}
+            src={stickerMapping[sticker.type]}
+            alt={sticker.type}
+            x={cardDimensions.width * sticker.posX}
+            y={cardDimensions.height * sticker.posY}
+            width={30}
+            height={30}
+            zIndex={sticker.zIndex}
+          />
+        ))}
 
         <CardLeftRight>
-          <CardNameSpace>
+          <CardNameSpace style={{ marginRight: "7px" }}>
             <CardName>{formatNameWithSpace(userData.name)}</CardName>
-            {primaryInfoKey && (
-              <IconAndText>
-                <CardText>{userData.status}</CardText>
-              </IconAndText>
-            )}
+            {primaryInfoKey && <CardText style={{ marginRight: "7px" }}>{userData.status}</CardText>}
           </CardNameSpace>
 
           <CardRight>
@@ -181,8 +206,6 @@ const CardName = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-
-  margin-right: 7px;
 `;
 
 const CardText = styled.div`

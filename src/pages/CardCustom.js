@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import BackHeader from "../components/BackHeader";
@@ -11,7 +13,13 @@ import { MainText, GuideText } from "../styles/Title";
 
 import TrashImg from "../images/trash.png";
 
+import { saveCustom } from "../uitls/axios";
+
 const CardCustom = () => {
+  const [cookies] = useCookies();
+  const token = cookies["jwt-token"];
+  const navigate = useNavigate();
+
   const { userInfo } = useUserInfo();
   const [customBackColor, setCustomBackColor] = useState(`${userInfo.bgColor}`);
   const [customTextColor, setCustomTextColor] = useState(`${userInfo.textColor}`);
@@ -20,13 +28,29 @@ const CardCustom = () => {
   const [addedImages, setAddedImages] = useState([]);
   const canvasRef = useRef(null);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const stickers = addedImages.map((img, index) => ({
       type: img.name,
       posX: img.x / canvasRef.current.width,
       posY: img.y / canvasRef.current.height,
       zIndex: index - 100,
     }));
+
+    const payload = {
+      bgColor: customBackColor,
+      textColor: customTextColor,
+      stickerList: stickers,
+    };
+
+    console.log(payload);
+
+    try {
+      const response = await saveCustom(payload, token);
+      navigate("/mypage");
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
 
     // 새로운 스티커 정보 배열을 customStickers 상태에 저장
     setCustomStickers(stickers);

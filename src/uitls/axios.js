@@ -150,3 +150,20 @@ export const deleteCard = async (memberId, token) => {
     window.location.reload();
   }
 };
+
+export const saveCustom = async (info, token) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `${API_KEY}/api/card/color`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: info,
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
