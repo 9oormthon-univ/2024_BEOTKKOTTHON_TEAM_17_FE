@@ -532,10 +532,12 @@ const Canvas = ({
     // 캔버스에 touchmove 이벤트 리스너를 추가
     const canvas = canvasRef.current;
     canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거
     return () => {
       canvas.removeEventListener("touchmove", handleTouchMove, { passive: false });
+      document.removeEventListener("touchmove", handleTouchMove, { passive: false });
     };
   }, [dragging, addedImages, draggingIdx, canvasRef]);
 
@@ -545,7 +547,6 @@ const Canvas = ({
         <StyledCanvas
           ref={canvasRef}
           onTouchStart={(e) => onTouchStart(e, addedImages)}
-          onTouchMove={(e) => onTouchMove(e, dragging, draggingIdx, addedImages)}
           onTouchEnd={() => onTouchEnd(setDragging, setDraggingIdx)}
           onMouseDown={(e) => onMouseDown(e, addedImages)}
           onMouseMove={(e) => onMouseMove(e, dragging, draggingIdx, addedImages)}
