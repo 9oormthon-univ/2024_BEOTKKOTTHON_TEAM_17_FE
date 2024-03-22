@@ -184,16 +184,15 @@ const Input = styled.input`
   outline: none;
 
   color: #8c8c8c;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
   &::placeholder {
     color: #8c8c8c;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
   }
-
   @media (hover: hover) and (pointer: fine) {
     width: 343px;
   }

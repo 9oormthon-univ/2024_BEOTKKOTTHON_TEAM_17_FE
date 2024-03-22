@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MainText = styled.div`
   align-self: flex-start;
   margin-top: 20px;
-  margin-bottom: 17px;
+  margin-bottom: 8px;
   margin-left: 16px;
 
   color: #000;
