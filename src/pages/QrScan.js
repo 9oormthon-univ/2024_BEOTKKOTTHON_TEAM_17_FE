@@ -9,7 +9,7 @@ function QrScan() {
   const navigate = useNavigate();
 
   const goBack = () => {
-    window.history.back(); // 뒤로 가기
+    navigate(-1);
   };
 
   const qrcodeRegionId = "reader";
@@ -72,10 +72,11 @@ function QrScan() {
           />
         </svg>
       </QRHeader>
-      <div id={qrcodeRegionId} width="600px">
-        {/* Camera Scan
-        <button onClick={startScanning}>Scan QR Code</button> */}
-      </div>
+      <div
+        id={qrcodeRegionId}
+        width="600px"
+      />
+      <QRFooter />
     </>
   );
 }
@@ -139,15 +140,13 @@ const QRResult = styled.div`
 
 const QRFooter = styled.div`
   width: 100vw;
-  height: 97px;
+  height: 87px;
   background-color: #000;
 
   position: absolute;
   bottom: 0;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
 
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
