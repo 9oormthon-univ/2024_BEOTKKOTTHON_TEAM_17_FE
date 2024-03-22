@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignUpStore } from "../store/store";
 import styled from "styled-components";
 import BackHeader from "../components/BackHeader";
-import { submitSignUp } from "../uitls/axios";
+import { submitSignUp } from "../utils/axios";
 import "../styles/Main.css";
 import { useCookies } from "react-cookie";
 

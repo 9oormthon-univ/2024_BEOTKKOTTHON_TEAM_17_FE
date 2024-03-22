@@ -23,7 +23,7 @@ import {
   organizationImg,
   phoneImg,
   mailImg,
-} from "../uitls/snsImg";
+} from "../utils/snsImg";
 
 const customOptions = [
   { key: "organization", label: "소속", icon: organizationImg },

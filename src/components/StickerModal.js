@@ -1,48 +1,10 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-import {
-  alphabet1,
-  alphabet2,
-  alphabet3,
-  number1,
-  number2,
-  number3,
-  number4,
-  number5,
-  hobby1,
-  hobby2,
-} from "../uitls/stickers";
-import { alphabetThumbnail, numberThumbnail, hobbyThumbnail } from "../uitls/stickers";
-
-// Dummy data
-const stickerCategories = [
-  { id: "hobby", thumbnail: hobbyThumbnail },
-  { id: "number", thumbnail: numberThumbnail },
-  { id: "alphabet", thumbnail: alphabetThumbnail },
-];
-
-const stickers = {
-  hobby: [
-    { name: "hobby1", src: hobby1 },
-    { name: "hobby2", src: hobby2 },
-  ],
-  number: [
-    { name: "number1", src: number1 },
-    { name: "number2", src: number2 },
-    { name: "number3", src: number3 },
-    { name: "number4", src: number4 },
-    { name: "number5", src: number5 },
-  ],
-  alphabet: [
-    { name: "alphabet1", src: alphabet1 },
-    { name: "alphabet2", src: alphabet2 },
-    { name: "alphabet3", src: alphabet3 },
-  ],
-};
+import { stickerCategories, stickers } from "../utils/mappingStickers";
 
 const StickerModal = ({ onClose, setAddedImages, addedImages }) => {
-  const [selectedCategory, setSelectedCategory] = useState("hobby");
+  const [selectedCategory, setSelectedCategory] = useState("field");
   const [selectedStickers, setSelectedStickers] = useState([]);
 
   const handleSelectCategory = (category) => {

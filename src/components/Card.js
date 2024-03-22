@@ -1,69 +1,10 @@
 import styled from "styled-components";
-import Wallet from "../images/wallet.png";
 import CustomImage from "./CustomImage";
 import { useRef, useEffect, useState } from "react";
-
-import {
-  kakaotalkImg,
-  behanceImg,
-  blogImg,
-  facebookImg,
-  githubImg,
-  instagramImg,
-  linkedInImg,
-  notefolioImg,
-  tiktokImg,
-  xImg,
-  youtubeImg,
-  contentImg,
-  linkImg,
-  organizationImg,
-  phoneImg,
-  mailImg,
-} from "../uitls/snsImg";
-
-import {
-  alphabet1,
-  alphabet2,
-  alphabet3,
-  number1,
-  number2,
-  number3,
-  number4,
-  number5,
-  hobby1,
-  hobby2,
-} from "../uitls/stickers";
-
-const stickerMapping = {
-  alphabet1: alphabet1,
-  alphabet2: alphabet2,
-  alphabet3: alphabet3,
-  number1: number1,
-  number2: number2,
-  number3: number3,
-  number4: number4,
-  number5: number5,
-  hobby1: hobby1,
-  hobby2: hobby2,
-};
-
-const iconMapping = {
-  instagram: instagramImg,
-  youtube: youtubeImg,
-  facebook: facebookImg,
-  linkedIn: linkedInImg,
-  organization: organizationImg,
-  link: linkImg,
-  content: contentImg,
-  x: xImg,
-  tiktok: tiktokImg,
-  naver: blogImg,
-  notefolio: notefolioImg,
-  behance: behanceImg,
-  github: githubImg,
-  kakao: kakaotalkImg,
-};
+import { iconMapping } from "../utils/mappingIcon";
+import { phoneImg, mailImg } from "../utils/snsImg";
+import { useStoreSize } from "../store/store";
+import { stickerMapping } from "../utils/mappingStickers";
 
 const Card = ({ userData }) => {
   const primaryInfoKey = userData.status !== null;
@@ -101,15 +42,17 @@ const Card = ({ userData }) => {
 
   // 상대적인 스티커 좌표를 구하기 위함
   const cardRef = useRef();
-  const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
+  // const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
+  const { cardDimensions, setCardDimensions } = useStoreSize();
 
   // 카드 컴포넌트가 마운트될 때마다 카드 컴포넌트의 상대적 위치를 구함
   useEffect(() => {
     if (cardRef.current) {
-      setCardDimensions({
-        width: cardRef.current.offsetWidth,
-        height: cardRef.current.offsetHeight,
-      });
+      // setCardDimensions({
+      //   width: cardRef.current.offsetWidth,
+      //   height: cardRef.current.offsetHeight,
+      // });
+      setCardDimensions(cardRef.current.offsetWidth, cardRef.current.offsetHeight);
     }
   }, []);
 
@@ -134,8 +77,7 @@ const Card = ({ userData }) => {
             y={cardDimensions.height * sticker.posY}
             width={30}
             height={30}
-            // zIndex={sticker.zIndex}
-            zIndex={-10}
+            zIndex={sticker.zindex}
           />
         ))}
 
@@ -235,11 +177,6 @@ const CardSpace = styled.div`
   display: flex;
   align-items: center;
   margin-top: 15px;
-`;
-
-const IconAndText = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const CardLeftRight = styled.div`

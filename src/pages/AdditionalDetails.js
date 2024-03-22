@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { MainText, GuideText } from "../styles/Title";
 import { useUserInfo } from "../store/store";
 import { mappedNameList, exceptCannotTransmitList } from "../components/MappedName";
-import { saveAdditionalInfoDetails } from "../uitls/axios";
+import { saveAdditionalInfoDetails } from "../utils/axios";
 
 const AdditionalDetails = () => {
   const location = useLocation();

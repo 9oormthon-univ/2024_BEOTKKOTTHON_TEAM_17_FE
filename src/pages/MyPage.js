@@ -6,7 +6,7 @@ import Modal from "../components/Modal";
 import "../styles/Main.css";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
-import { getMyInfo } from "../uitls/axios";
+import { getMyInfo } from "../utils/axios";
 import Pencil from "../images/pencil.png";
 import { useCookies } from "react-cookie";
 

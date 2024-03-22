@@ -1,0 +1,33 @@
+import {
+  kakaotalkImg,
+  behanceImg,
+  blogImg,
+  facebookImg,
+  githubImg,
+  instagramImg,
+  linkedInImg,
+  notefolioImg,
+  tiktokImg,
+  xImg,
+  youtubeImg,
+  contentImg,
+  linkImg,
+  organizationImg,
+} from "./snsImg";
+
+export const iconMapping = {
+  instagram: instagramImg,
+  youtube: youtubeImg,
+  facebook: facebookImg,
+  linkedIn: linkedInImg,
+  organization: organizationImg,
+  link: linkImg,
+  content: contentImg,
+  x: xImg,
+  tiktok: tiktokImg,
+  naver: blogImg,
+  notefolio: notefolioImg,
+  behance: behanceImg,
+  github: githubImg,
+  kakao: kakaotalkImg,
+};

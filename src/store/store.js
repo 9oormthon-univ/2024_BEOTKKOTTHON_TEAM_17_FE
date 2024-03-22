@@ -14,17 +14,6 @@ export const useSignUpStore = create((set) => ({
     })),
 }));
 
-export const useStoreSize = create((set) => ({
-  globalWidth: 0,
-  globalHeight: 0,
-  setGlobalWidthAndHeight: (globalWidth) =>
-    set(() => ({
-      globalWidth,
-      globalHeight: globalWidth,
-    })),
-  reset: () => set(() => ({ globalWidth: 0, globalHeight: 0 })),
-}));
-
 export const useUserInfo = create(
   persist(
     (set, get) => ({
@@ -98,3 +87,8 @@ export const useOtherInfo = create(
     }
   )
 );
+
+export const useStoreSize = create((set) => ({
+  cardDimensions: { width: 0, height: 0 },
+  setCardDimensions: (width, height) => set(() => ({ cardDimensions: { width, height } })),
+}));

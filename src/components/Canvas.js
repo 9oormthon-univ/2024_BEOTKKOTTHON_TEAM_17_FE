@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import React, { useRef, useState, useEffect } from "react";
-import { useUserInfo } from "../store/store";
-import walletImg from "../images/wallet.png";
-import schoolImg from "../images/school.png";
-import callImg from "../images/call.png";
-import pencilImg from "../images/pencil.png";
-import { useDragAndDrop } from "../uitls/dragNdrop";
+import React, { useState, useEffect } from "react";
+import { useStoreSize, useUserInfo } from "../store/store";
+import { useDragAndDrop } from "../utils/dragNdrop";
 import WrapCard from "./WrapCard";
+import { stickerMapping } from "../utils/mappingStickers";
 
 const _constants = {
   containerWidth: 343,
@@ -27,6 +24,7 @@ const Canvas = ({
   const [draggingIdx, setDraggingIdx] = useState(null);
 
   const [showCard, setShowCard] = useState(true);
+  const { cardDimensions } = useStoreSize();
 
   const { onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = useDragAndDrop(
     setAddedImages,
@@ -34,34 +32,6 @@ const Canvas = ({
     setDraggingIdx,
     canvasRef
   );
-
-  // useEffect(() => {
-  //   const resizeCanvas = () => {
-  //     const canvas = canvasRef.current;
-  //     const container = canvas.parentElement;
-  //     const context = canvas.getContext("2d");
-
-  // canvas.width = container.offsetWidth;
-  // canvas.height = _constants.containerHeight; // 높이는 200px로 고정
-
-  //     context.clearRect(0, 0, canvas.width, canvas.height);
-  //     context.fillStyle = `${customBackColor}`;
-  //     context.fillRect(0, 0, canvas.width, canvas.height);
-
-  //     addedImages.forEach((imgInfo) => {
-  //       const img = new Image();
-  //       img.onload = () => {
-  //         context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
-  //       };
-  //       img.src = imgInfo.src;
-  //     });
-  //   };
-
-  //   window.addEventListener("resize", resizeCanvas);
-  //   resizeCanvas(); // 초기 로드 시에도 캔버스 크기를 설정
-
-  //   return () => window.removeEventListener("resize", resizeCanvas);
-  // }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
 
   useEffect(() => {
     // 모든 이미지를 미리 로드하고 이미지 객체를 저장
@@ -97,7 +67,7 @@ const Canvas = ({
       const container = canvas.parentElement;
 
       canvas.width = container.offsetWidth;
-      canvas.height = _constants.containerHeight;
+      canvas.height = _constants.containerHeight; // 높이는 200px로 고정
 
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = customBackColor;
@@ -117,7 +87,22 @@ const Canvas = ({
     return () => {
       window.removeEventListener("resize", drawCanvas);
     };
-  }, [addedImages, customBackColor]); // Dependencies에 적절히 조정
+  }, [addedImages, customBackColor]);
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 userInfo.stickerDtoList의 내용을 addedImages에 반영
+    const initialImages = userInfo.stickerDtoList.map((sticker) => ({
+      ...sticker,
+      name: sticker.type,
+      src: stickerMapping[sticker.type], // 실제 이미지 경로로 변환
+      x: sticker.posX * cardDimensions.width,
+      y: sticker.posY * cardDimensions.height,
+      width: 30, // 너비와 높이는 예시 값이며, 필요에 따라 조정해야 할 수 있습니다.
+      height: 30,
+    }));
+
+    setAddedImages(initialImages);
+  }, [userInfo, canvasRef]);
 
   useEffect(() => {
     const handleTouchMove = (event) => {
