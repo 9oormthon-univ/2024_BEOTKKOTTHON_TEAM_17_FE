@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Wheel from "@uiw/react-color-wheel";
+import ShadeSlider from "@uiw/react-color-shade-slider";
 import { hsvaToHex } from "@uiw/color-convert";
 
 const ColorWheelModal = ({
@@ -18,6 +19,7 @@ const ColorWheelModal = ({
   tColor,
 }) => {
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
+
   const handleWheelChange = (color) => {
     const newColorHex = hsvaToHex(color.hsva);
     setHsva(color.hsva); // 색상 휠의 HSVa 상태 업데이트
@@ -71,17 +73,45 @@ const ColorWheelModal = ({
           <ModalContent>
             <ModalWheel>
               {type === "card" ? (
-                <Wheel
-                  color={hsva}
-                  onChange={handleWheelChange}
-                  width={230}
-                  height={230}
-                />
+                <>
+                  <Wheel
+                    color={hsva}
+                    onChange={handleWheelChange}
+                    width={220}
+                    height={220}
+                  />
+                  <ShadeSlider
+                    hsva={hsva}
+                    style={{ width: 220, marginTop: 20 }}
+                    onChange={(newShade) => {
+                      const newHsva = { ...hsva, v: newShade.v };
+                      setHsva(newHsva);
+                      const newColorHex = hsvaToHex(newHsva);
+                      setColor(newColorHex);
+                      setColors((currentColors) => [newColorHex, ...currentColors.slice(1)]);
+                      setCustomBackColor(newColorHex);
+                    }}
+                  />
+                </>
               ) : (
-                <Wheel
-                  color={hsva}
-                  onChange={handleWheelChangeText}
-                />
+                <>
+                  <Wheel
+                    color={hsva}
+                    onChange={handleWheelChangeText}
+                  />
+                  <ShadeSlider
+                    hsva={hsva}
+                    style={{ width: 210, marginTop: 20 }}
+                    onChange={(newShade) => {
+                      const newHsva = { ...hsva, v: newShade.v };
+                      setHsva(newHsva);
+                      const newColorHex = hsvaToHex(newHsva);
+                      setTColor(newColorHex);
+                      setTColors((currentColors) => [newColorHex, ...currentColors.slice(1)]);
+                      setCustomTextColor(newColorHex);
+                    }}
+                  />
+                </>
               )}
             </ModalWheel>
           </ModalContent>
@@ -133,7 +163,7 @@ const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
+  //   background-color: rgba(0, 0, 0, 0.1);
   top: 0;
   left: 0;
   z-index: 1;
@@ -166,5 +196,6 @@ const ModalTitle = styled.div`
 const ModalWheel = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin-top: 10px;
 `;

@@ -1,24 +1,30 @@
 import styled from "styled-components";
-import React, { useRef, useState, useEffect } from "react";
-import { useUserInfo } from "../store/store";
-import walletImg from "../images/wallet.png";
-import schoolImg from "../images/school.png";
-import callImg from "../images/call.png";
-import pencilImg from "../images/pencil.png";
-import { useDragAndDrop } from "../uitls/dragNdrop";
+import React, { useState, useEffect } from "react";
+import { useStoreSize, useUserInfo } from "../store/store";
+import { useDragAndDrop } from "../utils/dragNdrop";
 import WrapCard from "./WrapCard";
+import { stickerMapping } from "../utils/mappingStickers";
 
 const _constants = {
   containerWidth: 343,
   containerHeight: 200,
 };
 
-const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages, setAddedImages, canvasRef }) => {
+const Canvas = ({
+  customBackColor,
+  customTextColor,
+  customStickers,
+  addedImages,
+  setAddedImages,
+  canvasRef,
+  addImageToCanvas,
+}) => {
   const { userInfo } = useUserInfo();
   const [dragging, setDragging] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState(null);
 
   const [showCard, setShowCard] = useState(true);
+  const { cardDimensions } = useStoreSize();
 
   const { onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = useDragAndDrop(
     setAddedImages,
@@ -26,38 +32,77 @@ const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages,
     setDraggingIdx,
     canvasRef
   );
-  const toggleDrag = (isDragging) => {
-    setShowCard(!isDragging); // 드래깅 상태에 따라 Card의 표시 여부를 결정
-    setDragging(isDragging);
-  };
 
   useEffect(() => {
-    const resizeCanvas = () => {
+    // 모든 이미지를 미리 로드하고 이미지 객체를 저장
+    const imageObjects = {};
+
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    };
+
+    const loadAllImages = async () => {
+      const loadPromises = addedImages.map((imgInfo) =>
+        loadImage(imgInfo.src).then((img) => {
+          imageObjects[imgInfo.src] = img;
+        })
+      );
+
+      await Promise.all(loadPromises);
+
+      // 이미지 로드 완료 후 캔버스에 처음으로 그리기
+      drawCanvas();
+    };
+
+    loadAllImages();
+
+    const drawCanvas = () => {
       const canvas = canvasRef.current;
-      const container = canvas.parentElement;
       const context = canvas.getContext("2d");
+      const container = canvas.parentElement;
 
       canvas.width = container.offsetWidth;
       canvas.height = _constants.containerHeight; // 높이는 200px로 고정
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = `${customBackColor}`;
+      context.fillStyle = customBackColor;
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       addedImages.forEach((imgInfo) => {
-        const img = new Image();
-        img.onload = () => {
+        const img = imageObjects[imgInfo.src];
+        if (img) {
           context.drawImage(img, imgInfo.x, imgInfo.y, imgInfo.width, imgInfo.height);
-        };
-        img.src = imgInfo.src;
+        }
       });
     };
 
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas(); // 초기 로드 시에도 캔버스 크기를 설정
+    // Resize 이벤트 핸들러에서도 drawCanvas 호출
+    window.addEventListener("resize", drawCanvas);
 
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, [addedImages, customBackColor]); // addedImages가 변경될 때마다 useEffect를 다시 실행
+    return () => {
+      window.removeEventListener("resize", drawCanvas);
+    };
+  }, [addedImages, customBackColor]);
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 userInfo.stickerDtoList의 내용을 addedImages에 반영
+    const initialImages = userInfo.stickerDtoList.map((sticker) => ({
+      ...sticker,
+      name: sticker.type,
+      src: stickerMapping[sticker.type], // 실제 이미지 경로로 변환
+      x: sticker.posX * cardDimensions.width,
+      y: sticker.posY * cardDimensions.height,
+      width: 30, // 너비와 높이는 예시 값이며, 필요에 따라 조정해야 할 수 있습니다.
+      height: 30,
+    }));
+
+    setAddedImages(initialImages);
+  }, [userInfo, canvasRef]);
 
   useEffect(() => {
     const handleTouchMove = (event) => {
@@ -95,120 +140,8 @@ const Canvas = ({ customBackColor, customTextColor, customStickers, addedImages,
     };
   }, [dragging, addedImages, draggingIdx]);
 
-  const addImageToCanvas = (name, src) => {
-    // if (addedImages.some((img) => img.name === name)) {
-    //   return;
-    // }
-
-    const img = new Image();
-    img.onload = () => {
-      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
-    };
-    img.src = src;
-  };
-
-  // const onTouchStart = (e) => {
-  //   const touch = e.touches[0];
-  //   const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-  //   const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-  //   addedImages.forEach((img, idx) => {
-  //     if (offsetX > img.x && offsetX < img.x + img.width && offsetY > img.y && offsetY < img.y + img.height) {
-  //       toggleDrag(true);
-  //       setDraggingIdx(idx);
-  //       e.preventDefault();
-  //     }
-  //   });
-  // };
-
-  // const onTouchMove = (e) => {
-  //   if (!dragging) return;
-  //   window.requestAnimationFrame(() => {
-  //     const touch = e.touches[0];
-  //     const offsetX = touch.clientX - canvasRef.current.getBoundingClientRect().left;
-  //     const offsetY = touch.clientY - canvasRef.current.getBoundingClientRect().top;
-
-  //     const newX = Math.min(
-  //       Math.max(0, offsetX - addedImages[draggingIdx].width / 2),
-  //       canvasRef.current.width - addedImages[draggingIdx].width
-  //     );
-  //     const newY = Math.min(
-  //       Math.max(0, offsetY - addedImages[draggingIdx].height / 2),
-  //       canvasRef.current.height - addedImages[draggingIdx].height
-  //     );
-  //     e.preventDefault();
-  //     setAddedImages(
-  //       addedImages.map((img, idx) => {
-  //         if (idx === draggingIdx) {
-  //           return { ...img, x: newX, y: newY };
-  //         }
-  //         return img;
-  //       })
-  //     );
-  //   });
-  // };
-
-  // const onTouchEnd = () => {
-  //   toggleDrag(false);
-  //   setDraggingIdx(null);
-  // };
-
-  //   const onMouseDown = (e) => {
-  //     const mouseX = e.nativeEvent.offsetX;
-  //     const mouseY = e.nativeEvent.offsetY;
-  //     addedImages.forEach((img, idx) => {
-  //       if (mouseX > img.x && mouseX < img.x + img.width && mouseY > img.y && mouseY < img.y + img.height) {
-  //         toggleDrag(true);
-  //         setDraggingIdx(idx);
-  //       }
-  //     });
-  //   };
-
-  //   const onMouseMove = (e) => {
-  //     if (dragging) {
-  //       window.requestAnimationFrame(() => {
-  //         const mouseX = e.nativeEvent.offsetX;
-  //         const mouseY = e.nativeEvent.offsetY;
-  //         setAddedImages(
-  //           addedImages.map((img, idx) => {
-  //             if (idx === draggingIdx) {
-  //               return { ...img, x: mouseX - img.width / 2, y: mouseY - img.height / 2 };
-  //             }
-  //             return img;
-  //           })
-  //         );
-  //       });
-  //     }
-  //   };
-
-  //   const onMouseUp = () => {
-  //     toggleDrag(false);
-  //     setDraggingIdx(null);
-  //   };
-
   return (
     <CanvasDiv>
-      <ImageSelection>
-        <img
-          src={walletImg}
-          alt="Wallet"
-          onClick={() => addImageToCanvas("Wallet", walletImg)}
-        />
-        <img
-          src={schoolImg}
-          alt="School"
-          onClick={() => addImageToCanvas("School", schoolImg)}
-        />
-        <img
-          src={callImg}
-          alt="Call"
-          onClick={() => addImageToCanvas("Call", callImg)}
-        />
-        <img
-          src={pencilImg}
-          alt="Pencil"
-          onClick={() => addImageToCanvas("Pencil", pencilImg)}
-        />
-      </ImageSelection>
       <CanvasContainer>
         <StyledCanvas
           ref={canvasRef}
@@ -240,23 +173,8 @@ const CanvasDiv = styled.div`
   align-items: center;
 `;
 
-const ImageSelection = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-
-  margin-bottom: 20px;
-  margin-top: 20px;
-  img {
-    width: 50px;
-    height: 50px;
-    margin: 0 10px;
-    cursor: pointer;
-  }
-`;
-
 const CanvasContainer = styled.div`
-  margin-top: 10px;
+  // margin-top: 129px;
 
   width: calc(100vw - 32px);
   max-width: 580px;

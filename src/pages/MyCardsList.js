@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import ModalCard from "../components/ModalCard";
 import ModalDelete from "../components/ModalDelete";
 import { useOtherInfo } from "../store/store";
-import { getListInfo, getSearchInfo } from "../uitls/axios";
+import { getListInfo, getSearchInfo } from "../utils/axios";
 import { useCookies } from "react-cookie";
 import Search from "../images/search3.png";
 import NoMatched from "../images/no_matched.png";
@@ -120,7 +120,11 @@ const MyCardsList = ({ onToggle }) => {
           {Array.isArray(otherInfo) && otherInfo.length === 0 ? (
             /* 전체 리스트가 없을 때는 등록된 명함이 없다는 메시지 표시 */
             <NoneCards>
-              <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
+              <img
+                src={NoMatched}
+                alt="등록된 명함 X"
+                style={{ height: "30vh" }}
+              />
               <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
             </NoneCards>
           ) : (
@@ -128,7 +132,10 @@ const MyCardsList = ({ onToggle }) => {
             <div className="CardLists">
               {Array.isArray(otherInfo) &&
                 otherInfo.map((user, index) => (
-                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                  <CardListsCard
+                    key={index}
+                    onClick={() => handleCardClick(user)}
+                  >
                     <Test>
                       <Card userData={user} />
                     </Test>
@@ -155,7 +162,10 @@ const MyCardsList = ({ onToggle }) => {
             <div className="CardLists">
               {Array.isArray(searchedInfo) &&
                 searchedInfo.map((user, index) => (
-                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                  <CardListsCard
+                    key={index}
+                    onClick={() => handleCardClick(user)}
+                  >
                     <Test>
                       <Card userData={user} />
                     </Test>
@@ -213,9 +223,18 @@ const MyCardsList = ({ onToggle }) => {
         </>
       )}
       {isModalCardOpen && (
-        <ModalCard user={selectedUser} onClose={closeModal} onOpenDeleteModal={() => setIsModalDeleteOpen(true)} />
+        <ModalCard
+          user={selectedUser}
+          onClose={closeModal}
+          onOpenDeleteModal={() => setIsModalDeleteOpen(true)}
+        />
       )}
-      {isModalDeleteOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
+      {isModalDeleteOpen && (
+        <ModalDelete
+          user={selectedUser}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };

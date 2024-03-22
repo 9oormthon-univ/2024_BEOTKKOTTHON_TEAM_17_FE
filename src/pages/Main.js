@@ -6,22 +6,10 @@ import MainLogo from "../images/main.png";
 import Wallet from "../images/wallet_circle.png";
 import MainHeader from "../components/MainHeader";
 import { useCookies } from "react-cookie";
-import { getMyInfo, isValidToken } from "../uitls/axios";
+import { getMyInfo, isValidToken } from "../utils/axios";
 import { useUserInfo } from "../store/store";
 
 function Main() {
-  // const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setViewportHeight(window.innerHeight);
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
   const { setUserInfo } = useUserInfo();

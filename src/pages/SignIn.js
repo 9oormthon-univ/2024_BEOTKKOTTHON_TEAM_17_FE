@@ -3,7 +3,7 @@ import DefaultHeader from "../components/DefaultHeader";
 import "../styles/Main.css";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { logIn } from "../uitls/axios";
+import { logIn } from "../utils/axios";
 import { useCookies } from "react-cookie";
 
 const SignIn = () => {

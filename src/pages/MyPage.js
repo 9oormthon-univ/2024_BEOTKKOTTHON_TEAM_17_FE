@@ -6,7 +6,7 @@ import Modal from "../components/Modal";
 import "../styles/Main.css";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
-import { getMyInfo } from "../uitls/axios";
+import { getMyInfo } from "../utils/axios";
 import Pencil from "../images/pencil.png";
 import { useCookies } from "react-cookie";
 
@@ -154,6 +154,7 @@ const EditBtnSpace = styled.div`
   @media (hover: hover) and (pointer: fine) {
     width: 375px;
   }
+  z-index: 1;
 `;
 
 const CardEditBtn = styled.div`

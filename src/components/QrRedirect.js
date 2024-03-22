@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
-import { subscribeCard } from "../uitls/axios";
+import { subscribeCard } from "../utils/axios";
 
 const QrRedirect = () => {
   const [cookies] = useCookies();

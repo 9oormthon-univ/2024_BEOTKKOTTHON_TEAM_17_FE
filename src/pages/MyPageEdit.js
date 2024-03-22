@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import PlusInfoBtn from "../components/PlusInfoBtn";
 import { useNavigate } from "react-router-dom";
 import { mappedNameList, exceptCannotSelectList, exceptCannotTransmitList } from "../components/MappedName";
-import { saveAdditionalInfoDetails } from "../uitls/axios";
+import { saveAdditionalInfoDetails } from "../utils/axios";
 import { useCookies } from "react-cookie";
 
 const MyPageEdit = () => {

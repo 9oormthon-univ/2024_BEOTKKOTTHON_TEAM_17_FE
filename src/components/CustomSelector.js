@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import ColorPalette from "./ColorPalette";
 import StickerModal from "./StickerModal";
 
-const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStickers, setAddedImages }) => {
+const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStickers, setAddedImages, addedImages }) => {
   const [activeComponent, setActiveComponent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,7 +54,8 @@ const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStick
       {isModalOpen && (
         <StickerModal
           onClose={closeModal}
-          setCustomStickers={setCustomStickers}
+          setAddedImages={setAddedImages}
+          addedImages={addedImages}
         />
       )}
     </>

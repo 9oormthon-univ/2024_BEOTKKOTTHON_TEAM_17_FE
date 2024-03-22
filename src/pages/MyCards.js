@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
-import { getMyInfo } from "../uitls/axios";
+import { getMyInfo } from "../utils/axios";
 import { useCookies } from "react-cookie";
 import BackQRHeader from "../components/BackQRHeader";
 import MyCardsList from "./MyCardsList";
