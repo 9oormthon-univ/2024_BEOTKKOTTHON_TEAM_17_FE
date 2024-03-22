@@ -2,6 +2,7 @@ import alphabetThumbnail from "../images/alphabet/alphabetThumbnail.png";
 import fieldThumbnail from "../images/field/fieldThumbnail.png";
 import numberThumbnail from "../images/number/numberThumbnail.png";
 import emotionThumbnail from "../images/emotion/emotionThumbnail.png";
+import seasonThumbnail from "../images/season/seasonThumbnail.png";
 
 import field_1 from "../images/field/field_1.png";
 import field_2 from "../images/field/field_2.png";
@@ -227,11 +228,33 @@ import emotion_18 from "../images/emotion/emotion_18.png";
 import emotion_19 from "../images/emotion/emotion_19.png";
 import emotion_20 from "../images/emotion/emotion_20.png";
 
+import season_1 from "../images/season/season_1.png";
+import season_2 from "../images/season/season_2.png";
+import season_3 from "../images/season/season_3.png";
+import season_4 from "../images/season/season_4.png";
+import season_5 from "../images/season/season_5.png";
+import season_6 from "../images/season/season_6.png";
+import season_7 from "../images/season/season_7.png";
+import season_8 from "../images/season/season_8.png";
+import season_9 from "../images/season/season_9.png";
+import season_10 from "../images/season/season_10.png";
+import season_11 from "../images/season/season_11.png";
+import season_12 from "../images/season/season_12.png";
+import season_13 from "../images/season/season_13.png";
+import season_14 from "../images/season/season_14.png";
+import season_15 from "../images/season/season_15.png";
+import season_16 from "../images/season/season_16.png";
+import season_17 from "../images/season/season_17.png";
+import season_18 from "../images/season/season_18.png";
+import season_19 from "../images/season/season_19.png";
+import season_20 from "../images/season/season_20.png";
+
 export {
   alphabetThumbnail,
   fieldThumbnail,
   numberThumbnail,
   emotionThumbnail,
+  seasonThumbnail,
   field_1,
   field_2,
   field_3,
@@ -448,4 +471,24 @@ export {
   emotion_18,
   emotion_19,
   emotion_20,
+  season_1,
+  season_2,
+  season_3,
+  season_4,
+  season_5,
+  season_6,
+  season_7,
+  season_8,
+  season_9,
+  season_10,
+  season_11,
+  season_12,
+  season_13,
+  season_14,
+  season_15,
+  season_16,
+  season_17,
+  season_18,
+  season_19,
+  season_20,
 };

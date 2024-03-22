@@ -26,6 +26,7 @@ const SignIn = () => {
   const handleSignIn = async () => {
     try {
       const data = await logIn(signInData, setCookie);
+
       navigate("/"); // 메인으로 리다이렉트
       console.log("로그인 성공");
     } catch (error) {
