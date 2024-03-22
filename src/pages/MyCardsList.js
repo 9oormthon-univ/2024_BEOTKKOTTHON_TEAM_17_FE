@@ -45,6 +45,7 @@ const MyCardsList = ({ onToggle }) => {
         }
         const otherInfoResponse = await getListInfo(token);
         if (otherInfoResponse && otherInfoResponse.status === 200) {
+          console.log(otherInfoResponse);
           setOtherInfo(otherInfoResponse.data);
           console.log(otherInfo);
         }

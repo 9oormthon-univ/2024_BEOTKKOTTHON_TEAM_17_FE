@@ -20,24 +20,24 @@ const MyCards = () => {
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        if (!token) {
-          navigate("/");
-        }
-        const userInfoResponse = await getMyInfo(token);
-        if (userInfoResponse && userInfoResponse.status === 200) {
-          setUserInfo(userInfoResponse.data);
-          console.log(userInfo);
-        }
-      } catch (error) {
-        console.log(error);
-        navigate("/");
-      }
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       if (!token) {
+  //         navigate("/");
+  //       }
+  //       const userInfoResponse = await getMyInfo(token);
+  //       if (userInfoResponse && userInfoResponse.status === 200) {
+  //         setUserInfo(userInfoResponse.data);
+  //         console.log(userInfo);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //       navigate("/");
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="page">

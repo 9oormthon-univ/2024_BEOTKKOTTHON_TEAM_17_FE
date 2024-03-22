@@ -473,7 +473,7 @@ const Canvas = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [addedImages, customBackColor, canvasRef]); // `canvasRef`는 변하지 않으므로 의존성에 추가하는 것이 안전합니다.
+  }, [addedImages, customBackColor, canvasRef]);
 
   // 초기 이미지 설정
   useEffect(() => {
@@ -504,30 +504,40 @@ const Canvas = ({
 
       const touch = event.touches[0];
       const canvasBounds = canvasRef.current.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      const offsetX = (touch.clientX - canvasBounds.left) * dpr;
-      const offsetY = (touch.clientY - canvasBounds.top) * dpr;
+      const dpr = window.devicePixelRatio || 1; // Device Pixel Ratio를 가져옴
+      const offsetX = (touch.clientX - canvasBounds.left) * dpr; // DPR을 고려한 오프셋 X
+      const offsetY = (touch.clientY - canvasBounds.top) * dpr; // DPR을 고려한 오프셋 Y
 
+      // 스티커의 새로운 X, Y 위치를 계산하되, 캔버스의 실제 크기를 기준으로 경계를 넘지 않도록 제한
       const newX = Math.min(
-        Math.max(0, offsetX - (addedImages[draggingIdx].width / 2) * dpr),
-        canvasRef.current.width - addedImages[draggingIdx].width * dpr
+        Math.max(0, offsetX - (addedImages[draggingIdx].width / 2) * dpr), // 스티커가 캔버스 왼쪽 경계를 넘지 않도록 함
+        canvasRef.current.width - addedImages[draggingIdx].width * dpr // 스티커가 캔버스 오른쪽 경계를 넘지 않도록 함
       );
       const newY = Math.min(
-        Math.max(0, offsetY - (addedImages[draggingIdx].height / 2) * dpr),
-        canvasRef.current.height - addedImages[draggingIdx].height * dpr
+        Math.max(0, offsetY - (addedImages[draggingIdx].height / 2) * dpr), // 스티커가 캔버스 상단 경계를 넘지 않도록 함
+        canvasRef.current.height - addedImages[draggingIdx].height * dpr // 스티커가 캔버스 하단 경계를 넘지 않도록 함
       );
 
-      // 상태 업데이트를 최소화하기 위해 불변성을 유지하면서 현재 드래깅 중인 이미지만 업데이트
-      setAddedImages((currentAddedImages) =>
-        currentAddedImages.map((img, idx) => (idx === draggingIdx ? { ...img, x: newX / dpr, y: newY / dpr } : img))
+      // 상태를 업데이트하여 스티커의 위치를 변경
+      setAddedImages(
+        addedImages.map((img, idx) => {
+          if (idx === draggingIdx) {
+            return { ...img, x: newX / dpr, y: newY / dpr }; // DPR을 고려하여 스타일상의 위치로 조정
+          }
+          return img;
+        })
       );
     };
 
+    // 캔버스에 touchmove 이벤트 리스너를 추가
     const canvas = canvasRef.current;
     canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거
     return () => {
       canvas.removeEventListener("touchmove", handleTouchMove, { passive: false });
+      document.removeEventListener("touchmove", handleTouchMove, { passive: false });
     };
   }, [dragging, addedImages, draggingIdx, canvasRef]);
 
@@ -537,7 +547,6 @@ const Canvas = ({
         <StyledCanvas
           ref={canvasRef}
           onTouchStart={(e) => onTouchStart(e, addedImages)}
-          onTouchMove={(e) => onTouchMove(e, dragging, draggingIdx, addedImages)}
           onTouchEnd={() => onTouchEnd(setDragging, setDraggingIdx)}
           onMouseDown={(e) => onMouseDown(e, addedImages)}
           onMouseMove={(e) => onMouseMove(e, dragging, draggingIdx, addedImages)}
