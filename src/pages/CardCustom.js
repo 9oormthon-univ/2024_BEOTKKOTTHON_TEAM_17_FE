@@ -11,7 +11,8 @@ import Canvas from "../components/Canvas";
 
 import { MainText, GuideText } from "../styles/Title";
 
-import TrashImg from "../images/trash.png";
+import Undo from "../images/undo.png";
+import Redo from "../images/redo.png";
 
 import { saveCustom } from "../utils/axios";
 
@@ -22,6 +23,9 @@ const CardCustom = () => {
 
   const { userInfo } = useUserInfo();
 
+  // Redo시에 돌리기를 위한 history
+  const [undoStack, setUndoStack] = useState([]);
+
   const [customBackColor, setCustomBackColor] = useState(`${userInfo.bgColor}`);
   const [customTextColor, setCustomTextColor] = useState(`${userInfo.textColor}`);
   const [customStickers, setCustomStickers] = useState([]);
@@ -29,6 +33,7 @@ const CardCustom = () => {
   const [addedImages, setAddedImages] = useState([]);
   const canvasRef = useRef(null);
 
+  /*
   const handleSave = async () => {
     const stickers = addedImages.map((img, index) => ({
       type: img.name,
@@ -56,16 +61,67 @@ const CardCustom = () => {
     // 새로운 스티커 정보 배열을 customStickers 상태에 저장
     setCustomStickers(stickers);
   };
+  */
+  const handleSave = async () => {
+    const canvas = canvasRef.current;
+    const dpr = window.devicePixelRatio || 1;
+
+    // 캔버스의 실제 픽셀 기반 크기를 DPR로 나누어 스타일상의 크기를 얻음
+    const adjustedWidth = canvas.width / dpr;
+    const adjustedHeight = canvas.height / dpr;
+
+    const stickers = addedImages.map((img, index) => ({
+      type: img.name,
+      // 조정된 캔버스 크기를 사용하여 상대적 위치 계산
+      posX: img.x / adjustedWidth,
+      posY: img.y / adjustedHeight,
+      zindex: index - 100,
+    }));
+
+    const payload = {
+      bgColor: customBackColor,
+      textColor: customTextColor,
+      stickerList: stickers,
+    };
+
+    console.log(payload);
+
+    try {
+      const response = await saveCustom(payload, token);
+      navigate("/mypage");
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    // 새로운 스티커 정보 배열을 customStickers 상태에 저장
+    setCustomStickers(stickers);
+  };
 
   useEffect(() => {
-    // 저장하기 버튼을 누를시 console에 좌표 출력
+    // 저장하기 버튼을 누를시 console에 좌표d 출력
     console.log(customStickers);
     console.log(customBackColor);
     console.log(customTextColor);
   }, [customStickers]);
 
-  const handleResetStickers = () => {
-    setAddedImages([]);
+  const handleUndo = () => {
+    if (addedImages.length > 0) {
+      // 스티커가 하나 이상 있는 경우
+      const newAddedImages = [...addedImages];
+      const removedImage = newAddedImages.pop();
+      setAddedImages(newAddedImages);
+      setUndoStack([...undoStack, removedImage]);
+    }
+  };
+
+  const handleRedo = () => {
+    if (undoStack.length > 0) {
+      const newUndoStack = [...undoStack];
+      const redoImage = newUndoStack.pop();
+      setUndoStack(newUndoStack);
+      setAddedImages([...addedImages, redoImage]);
+    }
   };
 
   const addImageToCanvas = (name, src) => {
@@ -97,11 +153,18 @@ const CardCustom = () => {
                   addImageToCanvas={addImageToCanvas}
                 />
                 <ResetBtnSpace>
-                  <StickerResetBtn onClick={handleResetStickers}>
+                  <StickerResetBtn>
                     <img
-                      src={TrashImg}
-                      alt="스티커초기화"
-                      style={{ height: "16px" }}
+                      src={Undo}
+                      alt="실행취소"
+                      style={{ height: "15px" }}
+                      onClick={handleUndo}
+                    />
+                    <img
+                      src={Redo}
+                      alt="재실행"
+                      style={{ height: "15px" }}
+                      onClick={handleRedo}
                     />
                   </StickerResetBtn>
                 </ResetBtnSpace>
@@ -176,10 +239,10 @@ const StickerResetBtn = styled.div`
   margin-top: -38px;
   margin-right: 6vw;
 
-  width: 28px;
+  width: 48px;
   height: 28px;
   background-color: #fff;
-  border-radius: 100%;
+  border-radius: 14px 14px 14px 14px;
   filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.25));
 
   display: flex;
@@ -190,8 +253,16 @@ const StickerResetBtn = styled.div`
   @media (hover: hover) and (pointer: fine) {
     margin-right: calc(375px * 0.04);
   }
+
+  img:first-child {
+    margin-right: 4px; /* 첫 번째 이미지의 오른쪽 마진 조정 */
+  }
+
+  img:last-child {
+    margin-left: 4px; /* 두 번째 이미지의 왼쪽 마진 조정 */
+  }
 `;
 
 const Container = styled.div`
-  margin-top: calc(135px - 20px - 17px);
+  margin-top: calc(135px - 28px);
 `;

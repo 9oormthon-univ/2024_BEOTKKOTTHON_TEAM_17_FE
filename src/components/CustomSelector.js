@@ -1,6 +1,6 @@
 import Smile from "../images/smile.png";
 import Palette from "../images/palette.png";
-import ResetImg from "../images/reset.png";
+import Trash from "../images/trash.png";
 import styled from "styled-components";
 import React, { useState } from "react";
 import ColorPalette from "./ColorPalette";
@@ -39,8 +39,8 @@ const CustomSelector = ({ setCustomBackColor, setCustomTextColor, setCustomStick
           onClick={openModal}
         />
         <Image
-          style={{ opacity: "1" }}
-          src={ResetImg}
+          style={{ opacity: "1", width: "20px" }}
+          src={Trash}
           alt="Reset"
           onClick={handleReset}
         />
