@@ -167,3 +167,19 @@ export const saveCustom = async (info, token) => {
     throw error;
   }
 };
+
+export const getCategoryList = async (token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/category`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};

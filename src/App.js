@@ -9,6 +9,7 @@ import MyPageEdit from "./pages/MyPageEdit";
 import MyCards from "./pages/MyCards";
 import MyCardsList from "./pages/MyCardsList";
 import MyCardsCategory from "./pages/MyCardsCategory";
+import MyCardsCategoryCard from "./pages/MyCardsCategoryCard";
 import QrScan from "./pages/QrScan";
 import "./App.css";
 import CardCustom from "./pages/CardCustom";
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/mycards" element={<MyCards />} />
         <Route exact path="/mycards/list" element={<MyCardsList />} />
         <Route exact path="/mycards/category" element={<MyCardsCategory />} />
+        <Route exact path="/mycards/category/:categoryId" element={<MyCardsCategoryCard />} />
         <Route exact path="/qrscan" element={<QrScan />} />
         <Route exact path="/mypage/custom" element={<CardCustom />} />
         <Route exact path="/redirect/*" element={<QrRedirect />} />
