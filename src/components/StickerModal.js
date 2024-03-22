@@ -12,11 +12,11 @@ const StickerModal = ({ onClose, setAddedImages, addedImages }) => {
   };
 
   const handleSelectSticker = (name, src) => {
-    let containsKey = name.includes("field") || name.includes("emotion");
+    let containsKey = name.includes("field") || name.includes("emotion") || name.includes("season");
     if (containsKey) {
-      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 50, height: 50 }]);
+      setAddedImages([...addedImages, { name, src, x: 20, y: 20, width: 50, height: 50 }]);
     } else {
-      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
+      setAddedImages([...addedImages, { name, src, x: 20, y: 20, width: 30, height: 30 }]);
     }
   };
 
@@ -79,7 +79,10 @@ const ModalHeader = styled.div`
   justify-content: start;
   align-items: center;
 
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
 
   height: 58px;
 `;
@@ -144,8 +147,11 @@ const Thumbnail = styled.img`
 const StickersContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow-y: hidden;
+  overflow-y: auto;
   overflow-x: hidden;
+  flex-grow: 1;
+
+  margin-top: 10px;
 `;
 
 const Sticker = styled.img`
@@ -161,5 +167,8 @@ const Divider = styled.div`
   background-color: #8c8c8c;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 22px;
+
+  position: sticky;
+  top: 58px;
+  z-index: 2;
 `;

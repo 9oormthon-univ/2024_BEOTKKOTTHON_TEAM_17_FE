@@ -75,8 +75,16 @@ const Card = ({ userData }) => {
             alt={sticker.type}
             x={cardDimensions.width * sticker.posX}
             y={cardDimensions.height * sticker.posY}
-            width={sticker.type.includes("emotion") || sticker.type.includes("field") ? 50 : 30}
-            height={sticker.type.includes("emotion") || sticker.type.includes("field") ? 50 : 30}
+            width={
+              sticker.type.includes("emotion") || sticker.type.includes("field") || sticker.type.includes("season")
+                ? 50
+                : 30
+            }
+            height={
+              sticker.type.includes("emotion") || sticker.type.includes("field") || sticker.type.includes("season")
+                ? 50
+                : 30
+            }
             zIndex={sticker.zindex}
           />
         ))}

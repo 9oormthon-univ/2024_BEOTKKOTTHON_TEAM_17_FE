@@ -72,7 +72,7 @@ const CardCustom = () => {
   const addImageToCanvas = (name, src) => {
     const img = new Image();
     img.onload = () => {
-      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
+      setAddedImages([...addedImages, { name, src, x: 20, y: 20, width: 30, height: 30 }]);
     };
     img.src = src;
   };

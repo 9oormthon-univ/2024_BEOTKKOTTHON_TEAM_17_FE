@@ -92,7 +92,8 @@ const Canvas = ({
   useEffect(() => {
     // 컴포넌트 마운트 시 userInfo.stickerDtoList의 내용을 addedImages에 반영
     const initialImages = userInfo.stickerDtoList.map((sticker) => {
-      const isSpecialType = sticker.type.includes("emotion") || sticker.type.includes("field");
+      const isSpecialType =
+        sticker.type.includes("emotion") || sticker.type.includes("field") || sticker.type.includes("season");
       const size = isSpecialType ? 50 : 30;
 
       return {
