@@ -5,11 +5,12 @@ import React from "react";
 import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
 import Search from "../images/search1.png";
+import { logOut } from "../utils/axios";
 
 const BackQRHeader = ({ redirectTo, isMyPage }) => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["jwt-token"]);
-
+  const token = cookies["jwt-token"];
   const goBack = () => {
     if (redirectTo) {
       navigate(redirectTo);
@@ -22,9 +23,14 @@ const BackQRHeader = ({ redirectTo, isMyPage }) => {
     navigate("/qrscan");
   };
 
-  const handleToLogOut = () => {
-    removeCookie("jwt-token", { path: "/" });
-    navigate("/");
+  const handleToLogOut = async () => {
+    try {
+      await logOut(token);
+      // removeCookie("jwt-token", { path: "/" });
+      navigate("/");
+    } catch (error) {
+      console.log("로그아웃 실패", error);
+    }
   };
 
   return (

@@ -31,6 +31,22 @@ export const logIn = async (userData, setCookie) => {
   }
 };
 
+export const logOut = async (token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/auth/sign-out`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const isValidToken = async (token) => {
   try {
     const config = {

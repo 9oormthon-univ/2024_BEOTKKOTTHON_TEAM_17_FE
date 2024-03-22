@@ -180,8 +180,6 @@ const CanvasDiv = styled.div`
 `;
 
 const CanvasContainer = styled.div`
-  // margin-top: 129px;
-
   width: calc(100vw - 32px);
   max-width: 580px;
   height: 200px;

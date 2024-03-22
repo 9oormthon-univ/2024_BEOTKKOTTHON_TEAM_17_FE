@@ -14,7 +14,6 @@ import { MainText, GuideText } from "../styles/Title";
 import TrashImg from "../images/trash.png";
 
 import { saveCustom } from "../utils/axios";
-import { iconMapping } from "../utils/mappingIcon";
 
 const CardCustom = () => {
   const [cookies] = useCookies();
