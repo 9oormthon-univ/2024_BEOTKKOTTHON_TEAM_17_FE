@@ -11,6 +11,9 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt-token"]);
 
+  //비밀번호가 틀렸을 때 사용
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [signInData, setSignInData] = useState({
     principal: "",
     credential: "",
@@ -30,6 +33,11 @@ const SignIn = () => {
       navigate("/"); // 메인으로 리다이렉트
       console.log("로그인 성공");
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage("아이디 또는 비밀번호를 확인해주세요.");
+      } else {
+        setErrorMessage("로그인에 실패했습니다.");
+      }
       console.error("로그인 실패:", error);
     }
   };
@@ -99,6 +107,7 @@ const SignIn = () => {
                 onChange={handleChangeState}
                 placeholder="비밀번호"
               />
+              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
               <Button onClick={handleSignIn}>로그인하기</Button>
               <Button $isFindPassword>비밀번호 찾기</Button>
               <SignupPrompt>
@@ -240,7 +249,7 @@ const SignUpButton = styled(Button)`
 
 const IsFirst = styled.div`
   margin-top: 20px;
-  margin-left: 25px;
+  margin-left: 16px;
   align-self: flex-start;
   font-family: Pretendard;
   font-size: 12px;
@@ -248,4 +257,20 @@ const IsFirst = styled.div`
   font-weight: 400;
   line-height: normal;
   color: #000;
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  align-self: flex-start;
+  margin-left: 16px;
+  margin-bottom: 10px;
+
+  color: #ff1616;
+  leading-trim: both;
+  text-edge: cap;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
