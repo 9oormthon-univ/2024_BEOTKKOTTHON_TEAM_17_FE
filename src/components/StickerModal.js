@@ -12,7 +12,12 @@ const StickerModal = ({ onClose, setAddedImages, addedImages }) => {
   };
 
   const handleSelectSticker = (name, src) => {
-    setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
+    let containsKey = name.includes("field") || name.includes("emotion");
+    if (containsKey) {
+      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 50, height: 50 }]);
+    } else {
+      setAddedImages([...addedImages, { name, src, x: 0, y: 0, width: 30, height: 30 }]);
+    }
   };
 
   const handleCheck = () => {

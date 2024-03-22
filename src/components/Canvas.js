@@ -91,18 +91,23 @@ const Canvas = ({
 
   useEffect(() => {
     // 컴포넌트 마운트 시 userInfo.stickerDtoList의 내용을 addedImages에 반영
-    const initialImages = userInfo.stickerDtoList.map((sticker) => ({
-      ...sticker,
-      name: sticker.type,
-      src: stickerMapping[sticker.type], // 실제 이미지 경로로 변환
-      x: sticker.posX * cardDimensions.width,
-      y: sticker.posY * cardDimensions.height,
-      width: 30, // 너비와 높이는 예시 값이며, 필요에 따라 조정해야 할 수 있습니다.
-      height: 30,
-    }));
+    const initialImages = userInfo.stickerDtoList.map((sticker) => {
+      const isSpecialType = sticker.type.includes("emotion") || sticker.type.includes("field");
+      const size = isSpecialType ? 50 : 30;
+
+      return {
+        ...sticker,
+        name: sticker.type,
+        src: stickerMapping[sticker.type], // 실제 이미지 경로로 변환
+        x: sticker.posX * cardDimensions.width,
+        y: sticker.posY * cardDimensions.height,
+        width: size,
+        height: size,
+      };
+    });
 
     setAddedImages(initialImages);
-  }, [userInfo, canvasRef]);
+  }, [userInfo, cardDimensions]);
 
   useEffect(() => {
     const handleTouchMove = (event) => {
