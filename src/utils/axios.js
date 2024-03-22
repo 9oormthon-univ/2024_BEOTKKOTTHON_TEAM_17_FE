@@ -97,7 +97,7 @@ export const getListInfo = async (token) => {
 
 export const getSearchInfo = async (token, searchData) => {
   try {
-    const searchKeyword = encodeURIComponent(searchData.trim()); // 한글이나 특수문자를 URL 안전한 형태로 인코딩
+    const searchKeyword = searchData.trim();
     const config = {
       method: "get",
       url: `${API_KEY}/api/card/list?search=${searchKeyword}`,
@@ -189,6 +189,78 @@ export const getCategoryList = async (token) => {
     const config = {
       method: "get",
       url: `${API_KEY}/api/card/category`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getListCategoryInfo = async (token, categoryId) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/category/${categoryId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getSearchCategoryInfo = async (token, categoryId, searchData) => {
+  try {
+    const searchKeyword = searchData.trim();
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/category/${categoryId}?search=${searchKeyword}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createCategory = async (categoryName, token) => {
+  try {
+    const config = {
+      method: "post",
+      url: `${API_KEY}/api/card/category`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      data: {
+        categoryName,
+      },
+    };
+    const res = await axios.request(config);
+    if (res.status === 200) {
+      console.log(res.data);
+    }
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteCategory = async (categoryId, token) => {
+  try {
+    const config = {
+      method: "delete",
+      url: `${API_KEY}/api/card/category/${categoryId}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
