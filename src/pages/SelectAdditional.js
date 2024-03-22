@@ -82,7 +82,7 @@ const AdditionalInfoPage = () => {
       <div className="center">
         <PageBack>
           <div className="page-space">
-            <BackHeader />
+            <BackHeader redirectTo={"/mypage/edit"} />
             <MainText>추가 정보 입력</MainText>
             <GuideText style={{ marginBottom: "19px" }}>최대 4개의 카테고리를 선택하실 수 있어요.</GuideText>
             <Section>

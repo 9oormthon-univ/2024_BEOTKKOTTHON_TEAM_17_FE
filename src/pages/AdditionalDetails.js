@@ -76,7 +76,7 @@ const AdditionalDetails = () => {
       <div className="center">
         <PageBack>
           <div className="page-space">
-            <BackHeader />
+            <BackHeader redirectTo={"/mypage/edit/additional"} />
             <PageCenter>
               <MainText>{userInfo.name}님의 명함 정보</MainText>
               <GuideText style={{ marginBottom: "16px" }}>

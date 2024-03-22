@@ -2,10 +2,16 @@ import styled from "styled-components";
 import React from "react";
 import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
+import { useNavigate } from "react-router-dom";
 
-const BackHeader = () => {
+const BackHeader = ({ redirectTo }) => {
+  const navigate = useNavigate();
   const goBack = () => {
-    window.history.back(); // 뒤로 가기
+    if (redirectTo) {
+      navigate(redirectTo);
+    } else {
+      navigate(-1);
+    }
   };
   return (
     <HeaderContainer>

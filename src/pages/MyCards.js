@@ -44,7 +44,7 @@ const MyCards = () => {
       <div className="center">
         <MyCardsPage>
           <div className="page-space">
-            <BackQRHeader />
+            <BackQRHeader redirectTo={"/"} />
             <MyCardsTitle>{userInfo.name}님의 명함첩</MyCardsTitle>
             {showList ? (
               <MyCardsList onToggle={handleToggleComponent} />

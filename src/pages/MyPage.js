@@ -57,7 +57,10 @@ const MyPage = () => {
       <div className="center">
         <MyPageBack>
           <div className="page-space">
-            <BackQRHeader isMyPage={true} />
+            <BackQRHeader
+              redirectTo="/"
+              isMyPage={true}
+            />
             <MyPageCenter>
               <CardTitle>{userInfo.name}님의 명함</CardTitle>
               <CardContent>정보를 입력하고 명함을 등록해보세요.</CardContent>

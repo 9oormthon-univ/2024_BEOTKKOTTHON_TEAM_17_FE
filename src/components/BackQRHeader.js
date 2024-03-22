@@ -6,12 +6,16 @@ import "../styles/Header.css";
 import BackArrow from "../images/back_arrow.png";
 import Search from "../images/search1.png";
 
-const BackQRHeader = ({ isMyPage }) => {
+const BackQRHeader = ({ redirectTo, isMyPage }) => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["jwt-token"]);
 
   const goBack = () => {
-    window.history.back(); // 뒤로 가기
+    if (redirectTo) {
+      navigate(redirectTo);
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleToQrScan = () => {

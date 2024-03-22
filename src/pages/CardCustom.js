@@ -82,7 +82,7 @@ const CardCustom = () => {
       <div className="center">
         <CustomPage>
           <div className="page-space">
-            <BackHeader />
+            <BackHeader redirectTo="/mypage" />
             <CustomPageCenter>
               <MainText>명함 커스텀</MainText>
               <GuideText>색상 변경 및 스티커를 활용해 나만의 명함을 만들어보세요.</GuideText>

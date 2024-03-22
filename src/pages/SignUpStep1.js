@@ -54,7 +54,7 @@ const SignUpStep1 = () => {
       <div className="center">
         <SignUpPage1>
           <div className="page-space">
-            <BackHeader />
+            <BackHeader redirectTo={"/signin"} />
             <Container>
               <FormText>
                 반갑습니다!

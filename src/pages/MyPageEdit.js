@@ -60,7 +60,7 @@ const MyPageEdit = () => {
       <div className="center">
         <EditPageBack>
           <div className="page-space">
-            <BackHeader />
+            <BackHeader redirectTo={"/mypage"} />
             <EditPageCenter>
               <MainText>{userInfo.name}님의 명함 정보</MainText>
               <GuideText style={{ marginBottom: "16px" }}>
