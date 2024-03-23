@@ -6,6 +6,7 @@ import { getCategoryList, createCategory } from "../utils/axios";
 import ModalDeleteCategory from "../components/ModalDeleteCategory";
 import ModalModCategory from "../components/ModalModCategory";
 import Category from "../components/Category";
+import Loading from "../components/Loading";
 
 const MyCardsCategory = ({ onToggle }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const MyCardsCategory = ({ onToggle }) => {
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [modifiedCategory, setModifiedCategory] = useState(null);
   const [showNoneCategory, setShowNoneCategory] = useState(true);
-
+  const [loading, setLoading] = useState(true);
   const handleToListLink = () => {
     onToggle();
   };
@@ -35,6 +36,8 @@ const MyCardsCategory = ({ onToggle }) => {
       setCategoryList(response.data);
     } catch (error) {
       console.error("Error fetching category list:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,6 +110,9 @@ const MyCardsCategory = ({ onToggle }) => {
   const closeModalModCategory = () => {
     setIsModalModCategoryOpen(false);
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -118,13 +124,23 @@ const MyCardsCategory = ({ onToggle }) => {
         // categoryList가 비어 있지 않을 때
         <div>
           {categoryList.map((category) => (
-            <Category key={category.categoryId} category={category} fetchCategoryList={fetchCategoryList} />
+            <Category
+              key={category.categoryId}
+              category={category}
+              fetchCategoryList={fetchCategoryList}
+            />
           ))}
           {showNewCategoryInput && (
             <CategoryLists>
               <CategoryList>
                 <CategoryListLeft>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="18" viewBox="0 0 25 18" fill="none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="18"
+                    viewBox="0 0 25 18"
+                    fill="none"
+                  >
                     <g clip-path="url(#clip0_1_6988)">
                       <path
                         d="M20.7693 0H3.22945C1.44587 0 0 1.44052 0 3.2175V14.7825C0 16.5595 1.44587 18 3.22945 18H20.7693C22.5529 18 23.9988 16.5595 23.9988 14.7825V3.2175C23.9988 1.44052 22.5529 0 20.7693 0Z"
@@ -144,7 +160,11 @@ const MyCardsCategory = ({ onToggle }) => {
                     </g>
                     <defs>
                       <clipPath id="clip0_1_6988">
-                        <rect width="25" height="18" fill="white" />
+                        <rect
+                          width="25"
+                          height="18"
+                          fill="white"
+                        />
                       </clipPath>
                     </defs>
                   </svg>
@@ -171,17 +191,37 @@ const MyCardsCategory = ({ onToggle }) => {
                     stroke-width="1.2"
                     stroke-linecap="round"
                   />
-                  <path d="M2.47559 11.0722L5.92746 14.5241" stroke="#8C8C8C" stroke-width="1.2" />
+                  <path
+                    d="M2.47559 11.0722L5.92746 14.5241"
+                    stroke="#8C8C8C"
+                    stroke-width="1.2"
+                  />
                 </svg>
               </CategoryList>
               <CategoryBtn onClick={handleCategoryBtnClick}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65" fill="none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="65"
+                  height="65"
+                  viewBox="0 0 65 65"
+                  fill="none"
+                >
                   <path
                     d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                     fill="url(#paint0_linear_51_3214)"
                   />
-                  <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                  <path
+                    d="M33 20V46"
+                    stroke="white"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M46 33L20 33"
+                    stroke="white"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
                   <defs>
                     <linearGradient
                       id="paint0_linear_51_3214"
@@ -191,9 +231,18 @@ const MyCardsCategory = ({ onToggle }) => {
                       y2="82"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop offset="0.0475677" stop-color="#92CBFF" />
-                      <stop offset="0.462568" stop-color="#0587FF" />
-                      <stop offset="0.752212" stop-color="#0076FF" />
+                      <stop
+                        offset="0.0475677"
+                        stop-color="#92CBFF"
+                      />
+                      <stop
+                        offset="0.462568"
+                        stop-color="#0587FF"
+                      />
+                      <stop
+                        offset="0.752212"
+                        stop-color="#0076FF"
+                      />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -201,13 +250,29 @@ const MyCardsCategory = ({ onToggle }) => {
             </CategoryLists>
           )}
           <CategoryBtn onClick={handleCategoryBtnClick}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65" fill="none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="65"
+              height="65"
+              viewBox="0 0 65 65"
+              fill="none"
+            >
               <path
                 d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                 fill="url(#paint0_linear_51_3214)"
               />
-              <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+              <path
+                d="M33 20V46"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M46 33L20 33"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
               <defs>
                 <linearGradient
                   id="paint0_linear_51_3214"
@@ -217,9 +282,18 @@ const MyCardsCategory = ({ onToggle }) => {
                   y2="82"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop offset="0.0475677" stop-color="#92CBFF" />
-                  <stop offset="0.462568" stop-color="#0587FF" />
-                  <stop offset="0.752212" stop-color="#0076FF" />
+                  <stop
+                    offset="0.0475677"
+                    stop-color="#92CBFF"
+                  />
+                  <stop
+                    offset="0.462568"
+                    stop-color="#0587FF"
+                  />
+                  <stop
+                    offset="0.752212"
+                    stop-color="#0076FF"
+                  />
                 </linearGradient>
               </defs>
             </svg>
@@ -243,8 +317,18 @@ const MyCardsCategory = ({ onToggle }) => {
                   d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                   fill="url(#paint0_linear_51_3203)"
                 />
-                <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                <path
+                  d="M33 20V46"
+                  stroke="white"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M46 33L20 33"
+                  stroke="white"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
                 <defs>
                   <linearGradient
                     id="paint0_linear_51_3203"
@@ -254,9 +338,18 @@ const MyCardsCategory = ({ onToggle }) => {
                     y2="82"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset="0.0475677" stop-color="#92CBFF" />
-                    <stop offset="0.462568" stop-color="#0587FF" />
-                    <stop offset="0.752212" stop-color="#0076FF" />
+                    <stop
+                      offset="0.0475677"
+                      stop-color="#92CBFF"
+                    />
+                    <stop
+                      offset="0.462568"
+                      stop-color="#0587FF"
+                    />
+                    <stop
+                      offset="0.752212"
+                      stop-color="#0076FF"
+                    />
                   </linearGradient>
                 </defs>
               </svg>
@@ -267,7 +360,13 @@ const MyCardsCategory = ({ onToggle }) => {
             <CategoryLists>
               <CategoryList>
                 <CategoryListLeft>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="18" viewBox="0 0 25 18" fill="none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="18"
+                    viewBox="0 0 25 18"
+                    fill="none"
+                  >
                     <g clip-path="url(#clip0_1_6988)">
                       <path
                         d="M20.7693 0H3.22945C1.44587 0 0 1.44052 0 3.2175V14.7825C0 16.5595 1.44587 18 3.22945 18H20.7693C22.5529 18 23.9988 16.5595 23.9988 14.7825V3.2175C23.9988 1.44052 22.5529 0 20.7693 0Z"
@@ -287,7 +386,11 @@ const MyCardsCategory = ({ onToggle }) => {
                     </g>
                     <defs>
                       <clipPath id="clip0_1_6988">
-                        <rect width="25" height="18" fill="white" />
+                        <rect
+                          width="25"
+                          height="18"
+                          fill="white"
+                        />
                       </clipPath>
                     </defs>
                   </svg>
@@ -314,17 +417,37 @@ const MyCardsCategory = ({ onToggle }) => {
                     stroke-width="1.2"
                     stroke-linecap="round"
                   />
-                  <path d="M2.47559 11.0722L5.92746 14.5241" stroke="#8C8C8C" stroke-width="1.2" />
+                  <path
+                    d="M2.47559 11.0722L5.92746 14.5241"
+                    stroke="#8C8C8C"
+                    stroke-width="1.2"
+                  />
                 </svg>
               </CategoryList>
               <CategoryBtn onClick={handleCategoryBtnClick}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65" fill="none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="65"
+                  height="65"
+                  viewBox="0 0 65 65"
+                  fill="none"
+                >
                   <path
                     d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                     fill="url(#paint0_linear_51_3214)"
                   />
-                  <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                  <path
+                    d="M33 20V46"
+                    stroke="white"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M46 33L20 33"
+                    stroke="white"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
                   <defs>
                     <linearGradient
                       id="paint0_linear_51_3214"
@@ -334,9 +457,18 @@ const MyCardsCategory = ({ onToggle }) => {
                       y2="82"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop offset="0.0475677" stop-color="#92CBFF" />
-                      <stop offset="0.462568" stop-color="#0587FF" />
-                      <stop offset="0.752212" stop-color="#0076FF" />
+                      <stop
+                        offset="0.0475677"
+                        stop-color="#92CBFF"
+                      />
+                      <stop
+                        offset="0.462568"
+                        stop-color="#0587FF"
+                      />
+                      <stop
+                        offset="0.752212"
+                        stop-color="#0076FF"
+                      />
                     </linearGradient>
                   </defs>
                 </svg>
