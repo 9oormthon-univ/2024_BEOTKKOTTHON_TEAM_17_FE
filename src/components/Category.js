@@ -39,13 +39,7 @@ const Category = ({ category, fetchCategoryList }) => {
     <>
       <CategoryList>
         <CategoryListLeft>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="18"
-            viewBox="0 0 25 18"
-            fill="none"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="18" viewBox="0 0 25 18" fill="none">
             <g clip-path="url(#clip0_1_6988)">
               <path
                 d="M20.7693 0H3.22945C1.44587 0 0 1.44052 0 3.2175V14.7825C0 16.5595 1.44587 18 3.22945 18H20.7693C22.5529 18 23.9988 16.5595 23.9988 14.7825V3.2175C23.9988 1.44052 22.5529 0 20.7693 0Z"
@@ -65,11 +59,7 @@ const Category = ({ category, fetchCategoryList }) => {
             </g>
             <defs>
               <clipPath id="clip0_1_6988">
-                <rect
-                  width="25"
-                  height="18"
-                  fill="white"
-                />
+                <rect width="25" height="18" fill="white" />
               </clipPath>
             </defs>
           </svg>
@@ -100,12 +90,7 @@ const Category = ({ category, fetchCategoryList }) => {
                 cursor="pointer"
                 onClick={renameCategory}
               >
-                <path
-                  d="M1 8.96875L7.5 16L16 1"
-                  stroke="#138EFF"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
+                <path d="M1 8.96875L7.5 16L16 1" stroke="#138EFF" stroke-width="2" stroke-linecap="round" />
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -145,11 +130,7 @@ const Category = ({ category, fetchCategoryList }) => {
                   stroke-width="1.2"
                   stroke-linecap="round"
                 />
-                <path
-                  d="M2.47559 11.0722L5.92746 14.5241"
-                  stroke="#8C8C8C"
-                  stroke-width="1.2"
-                />
+                <path d="M2.47559 11.0722L5.92746 14.5241" stroke="#8C8C8C" stroke-width="1.2" />
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -191,6 +172,7 @@ const CategoryList = styled.div`
   align-items: center;
 
   margin-top: 26px;
+  padding: 0 16px;
 `;
 
 const CategoryListLeft = styled.div`
