@@ -101,11 +101,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 `;
 
 const FormText = styled.span`
   margin-top: 60px;
+  margin-left: 16px;
   margin-bottom: 43px;
   align-self: flex-start;
   color: #000;
