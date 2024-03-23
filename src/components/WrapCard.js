@@ -158,6 +158,15 @@ const CardText = styled.div`
   font-weight: 400;
   line-height: normal;
   margin-left: 7px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: calc(100vw - 120px - 32px - 32px);
+
+  @media (hover: hover) and (pointer: fine) {
+    max-width: calc(375px - 120px - 32px - 32px);
+  }
 `;
 
 const CardContents = styled.div`
