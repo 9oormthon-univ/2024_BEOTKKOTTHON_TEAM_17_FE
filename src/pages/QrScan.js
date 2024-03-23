@@ -144,7 +144,7 @@ const QRFooter = styled.div`
   background-color: #000;
 
   position: absolute;
-  bottom: 0;
+  top: 267px;
 
   display: flex;
 
