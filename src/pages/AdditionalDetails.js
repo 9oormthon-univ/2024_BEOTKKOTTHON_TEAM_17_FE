@@ -22,7 +22,6 @@ const AdditionalDetails = () => {
     Object.entries(userInfo).filter(([key, value]) => !exceptCannotTransmitList.includes(key))
   );
 
-  //   const [localUserInfo, setLocalUserInfo] = useState(userInfo);
   const [localUserInfo, setLocalUserInfo] = useState(userInfoToSubmit);
 
   const handleChange = (event) => {

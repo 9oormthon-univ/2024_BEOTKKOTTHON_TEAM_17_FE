@@ -80,18 +80,6 @@ function Main() {
         </MainPage>
       </div>
     </div>
-    // <FullHeightSection $viewportHeight={viewportHeight}>
-    //   <MainHeader isLoggedIn={isLoggedIn} />
-    //   <Container>
-    //     <FiestTextLine>나만의 명함을 만들고 정보 관리를 손쉽게</FiestTextLine>
-    //     <SecondTextLine>PONNECT</SecondTextLine>
-
-    //     <LogoImg src={MainLogo} />
-    //     <WalletDiv>
-    //       <WalletImg src={Wallet} />
-    //     </WalletDiv>
-    //   </Container>
-    // </FullHeightSection>
   );
 }
 
@@ -100,14 +88,6 @@ export default Main;
 const MainPage = styled.div`
   background: linear-gradient(180deg, #138eff 27.96%, #006eee 89.04%);
 `;
-
-// 동적 높이를 받아 스타일을 적용하는 컴포넌트
-// const FullHeightSection = styled.div`
-//   width: 100%;
-//   height: ${({ $viewportHeight }) => `${$viewportHeight}px`};
-//   overflow: hidden;
-//   background: linear-gradient(180deg, #138eff 27.96%, #006eee 89.04%);
-// `;
 
 // 스크롤이 생기지 않게 최대 길이를 제한
 const Container = styled.div`

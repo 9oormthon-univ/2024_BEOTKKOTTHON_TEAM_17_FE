@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import DefaultHeader from "../components/DefaultHeader";
 import "../styles/Main.css";
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { logIn } from "../utils/axios";
 import { useCookies } from "react-cookie";
 
 const SignIn = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt-token"]);
 
@@ -46,46 +45,7 @@ const SignIn = () => {
     navigate("/signup/step1");
   };
 
-  // const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setViewportHeight(window.innerHeight);
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
   return (
-    // <FullHeightSection $viewportHeight={viewportHeight}>
-    //   <DefaultHeader />
-    //   <Container>
-    //     <Title>로그인</Title>
-    //     <Input
-    //       type="email"
-    //       name="principal"
-    //       value={signInData.principal}
-    //       onChange={handleChangeState}
-    //       placeholder="아이디 (이메일)"
-    //     />
-    //     <Input
-    //       type="password"
-    //       name="credential"
-    //       value={signInData.credential}
-    //       onChange={handleChangeState}
-    //       placeholder="비밀번호"
-    //     />
-    //     <Button onClick={handleSignIn}>로그인하기</Button>
-    //     <Button $isFindPassword>비밀번호 찾기</Button>
-    //     <SignupPrompt>
-    //       <IsFirst>PONNECT가 처음이신가요?</IsFirst>
-    //       <SignUpButton onClick={linkToSignUp}>간편 회원가입하기</SignUpButton>
-    //     </SignupPrompt>
-    //   </Container>
-    // </FullHeightSection>
-
     <div className="page">
       <div className="center">
         <SignInPage>
@@ -130,13 +90,6 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-const FullHeightSection = styled.div`
-  width: 100%;
-  height: ${({ $viewportHeight }) => `${$viewportHeight}px`};
-  overflow: hidden;
-  background-color: #fff;
-`;
 
 const SignInPage = styled.div`
   background-color: #fff;

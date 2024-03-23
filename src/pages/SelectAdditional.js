@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import SmileImg from "../images/smile.png";
 import "../styles/Main.css";
 import BackHeader from "../components/BackHeader";
 import { MainText, GuideText } from "../styles/Title";

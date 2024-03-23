@@ -19,13 +19,7 @@ const ModalDelete = ({ user, onClose }) => {
         <ModalWrap>
           <ModalCloseSpace>
             <ModalClose onClick={onClose}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                 <path
                   d="M1 1L8.5 8.5L16 16M16 1L1 16"
                   stroke="black"
@@ -56,7 +50,6 @@ const ModalDelete = ({ user, onClose }) => {
 export default ModalDelete;
 
 const ModalWrap = styled.div`
-  // box-shadow: 0px 0px 10px 0px rgba(140, 140, 140, 0.5);
   border-radius: 25px 25px 0px 0px;
   width: 100vw;
   height: 405px;
@@ -87,7 +80,6 @@ const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  // background-color: rgba(0, 0, 0, 0.25);
   top: 0;
   left: 0;
   z-index: 1;

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useUserInfo } from "../store/store";
-import { getMyInfo } from "../utils/axios";
 import { useCookies } from "react-cookie";
 import BackQRHeader from "../components/BackQRHeader";
 import MyCardsList from "./MyCardsList";
 import MyCardsCategory from "./MyCardsCategory";
 
 const MyCards = () => {
-  const navigate = useNavigate();
   const [showList, setShowList] = useState(true);
 
   const handleToggleComponent = () => {
@@ -19,25 +16,6 @@ const MyCards = () => {
   const { userInfo, setUserInfo } = useUserInfo();
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       if (!token) {
-  //         navigate("/");
-  //       }
-  //       const userInfoResponse = await getMyInfo(token);
-  //       if (userInfoResponse && userInfoResponse.status === 200) {
-  //         setUserInfo(userInfoResponse.data);
-  //         console.log(userInfo);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       navigate("/");
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
 
   return (
     <div className="page">
@@ -49,10 +27,7 @@ const MyCards = () => {
             {showList ? (
               <MyCardsList onToggle={handleToggleComponent} />
             ) : (
-              <MyCardsCategory
-                onToggle={handleToggleComponent}
-                setShowList={setShowList}
-              />
+              <MyCardsCategory onToggle={handleToggleComponent} setShowList={setShowList} />
             )}
           </div>
         </MyCardsPage>

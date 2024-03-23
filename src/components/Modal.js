@@ -1,4 +1,3 @@
-import { StringUtils } from "@zxing/library";
 import React from "react";
 import styled from "styled-components";
 
@@ -10,13 +9,7 @@ const Modal = ({ onClose, qrUrl }) => {
         <ModalWrap>
           <ModalCloseSpace>
             <ModalClose onClick={onClose}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                 <path
                   d="M1 1L8.5 8.5L16 16M16 1L1 16"
                   stroke="black"
@@ -30,10 +23,7 @@ const Modal = ({ onClose, qrUrl }) => {
           <ModalContent>
             <ModalTitle>MY QR</ModalTitle>
             <ModalText>친구의 PONNECT에서 QR을 인식해주세요.</ModalText>
-            <ModalQRImage
-              src={qrUrl}
-              alt="QR 코드"
-            />
+            <ModalQRImage src={qrUrl} alt="QR 코드" />
           </ModalContent>
         </ModalWrap>
       </ModalSpace>

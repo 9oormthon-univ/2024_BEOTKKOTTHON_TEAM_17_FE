@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { stickerCategories, stickers } from "../utils/mappingStickers";
 
@@ -30,26 +30,11 @@ const StickerModal = ({ onClose, setAddedImages, addedImages }) => {
         <ModalWrap>
           <ModalHeader>
             {stickerCategories.map((category) => (
-              <Thumbnail
-                key={category.id}
-                src={category.thumbnail}
-                onClick={() => handleSelectCategory(category.id)}
-              />
+              <Thumbnail key={category.id} src={category.thumbnail} onClick={() => handleSelectCategory(category.id)} />
             ))}
             <ModalClose onClick={handleCheck}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="18"
-                viewBox="0 0 17 18"
-                fill="none"
-              >
-                <path
-                  d="M1 8.96875L7.5 16L16 1"
-                  stroke="black"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
+                <path d="M1 8.96875L7.5 16L16 1" stroke="black" stroke-width="1.5" stroke-linecap="round" />
               </svg>
             </ModalClose>
           </ModalHeader>

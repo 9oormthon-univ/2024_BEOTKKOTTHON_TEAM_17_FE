@@ -33,35 +33,6 @@ const CardCustom = () => {
   const [addedImages, setAddedImages] = useState([]);
   const canvasRef = useRef(null);
 
-  /*
-  const handleSave = async () => {
-    const stickers = addedImages.map((img, index) => ({
-      type: img.name,
-      posX: img.x / canvasRef.current.width,
-      posY: img.y / canvasRef.current.height,
-      zindex: index - 100,
-    }));
-
-    const payload = {
-      bgColor: customBackColor,
-      textColor: customTextColor,
-      stickerList: stickers,
-    };
-
-    console.log(payload);
-
-    try {
-      const response = await saveCustom(payload, token);
-      navigate("/mypage");
-      console.log(response);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    // 새로운 스티커 정보 배열을 customStickers 상태에 저장
-    setCustomStickers(stickers);
-  };
-  */
   const handleSave = async () => {
     const canvas = canvasRef.current;
     const dpr = window.devicePixelRatio || 1;

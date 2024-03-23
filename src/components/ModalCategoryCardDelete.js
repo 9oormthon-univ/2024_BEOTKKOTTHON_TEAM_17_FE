@@ -51,7 +51,6 @@ const ModalCategoryCardDelete = ({ category, user, onClose }) => {
 export default ModalCategoryCardDelete;
 
 const ModalWrap = styled.div`
-  // box-shadow: 0px 0px 10px 0px rgba(140, 140, 140, 0.5);
   border-radius: 25px 25px 0px 0px;
   width: 100vw;
   height: 405px;

@@ -310,14 +310,14 @@ const SearchInputDiv = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  height: calc(35px - 20px);
+  height: calc(35px - 25px);
   border-radius: 100px;
   background: #f4f4f4;
   border: none;
   width: calc(100vw - 40px - 40px - 20px);
 
   @media (hover: hover) and (pointer: fine) {
-    width: calc(375px - 40px - 40px - 20px);
+    width: calc(375px - 40px - 40px - 25px);
   }
 `;
 
@@ -334,6 +334,7 @@ const SearchInput = styled.input`
 `;
 
 const AddButton = styled.button`
+  width: 35px;
   color: #8c8c8c;
   background: #fff;
   leading-trim: both;
