@@ -34,10 +34,7 @@ const Memo = ({ userData, memoText, setMemoText }) => {
   };
 
   return (
-    <MemoBox
-      bgColor={userData.bgColor}
-      textColor={userData.textColor}
-    >
+    <MemoBox bgColor={userData.bgColor} textColor={userData.textColor}>
       {isEdit || memoText !== null ? (
         <Textarea
           value={memoText || ""}
@@ -59,12 +56,7 @@ const Memo = ({ userData, memoText, setMemoText }) => {
           onClick={handleRemoveMemo}
         >
           <g filter="url(#filter0_d_1324_7351)">
-            <circle
-              cx="17"
-              cy="17"
-              r="14"
-              fill="white"
-            />
+            <circle cx="17" cy="17" r="14" fill="white" />
           </g>
           <path
             d="M21.8 13.6842H22.2C22.6418 13.6842 23 13.3543 23 12.9474V12.5789C23 12.172 22.6418 11.8421 22.2 11.8421H19.8M21.8 13.6842V22.5263C21.8 23.3402 21.0837 24 20.2 24H13.8C12.9163 24 12.2 23.3402 12.2 22.5263V13.6842M21.8 13.6842H12.2M19.8 11.8421V11.4737C19.8 10.6598 19.0837 10 18.2 10H15.8C14.9163 10 14.2 10.6598 14.2 11.4737V11.8421M19.8 11.8421H14.2M12.2 13.6842H11.8C11.3582 13.6842 11 13.3543 11 12.9474V12.5789C11 12.172 11.3582 11.8421 11.8 11.8421H14.2M15.4 16.2632V21.4211M18.6 16.2632V21.4211"
@@ -82,10 +74,7 @@ const Memo = ({ userData, memoText, setMemoText }) => {
               filterUnits="userSpaceOnUse"
               color-interpolation-filters="sRGB"
             >
-              <feFlood
-                flood-opacity="0"
-                result="BackgroundImageFix"
-              />
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
               <feColorMatrix
                 in="SourceAlpha"
                 type="matrix"
@@ -94,25 +83,10 @@ const Memo = ({ userData, memoText, setMemoText }) => {
               />
               <feOffset />
               <feGaussianBlur stdDeviation="1.5" />
-              <feComposite
-                in2="hardAlpha"
-                operator="out"
-              />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_1324_7351"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_1324_7351"
-                result="shape"
-              />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1324_7351" />
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1324_7351" result="shape" />
             </filter>
           </defs>
         </svg>
@@ -180,4 +154,8 @@ const TrashCan = styled.div`
   position: fixed;
   right: 26px;
   bottom: 90px;
+
+  @media (hover: hover) and (pointer: fine) {
+    right: calc(50vw - 187.5px + 26px);
+  }
 `;

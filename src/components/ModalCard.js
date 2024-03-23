@@ -58,13 +58,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
             <>
               <ModalBackSpace>
                 <ModalBack onClick={toggleMemo}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 17 17"
-                    fill="none"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                     <path
                       d="M1.97601 8.34216H16.236"
                       stroke="black"
@@ -87,13 +81,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
             <>
               <ModalCloseSpace>
                 <ModalClose onClick={onClose}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="17"
-                    viewBox="0 0 17 17"
-                    fill="none"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                     <path
                       d="M1 1L8.5 8.5L16 16M16 1L1 16"
                       stroke="black"
@@ -113,11 +101,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
             <ModalCardImg>
               {isMemo ? (
                 <>
-                  <Memo
-                    userData={user}
-                    memoText={memoText}
-                    setMemoText={setMemoText}
-                  />
+                  <Memo userData={user} memoText={memoText} setMemoText={setMemoText} />
                 </>
               ) : (
                 <>
@@ -139,12 +123,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
                     onClick={handleMemo}
                   >
                     <g filter="url(#filter0_d_1267_10448)">
-                      <circle
-                        cx="13.5"
-                        cy="13.5"
-                        r="10.5"
-                        fill="white"
-                      />
+                      <circle cx="13.5" cy="13.5" r="10.5" fill="white" />
                     </g>
                     <path
                       d="M7.875 12C8.49631 12 9 12.5037 9 13.125C9 13.7463 8.49631 14.25 7.875 14.25C7.25368 14.25 6.75 13.7463 6.75 13.125C6.75 12.5037 7.25368 12 7.875 12Z"
@@ -168,10 +147,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
                         filterUnits="userSpaceOnUse"
                         color-interpolation-filters="sRGB"
                       >
-                        <feFlood
-                          flood-opacity="0"
-                          result="BackgroundImageFix"
-                        />
+                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
                         <feColorMatrix
                           in="SourceAlpha"
                           type="matrix"
@@ -180,25 +156,10 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
                         />
                         <feOffset />
                         <feGaussianBlur stdDeviation="1.125" />
-                        <feComposite
-                          in2="hardAlpha"
-                          operator="out"
-                        />
-                        <feColorMatrix
-                          type="matrix"
-                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in2="BackgroundImageFix"
-                          result="effect1_dropShadow_1267_10448"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in="SourceGraphic"
-                          in2="effect1_dropShadow_1267_10448"
-                          result="shape"
-                        />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1267_10448" />
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1267_10448" result="shape" />
                       </filter>
                     </defs>
                   </svg>
@@ -219,12 +180,7 @@ const ModalCard = ({ user, onClose, onOpenDeleteModal }) => {
         </ModalWrap>
       </ModalSpace>
 
-      {isModalOpen && (
-        <ModalDelete
-          user={selectedUser}
-          onClose={closeModal}
-        />
-      )}
+      {isModalOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
     </div>
   );
 };
@@ -351,4 +307,8 @@ const MemoToggleButton = styled.div`
   position: fixed;
   right: 26px;
   bottom: 245px;
+
+  @media (hover: hover) and (pointer: fine) {
+    right: calc(50vw - 187.5px + 26px);
+  }
 `;
