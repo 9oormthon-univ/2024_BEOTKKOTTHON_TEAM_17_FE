@@ -144,8 +144,15 @@ const WalletDiv = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
 
-  margin-right: 20px;
   cursor: pointer;
+
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  @media (hover: hover) and (pointer: fine) {
+    right: calc(50vw - 187.5px + 20px);
+  }
 `;
 
 const WalletImg = styled.img`
