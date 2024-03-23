@@ -154,18 +154,8 @@ const CardCustom = () => {
                 />
                 <ResetBtnSpace>
                   <StickerResetBtn>
-                    <img
-                      src={Undo}
-                      alt="실행취소"
-                      style={{ height: "15px" }}
-                      onClick={handleUndo}
-                    />
-                    <img
-                      src={Redo}
-                      alt="재실행"
-                      style={{ height: "15px" }}
-                      onClick={handleRedo}
-                    />
+                    <img src={Undo} alt="실행취소" style={{ height: "15px" }} onClick={handleUndo} />
+                    <img src={Redo} alt="재실행" style={{ height: "15px" }} onClick={handleRedo} />
                   </StickerResetBtn>
                 </ResetBtnSpace>
                 <SelectorContainer>
@@ -251,7 +241,7 @@ const StickerResetBtn = styled.div`
   cursor: pointer;
 
   @media (hover: hover) and (pointer: fine) {
-    margin-right: calc(375px * 0.04);
+    margin-right: 28px;
   }
 
   img:first-child {

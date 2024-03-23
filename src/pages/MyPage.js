@@ -57,33 +57,21 @@ const MyPage = () => {
       <div className="center">
         <MyPageBack>
           <div className="page-space">
-            <BackQRHeader
-              redirectTo="/"
-              isMyPage={true}
-            />
+            <BackQRHeader redirectTo="/" isMyPage={true} />
             <MyPageCenter>
               <CardTitle>{userInfo.name}님의 명함</CardTitle>
               <CardContent>정보를 입력하고 명함을 등록해보세요.</CardContent>
               <Card userData={userInfo} />
               <EditBtnSpace>
                 <CardEditBtn onClick={linkToCustom}>
-                  <img
-                    src={Pencil}
-                    alt="편집"
-                    style={{ height: "18px" }}
-                  />
+                  <img src={Pencil} alt="편집" style={{ height: "18px" }} />
                 </CardEditBtn>
               </EditBtnSpace>
               <BtnSpace>
                 <CardBtn onClick={linkToMyPageEdit}>명함 정보 입력하기</CardBtn>
                 <CardBtn onClick={openModal}>나의 QR</CardBtn>
               </BtnSpace>
-              {isModalOpen && (
-                <Modal
-                  onClose={closeModal}
-                  qrUrl={userInfo.qrUrl}
-                />
-              )}
+              {isModalOpen && <Modal onClose={closeModal} qrUrl={userInfo.qrUrl} />}
             </MyPageCenter>
           </div>
         </MyPageBack>
@@ -176,6 +164,6 @@ const CardEditBtn = styled.div`
   cursor: pointer;
 
   @media (hover: hover) and (pointer: fine) {
-    margin-right: calc(375px * 0.04);
+    margin-right: 28px;
   }
 `;
