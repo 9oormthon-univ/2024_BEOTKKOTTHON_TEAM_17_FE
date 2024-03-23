@@ -105,7 +105,7 @@ const AdditionalDetails = () => {
                 <Input
                   name="email"
                   value={localUserInfo.email}
-                  onChange={handleChange}
+                  readOnly
                 />
               </Container>
               <CustomGuide>상태</CustomGuide>
