@@ -8,6 +8,7 @@ import MainHeader from "../components/MainHeader";
 import { useCookies } from "react-cookie";
 import { getMyInfo, isValidToken } from "../utils/axios";
 import { useUserInfo } from "../store/store";
+import Loading from "../components/Loading";
 
 function Main() {
   const [cookies] = useCookies();
@@ -15,6 +16,8 @@ function Main() {
   const { setUserInfo } = useUserInfo();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -38,6 +41,8 @@ function Main() {
       } catch (error) {
         console.log(error);
         setIsLoggedIn(false);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
@@ -48,6 +53,10 @@ function Main() {
   const handleToMyCards = () => {
     navigate("/mycards");
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="page">

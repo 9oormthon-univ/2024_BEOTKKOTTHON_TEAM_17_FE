@@ -368,3 +368,39 @@ export const modCategoryName = async (categoryId, newName, token) => {
     throw error;
   }
 };
+
+export const getMemo = async (userId, token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/memo/${userId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const modifyMemo = async (userId, memo, token) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `${API_KEY}/api/card/memo`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId: userId,
+        memo: memo,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};

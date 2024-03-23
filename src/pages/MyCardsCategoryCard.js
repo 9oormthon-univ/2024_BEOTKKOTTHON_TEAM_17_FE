@@ -11,6 +11,7 @@ import ModalDelete from "../components/ModalDelete";
 import ModalCategoryCardDelete from "../components/ModalCategoryCardDelete";
 import Search from "../images/search3.png";
 import AddCardModal from "../components/AddCardModal";
+import Loading from "../components/Loading";
 
 const MyCardsCategoryCard = () => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ const MyCardsCategoryCard = () => {
   const [isAddCardModal, setIsAddCardModal] = useState(false);
   const location = useLocation();
   const category = location.state.category;
+
+  const [loading, setLoading] = useState(true);
 
   const handleInputChange = (e) => {
     setSearchData(e.target.value);
@@ -89,11 +92,15 @@ const MyCardsCategoryCard = () => {
       } catch (error) {
         console.log(error);
         navigate("/");
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
   }, []);
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="page">
       <div className="center">
@@ -134,8 +141,18 @@ const MyCardsCategoryCard = () => {
                         d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                         fill="url(#paint0_linear_205_7625)"
                       />
-                      <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                      <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                      <path
+                        d="M33 20V46"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M46 33L20 33"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
                       <defs>
                         <linearGradient
                           id="paint0_linear_205_7625"
@@ -145,9 +162,18 @@ const MyCardsCategoryCard = () => {
                           y2="82"
                           gradientUnits="userSpaceOnUse"
                         >
-                          <stop offset="0.0475677" stop-color="#92CBFF" />
-                          <stop offset="0.462568" stop-color="#0587FF" />
-                          <stop offset="0.752212" stop-color="#0076FF" />
+                          <stop
+                            offset="0.0475677"
+                            stop-color="#92CBFF"
+                          />
+                          <stop
+                            offset="0.462568"
+                            stop-color="#0587FF"
+                          />
+                          <stop
+                            offset="0.752212"
+                            stop-color="#0076FF"
+                          />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -159,19 +185,38 @@ const MyCardsCategoryCard = () => {
                     <CardLists>
                       {Array.isArray(otherCategoryInfo) &&
                         otherCategoryInfo.map((user, index) => (
-                          <CardListsCard key={index} onClick={() => handleCategoryCardClick(user)}>
+                          <CardListsCard
+                            key={index}
+                            onClick={() => handleCategoryCardClick(user)}
+                          >
                             <Card userData={user} />
                           </CardListsCard>
                         ))}
                     </CardLists>
                     <PlusBtn onClick={handleAddCardModal}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65" fill="none">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="65"
+                        height="65"
+                        viewBox="0 0 65 65"
+                        fill="none"
+                      >
                         <path
                           d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                           fill="url(#paint0_linear_51_3214)"
                         />
-                        <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                        <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                        <path
+                          d="M33 20V46"
+                          stroke="white"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                        />
+                        <path
+                          d="M46 33L20 33"
+                          stroke="white"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                        />
                         <defs>
                           <linearGradient
                             id="paint0_linear_51_3214"
@@ -181,9 +226,18 @@ const MyCardsCategoryCard = () => {
                             y2="82"
                             gradientUnits="userSpaceOnUse"
                           >
-                            <stop offset="0.0475677" stop-color="#92CBFF" />
-                            <stop offset="0.462568" stop-color="#0587FF" />
-                            <stop offset="0.752212" stop-color="#0076FF" />
+                            <stop
+                              offset="0.0475677"
+                              stop-color="#92CBFF"
+                            />
+                            <stop
+                              offset="0.462568"
+                              stop-color="#0587FF"
+                            />
+                            <stop
+                              offset="0.752212"
+                              stop-color="#0076FF"
+                            />
                           </linearGradient>
                         </defs>
                       </svg>
@@ -205,20 +259,39 @@ const MyCardsCategoryCard = () => {
                     <CardLists>
                       {Array.isArray(searchedCategoryInfo) &&
                         searchedCategoryInfo.map((user, index) => (
-                          <CardListsCard key={index} onClick={() => handleCategoryCardClick(user)}>
+                          <CardListsCard
+                            key={index}
+                            onClick={() => handleCategoryCardClick(user)}
+                          >
                             <Card userData={user} />
                           </CardListsCard>
                         ))}
                     </CardLists>
                   )}
                   <PlusBtn onClick={handleAddCardModal}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65" fill="none">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="65"
+                      height="65"
+                      viewBox="0 0 65 65"
+                      fill="none"
+                    >
                       <path
                         d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                         fill="url(#paint0_linear_51_3214)"
                       />
-                      <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                      <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                      <path
+                        d="M33 20V46"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M46 33L20 33"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
                       <defs>
                         <linearGradient
                           id="paint0_linear_51_3214"
@@ -228,9 +301,18 @@ const MyCardsCategoryCard = () => {
                           y2="82"
                           gradientUnits="userSpaceOnUse"
                         >
-                          <stop offset="0.0475677" stop-color="#92CBFF" />
-                          <stop offset="0.462568" stop-color="#0587FF" />
-                          <stop offset="0.752212" stop-color="#0076FF" />
+                          <stop
+                            offset="0.0475677"
+                            stop-color="#92CBFF"
+                          />
+                          <stop
+                            offset="0.462568"
+                            stop-color="#0587FF"
+                          />
+                          <stop
+                            offset="0.752212"
+                            stop-color="#0076FF"
+                          />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -250,11 +332,25 @@ const MyCardsCategoryCard = () => {
                 }}
               />
             )}
-            {isModalDeleteOpen && <ModalDelete user={selectedUser} onClose={closeCategoryModal} />}
-            {isModalCategoryDeleteOpen && (
-              <ModalCategoryCardDelete category={category} user={selectedUser} onClose={closeCategoryModal} />
+            {isModalDeleteOpen && (
+              <ModalDelete
+                user={selectedUser}
+                onClose={closeCategoryModal}
+              />
             )}
-            {isAddCardModal && <AddCardModal onClose={closeAddCardModal} token={token} />}
+            {isModalCategoryDeleteOpen && (
+              <ModalCategoryCardDelete
+                category={category}
+                user={selectedUser}
+                onClose={closeCategoryModal}
+              />
+            )}
+            {isAddCardModal && (
+              <AddCardModal
+                onClose={closeAddCardModal}
+                token={token}
+              />
+            )}
           </div>
         </MyCardsCategoryCardPage>
       </div>
