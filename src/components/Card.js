@@ -134,14 +134,15 @@ const Card = ({ userData, isSelected }) => {
               {secondaryInfos.map((info) => (
                 <CardSpace key={info.key}>
                   <Logo src={iconMapping[info.key]} />
-                  {info.key === "link" ? (
-                    <a
+                  {info.key === "link" || info.key === "naver" ? (
+                    <HyperLink
                       href={info.value}
                       target="_blank"
                       rel="noopener noreferrer"
+                      textColor={userData.textColor}
                     >
                       <CardText>{info.value}</CardText>
-                    </a>
+                    </HyperLink>
                   ) : (
                     <CardText>{info.value}</CardText>
                   )}
@@ -245,4 +246,19 @@ const CardRight = styled.div`
 const Logo = styled.img`
   width: 12px;
   height: auto;
+`;
+
+const HyperLink = styled.a`
+  color: ${(props) => props.textColor || "#000"};
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+  }
 `;
