@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { modifyMemo } from "../utils/axios";
 import { useCookies } from "react-cookie";
@@ -8,6 +8,15 @@ const Memo = ({ userData, memoText, setMemoText }) => {
   const toggleEdit = () => setIsEdit(!isEdit);
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (isEdit && textareaRef.current) {
+      textareaRef.current.focus();
+      const length = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(length, length);
+    }
+  }, [isEdit]);
 
   const handlePlaceholderClick = () => {
     if (memoText === null) {
@@ -35,7 +44,7 @@ const Memo = ({ userData, memoText, setMemoText }) => {
           onChange={(e) => setMemoText(e.target.value)}
           onBlur={() => setIsEdit(false)}
           textColor={userData.textColor}
-          autoFocus
+          ref={textareaRef}
         />
       ) : (
         <MemoPlaceholder onClick={handlePlaceholderClick}>친구에 대한 추가 정보를 메모해보세요.</MemoPlaceholder>
