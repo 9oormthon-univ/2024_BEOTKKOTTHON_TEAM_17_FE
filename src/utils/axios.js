@@ -47,6 +47,16 @@ export const logOut = async (token) => {
   }
 };
 
+export const findPassword = async (info) => {
+  try {
+    const url = `${API_KEY}/api/auth/reissuance-pw`;
+    const res = await axios.post(url, info);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const isValidToken = async (token) => {
   try {
     const config = {

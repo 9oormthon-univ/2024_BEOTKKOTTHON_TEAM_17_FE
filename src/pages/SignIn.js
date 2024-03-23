@@ -109,7 +109,14 @@ const SignIn = () => {
               />
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
               <Button onClick={handleSignIn}>로그인하기</Button>
-              <Button $isFindPassword>비밀번호 찾기</Button>
+              <Button
+                $isFindPassword
+                onClick={() => {
+                  navigate("/find-password");
+                }}
+              >
+                비밀번호 찾기
+              </Button>
               <SignupPrompt>
                 <IsFirst>PONNECT가 처음이신가요?</IsFirst>
                 <SignUpButton onClick={linkToSignUp}>간편 회원가입하기</SignUpButton>
