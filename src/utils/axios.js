@@ -318,3 +318,40 @@ export const addCardsToCategory = async (categoryId, cardList, token) => {
     throw error;
   }
 };
+
+export const getSearchCategoryCardInfo = async (token, categoryId, searchData) => {
+  try {
+    const searchKeyword = searchData.trim();
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/category/not-belong/${categoryId}?search=${searchKeyword}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteCategoryCard = async (token, categoryId, cardId) => {
+  try {
+    const config = {
+      method: "delete",
+      url: `${API_KEY}/api/card/category/${categoryId}/remove/${cardId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    if (res.status === 200) {
+      console.log(res.data);
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log("실패");
+    window.location.reload();
+  }
+};
