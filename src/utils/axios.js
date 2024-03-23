@@ -281,3 +281,40 @@ export const deleteCategory = async (categoryId, token) => {
     throw error;
   }
 };
+
+export const getNotExistCard = async (categoryId, keyword, token) => {
+  try {
+    const config = {
+      method: "get",
+      url: `${API_KEY}/api/card/category/not-belong/${categoryId}?search=${keyword}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addCardsToCategory = async (categoryId, cardList, token) => {
+  try {
+    const config = {
+      method: "post",
+      url: `${API_KEY}/api/card/category/friend`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        categoryId: categoryId,
+        cardIdList: cardList,
+      },
+    };
+    console.log(config);
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};

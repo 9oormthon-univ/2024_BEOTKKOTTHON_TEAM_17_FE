@@ -9,6 +9,7 @@ import Card from "../components/Card";
 import ModalCard from "../components/ModalCard";
 import ModalDelete from "../components/ModalDelete";
 import Search from "../images/search3.png";
+import AddCardModal from "../components/AddCardModal";
 
 const MyCardsCategoryCard = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const MyCardsCategoryCard = () => {
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
   const { otherCategoryInfo, setOtherCategoryInfo } = useOtherCategoryInfo();
-
+  const [isAddCardModal, setIsAddCardModal] = useState(false);
   const location = useLocation();
   const category = location.state.category;
 
@@ -63,6 +64,14 @@ const MyCardsCategoryCard = () => {
   const closeModal = () => {
     setIsModalCardOpen(false);
     setIsModalDeleteOpen(false);
+  };
+
+  const handleAddCardModal = () => {
+    setIsAddCardModal(true);
+  };
+
+  const closeAddCardModal = () => {
+    setIsAddCardModal(false);
   };
 
   useEffect(() => {
@@ -111,7 +120,7 @@ const MyCardsCategoryCard = () => {
               <>
                 {Array.isArray(otherCategoryInfo) && otherCategoryInfo.length === 0 ? (
                   /* 전체 리스트가 없을 때는 등록된 명함이 없다는 메시지 표시 */
-                  <NoneCategoryCards>
+                  <NoneCategoryCards onClick={handleAddCardModal}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="65"
@@ -124,8 +133,18 @@ const MyCardsCategoryCard = () => {
                         d="M65 32.5C65 50.4493 50.4493 65 32.5 65C14.5507 65 0 50.4493 0 32.5C0 14.5507 14.5507 0 32.5 0C50.4493 0 65 14.5507 65 32.5Z"
                         fill="url(#paint0_linear_205_7625)"
                       />
-                      <path d="M33 20V46" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                      <path d="M46 33L20 33" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                      <path
+                        d="M33 20V46"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M46 33L20 33"
+                        stroke="white"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                      />
                       <defs>
                         <linearGradient
                           id="paint0_linear_205_7625"
@@ -135,9 +154,18 @@ const MyCardsCategoryCard = () => {
                           y2="82"
                           gradientUnits="userSpaceOnUse"
                         >
-                          <stop offset="0.0475677" stop-color="#92CBFF" />
-                          <stop offset="0.462568" stop-color="#0587FF" />
-                          <stop offset="0.752212" stop-color="#0076FF" />
+                          <stop
+                            offset="0.0475677"
+                            stop-color="#92CBFF"
+                          />
+                          <stop
+                            offset="0.462568"
+                            stop-color="#0587FF"
+                          />
+                          <stop
+                            offset="0.752212"
+                            stop-color="#0076FF"
+                          />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -148,7 +176,10 @@ const MyCardsCategoryCard = () => {
                   <CardLists>
                     {Array.isArray(otherCategoryInfo) &&
                       otherCategoryInfo.map((user, index) => (
-                        <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                        <CardListsCard
+                          key={index}
+                          onClick={() => handleCardClick(user)}
+                        >
                           <Card userData={user} />
                         </CardListsCard>
                       ))}
@@ -168,7 +199,10 @@ const MyCardsCategoryCard = () => {
                   <CardLists>
                     {Array.isArray(searchedCategoryInfo) &&
                       searchedCategoryInfo.map((user, index) => (
-                        <CardListsCard key={index} onClick={() => handleCardClick(user)}>
+                        <CardListsCard
+                          key={index}
+                          onClick={() => handleCardClick(user)}
+                        >
                           <Card userData={user} />
                         </CardListsCard>
                       ))}
@@ -183,7 +217,18 @@ const MyCardsCategoryCard = () => {
                 onOpenDeleteModal={() => setIsModalDeleteOpen(true)}
               />
             )}
-            {isModalDeleteOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
+            {isModalDeleteOpen && (
+              <ModalDelete
+                user={selectedUser}
+                onClose={closeModal}
+              />
+            )}
+            {isAddCardModal && (
+              <AddCardModal
+                onClose={closeAddCardModal}
+                token={token}
+              />
+            )}
           </div>
         </MyCardsCategoryCardPage>
       </div>

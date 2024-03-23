@@ -6,7 +6,7 @@ import { phoneImg, mailImg } from "../utils/snsImg";
 import { useStoreSize } from "../store/store";
 import { stickerMapping } from "../utils/mappingStickers";
 
-const Card = ({ userData }) => {
+const Card = ({ userData, isSelected }) => {
   const primaryInfoKey = userData.status !== null;
 
   // 나머지 정보 중 최대 4개 선택
@@ -66,7 +66,32 @@ const Card = ({ userData }) => {
       bgColor={userData.bgColor}
       textColor={userData.textColor}
       ref={cardRef}
+      isSelected={isSelected}
     >
+      {isSelected && (
+        <div style={{ position: "absolute", zIndex: "2" }}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100"
+            height="100"
+            viewBox="0 0 30 30"
+            fill="none"
+          >
+            <circle
+              cx="15"
+              cy="15"
+              r="15"
+              fill="#138EFF"
+            />
+            <path
+              d="M9 15.375L14.2 21L21 9"
+              stroke="white"
+              stroke-width="2.25"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      )}
       <CardBoxIn>
         {userData.stickerDtoList.map((sticker, index) => (
           <CustomImage
@@ -133,6 +158,7 @@ const CardBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: ${(props) => (props.isSelected ? "0.5" : "1")};
 
   @media (hover: hover) and (pointer: fine) {
     width: 343px;
