@@ -140,11 +140,11 @@ const QRResult = styled.div`
 
 const QRFooter = styled.div`
   width: 100vw;
-  height: 160px;
+  height: 200px;
   background-color: #000;
 
   position: absolute;
-  top: 267px;
+  bottom: 0;
 
   display: flex;
 
