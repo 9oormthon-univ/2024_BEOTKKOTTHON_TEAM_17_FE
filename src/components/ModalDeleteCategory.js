@@ -4,11 +4,10 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { deleteCategory } from "../utils/axios";
 
-const ModalDeleteCategory = ({ onClose, fetchCategoryList, categoryToDelete }) => {
+const ModalDeleteCategory = ({ onClose, categoryToDelete, fetchCategoryList }) => {
   const navigate = useNavigate();
   const [cookies] = useCookies();
   const token = cookies["jwt-token"];
-  console.log(categoryToDelete);
 
   const deleteCategoryList = async () => {
     try {
@@ -17,8 +16,8 @@ const ModalDeleteCategory = ({ onClose, fetchCategoryList, categoryToDelete }) =
         return;
       }
       await deleteCategory(categoryToDelete, token);
-      fetchCategoryList();
       onClose();
+      fetchCategoryList();
     } catch (error) {
       console.error("Error deleting category:", error);
       navigate("/");
@@ -32,7 +31,13 @@ const ModalDeleteCategory = ({ onClose, fetchCategoryList, categoryToDelete }) =
         <ModalWrap>
           <ModalCloseSpace>
             <ModalClose onClick={onClose}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+              >
                 <path
                   d="M1 1L8.5 8.5L16 16M16 1L1 16"
                   stroke="black"

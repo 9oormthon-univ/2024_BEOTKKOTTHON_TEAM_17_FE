@@ -257,9 +257,6 @@ export const createCategory = async (categoryName, token) => {
       },
     };
     const res = await axios.request(config);
-    if (res.status === 200) {
-      console.log(res.data);
-    }
     return res;
   } catch (error) {
     throw error;
@@ -353,5 +350,25 @@ export const deleteCategoryCard = async (token, categoryId, cardId) => {
   } catch (error) {
     console.log("실패");
     window.location.reload();
+  }
+};
+
+export const modCategoryName = async (categoryId, newName, token) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `${API_KEY}/api/card/category/${categoryId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        categoryName: newName,
+      },
+    };
+    console.log(config);
+    const res = await axios.request(config);
+    return res;
+  } catch (error) {
+    throw error;
   }
 };

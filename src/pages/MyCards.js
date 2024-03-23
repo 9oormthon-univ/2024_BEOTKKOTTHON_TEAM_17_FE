@@ -49,7 +49,10 @@ const MyCards = () => {
             {showList ? (
               <MyCardsList onToggle={handleToggleComponent} />
             ) : (
-              <MyCardsCategory onToggle={handleToggleComponent} />
+              <MyCardsCategory
+                onToggle={handleToggleComponent}
+                setShowList={setShowList}
+              />
             )}
           </div>
         </MyCardsPage>
