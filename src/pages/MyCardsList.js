@@ -45,9 +45,7 @@ const MyCardsList = ({ onToggle }) => {
         }
         const otherInfoResponse = await getListInfo(token);
         if (otherInfoResponse && otherInfoResponse.status === 200) {
-          console.log(otherInfoResponse);
           setOtherInfo(otherInfoResponse.data);
-          console.log(otherInfo);
         }
       } catch (error) {
         console.log(error);
@@ -67,7 +65,6 @@ const MyCardsList = ({ onToggle }) => {
         const searchRes = await getSearchInfo(token, searchData);
         if (searchRes && searchRes.status === 200) {
           setSearchedInfo(searchRes.data); // 검색 결과를 상태에 저장
-          console.log(searchRes.data);
         }
       } catch (error) {
         console.log(error);
@@ -121,11 +118,7 @@ const MyCardsList = ({ onToggle }) => {
           {Array.isArray(otherInfo) && otherInfo.length === 0 ? (
             /* 전체 리스트가 없을 때는 등록된 명함이 없다는 메시지 표시 */
             <NoneCards>
-              <img
-                src={NoMatched}
-                alt="등록된 명함 X"
-                style={{ height: "30vh" }}
-              />
+              <img src={NoMatched} alt="등록된 명함 X" style={{ height: "30vh" }} />
               <p style={{ marginTop: "30px" }}>아직 등록된 명함이 없어요.</p>
             </NoneCards>
           ) : (
@@ -133,10 +126,7 @@ const MyCardsList = ({ onToggle }) => {
             <div className="CardLists">
               {Array.isArray(otherInfo) &&
                 otherInfo.map((user, index) => (
-                  <CardListsCard
-                    key={index}
-                    onClick={() => handleCardClick(user)}
-                  >
+                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
                     <Test>
                       <Card userData={user} />
                     </Test>
@@ -163,10 +153,7 @@ const MyCardsList = ({ onToggle }) => {
             <div className="CardLists">
               {Array.isArray(searchedInfo) &&
                 searchedInfo.map((user, index) => (
-                  <CardListsCard
-                    key={index}
-                    onClick={() => handleCardClick(user)}
-                  >
+                  <CardListsCard key={index} onClick={() => handleCardClick(user)}>
                     <Test>
                       <Card userData={user} />
                     </Test>
@@ -224,18 +211,9 @@ const MyCardsList = ({ onToggle }) => {
         </>
       )}
       {isModalCardOpen && (
-        <ModalCard
-          user={selectedUser}
-          onClose={closeModal}
-          onOpenDeleteModal={() => setIsModalDeleteOpen(true)}
-        />
+        <ModalCard user={selectedUser} onClose={closeModal} onOpenDeleteModal={() => setIsModalDeleteOpen(true)} />
       )}
-      {isModalDeleteOpen && (
-        <ModalDelete
-          user={selectedUser}
-          onClose={closeModal}
-        />
-      )}
+      {isModalDeleteOpen && <ModalDelete user={selectedUser} onClose={closeModal} />}
     </div>
   );
 };

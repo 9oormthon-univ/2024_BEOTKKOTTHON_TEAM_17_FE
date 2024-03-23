@@ -42,7 +42,6 @@ const AddCardModal = ({ onClose, token }) => {
       if (prevSelected.includes(cardId)) {
         return prevSelected.filter((id) => id !== cardId);
       } else {
-        console.log(cardId);
         return [...prevSelected, cardId];
       }
     });
@@ -82,7 +81,6 @@ const AddCardModal = ({ onClose, token }) => {
         const searchRes = await getSearchCategoryCardInfo(token, category.categoryId, searchData);
         if (searchRes && searchRes.status === 200) {
           setSearchedCardInfo(searchRes.data); // 검색 결과를 상태에 저장
-          console.log(searchRes.data);
         }
       } catch (error) {
         console.log(error);

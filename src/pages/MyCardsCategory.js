@@ -52,7 +52,6 @@ const MyCardsCategory = ({ onToggle }) => {
 
   const handleChangeModData = (e) => {
     setCategoryName(e.target.value);
-    console.log(categoryName);
   };
 
   const handleOnKeyPress = (e) => {
@@ -89,7 +88,6 @@ const MyCardsCategory = ({ onToggle }) => {
 
   const openModalDeleteCategory = (category) => {
     setCategoryToDelete(category.categoryId);
-    console.log(category.categoryId);
     setIsModalDeleteCategoryOpen(true);
   };
 
@@ -100,7 +98,6 @@ const MyCardsCategory = ({ onToggle }) => {
   const handleModifyCategoryList = (category) => {
     setModifiedCategory(category);
     setShowModCategoryInput(true);
-    console.log(category.categoryId, category.categoryName);
   };
 
   const openModalModCategory = () => {

@@ -48,8 +48,6 @@ const MyPageEdit = () => {
     try {
       const response = await saveAdditionalInfoDetails(localUserInfo, token);
       setLocalUserInfo(response.data);
-      console.log(localUserInfo);
-      // console.log(response.data);
       navigate("/mypage");
     } catch (error) {
       console.log(error);
@@ -68,29 +66,15 @@ const MyPageEdit = () => {
               </GuideText>
               <CustomGuide>이름</CustomGuide>
               <Container>
-                <Input
-                  name="name"
-                  value={localUserInfo.name}
-                  onChange={handleChange}
-                  maxLength={7}
-                />
+                <Input name="name" value={localUserInfo.name} onChange={handleChange} maxLength={7} />
               </Container>
               <CustomGuide>전화번호</CustomGuide>
               <Container>
-                <Input
-                  name="phone"
-                  value={localUserInfo.phone}
-                  onChange={handleChange}
-                  maxLength={11}
-                />
+                <Input name="phone" value={localUserInfo.phone} onChange={handleChange} maxLength={11} />
               </Container>
               <CustomGuide>이메일</CustomGuide>
               <Container>
-                <Input
-                  name="email"
-                  value={localUserInfo.email}
-                  readOnly
-                />
+                <Input name="email" value={localUserInfo.email} readOnly />
               </Container>
               <CustomGuide>상태</CustomGuide>
               <Container>
@@ -122,12 +106,7 @@ const MyPageEdit = () => {
                     <>
                       <CustomGuide>{title}</CustomGuide>
                       <Container>
-                        <Input
-                          id={key}
-                          name={key}
-                          value={localUserInfo[key]}
-                          onChange={handleChange}
-                        />
+                        <Input id={key} name={key} value={localUserInfo[key]} onChange={handleChange} />
                       </Container>
                     </>
                   );

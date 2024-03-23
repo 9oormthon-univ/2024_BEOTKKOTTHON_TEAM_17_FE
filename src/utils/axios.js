@@ -168,7 +168,6 @@ export const deleteCard = async (memberId, token) => {
     };
     const res = await axios.request(config);
     if (res.status === 200) {
-      console.log(res.data);
       window.location.reload();
     }
   } catch (error) {
@@ -308,7 +307,6 @@ export const addCardsToCategory = async (categoryId, cardList, token) => {
         cardIdList: cardList,
       },
     };
-    console.log(config);
     const res = await axios.request(config);
     return res;
   } catch (error) {
@@ -344,7 +342,6 @@ export const deleteCategoryCard = async (token, categoryId, cardId) => {
     };
     const res = await axios.request(config);
     if (res.status === 200) {
-      console.log(res.data);
       window.location.reload();
     }
   } catch (error) {
@@ -365,7 +362,6 @@ export const modCategoryName = async (categoryId, newName, token) => {
         categoryName: newName,
       },
     };
-    console.log(config);
     const res = await axios.request(config);
     return res;
   } catch (error) {

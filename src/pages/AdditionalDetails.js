@@ -42,7 +42,6 @@ const AdditionalDetails = () => {
     try {
       const response = await saveAdditionalInfoDetails(localUserInfo, token);
       setLocalUserInfo(response.data);
-      console.log(localUserInfo);
       navigate("/mypage");
     } catch (error) {
       console.log(error);
@@ -51,7 +50,6 @@ const AdditionalDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(selectedOptions);
 
     const preserveKeys = ["email", "name", "phone", "status"];
 
@@ -68,7 +66,6 @@ const AdditionalDetails = () => {
 
     // 업데이트된 정보를 localUserInfo 상태에 설정
     setLocalUserInfo(updatedUserInfo);
-    console.log(localUserInfo);
   }, []);
 
   return (
@@ -84,29 +81,15 @@ const AdditionalDetails = () => {
               </GuideText>
               <CustomGuide>이름</CustomGuide>
               <Container>
-                <Input
-                  name="name"
-                  value={localUserInfo.name}
-                  onChange={handleChange}
-                  maxLength={7}
-                />
+                <Input name="name" value={localUserInfo.name} onChange={handleChange} maxLength={7} />
               </Container>
               <CustomGuide>전화번호</CustomGuide>
               <Container>
-                <Input
-                  name="phone"
-                  value={localUserInfo.phone}
-                  onChange={handleChange}
-                  maxLength={11}
-                />
+                <Input name="phone" value={localUserInfo.phone} onChange={handleChange} maxLength={11} />
               </Container>
               <CustomGuide>이메일</CustomGuide>
               <Container>
-                <Input
-                  name="email"
-                  value={localUserInfo.email}
-                  readOnly
-                />
+                <Input name="email" value={localUserInfo.email} readOnly />
               </Container>
               <CustomGuide>상태</CustomGuide>
               <Container>
@@ -121,12 +104,7 @@ const AdditionalDetails = () => {
                 <>
                   <CustomGuide>{mappedNameList[key]}</CustomGuide>
                   <Container>
-                    <Input
-                      key={key}
-                      name={key}
-                      value={localUserInfo[key]}
-                      onChange={handleChange}
-                    />
+                    <Input key={key} name={key} value={localUserInfo[key]} onChange={handleChange} />
                   </Container>
                 </>
               ))}

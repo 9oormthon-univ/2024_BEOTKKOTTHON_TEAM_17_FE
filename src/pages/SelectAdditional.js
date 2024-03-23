@@ -55,7 +55,6 @@ const AdditionalInfoPage = () => {
     window.scrollTo(0, 0);
 
     // 이미 선택된 항목들을 최대 선택 가능한 항목 수에 맞추어 상태를 설정
-    console.log(location.state);
     if (selectedOptions.length > 4) {
       setSelectedOptions(selectedOptions.slice(0, 4));
     }
@@ -68,7 +67,6 @@ const AdditionalInfoPage = () => {
           ? prevSelected.filter((selectedKey) => selectedKey !== key)
           : [...prevSelected, key].slice(0, 4) // 최대 4개까지만 선택 가능
     );
-    console.log(key);
   };
 
   const handleSubmit = () => {
@@ -94,10 +92,7 @@ const AdditionalInfoPage = () => {
                     selected={selectedOptions.includes(option.key)}
                     onClick={() => toggleSelection(option.key)}
                   >
-                    <Img
-                      src={option.icon}
-                      alt={option.label}
-                    />
+                    <Img src={option.icon} alt={option.label} />
                     {option.label}
                   </Block>
                 ))}
@@ -112,10 +107,7 @@ const AdditionalInfoPage = () => {
                     selected={selectedOptions.includes(option.key)}
                     onClick={() => toggleSelection(option.key)}
                   >
-                    <Img
-                      src={option.icon}
-                      alt={option.label}
-                    />
+                    <Img src={option.icon} alt={option.label} />
                     {option.label}
                   </Block>
                 ))}

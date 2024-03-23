@@ -84,8 +84,6 @@ const CardCustom = () => {
       stickerList: stickers,
     };
 
-    console.log(payload);
-
     try {
       const response = await saveCustom(payload, token);
       navigate("/mypage");
@@ -97,13 +95,6 @@ const CardCustom = () => {
     // 새로운 스티커 정보 배열을 customStickers 상태에 저장
     setCustomStickers(stickers);
   };
-
-  useEffect(() => {
-    // 저장하기 버튼을 누를시 console에 좌표d 출력
-    console.log(customStickers);
-    console.log(customBackColor);
-    console.log(customTextColor);
-  }, [customStickers]);
 
   const handleUndo = () => {
     if (addedImages.length > 0) {

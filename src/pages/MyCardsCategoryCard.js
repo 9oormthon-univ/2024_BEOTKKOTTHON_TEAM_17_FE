@@ -49,7 +49,6 @@ const MyCardsCategoryCard = () => {
         const searchRes = await getSearchCategoryInfo(token, category.categoryId, searchData);
         if (searchRes && searchRes.status === 200) {
           setSearchedCategoryInfo(searchRes.data); // 검색 결과를 상태에 저장
-          console.log(searchRes.data);
         }
       } catch (error) {
         console.log(error);
@@ -86,7 +85,6 @@ const MyCardsCategoryCard = () => {
         const otherCategoryInfoResponse = await getListCategoryInfo(token, category.categoryId);
         if (otherCategoryInfoResponse && otherCategoryInfoResponse.status === 200) {
           setOtherCategoryInfo(otherCategoryInfoResponse.data);
-          console.log(otherCategoryInfo);
         }
       } catch (error) {
         console.log(error);
